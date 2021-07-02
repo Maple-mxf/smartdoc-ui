@@ -1,0 +1,130 @@
+{
+  "status": "OK",
+  "code": "200",
+  "message": null,
+  "data": [
+    {
+      "id": "root",
+      "title": "一级目录",
+      "field": "title",
+      "children": [
+        {
+          "id": "d283f0e3c98f9ed79aa8aa2e1bbfc85e",
+          "title": "用户控制器",
+          "field": "name",
+          "children": [
+            {
+              "id": "9fe991e64d6db34dae0a59b84cca31bb",
+              "title": "订单接口",
+              "field": "name",
+              "children": [],
+              "href": null,
+              "pid": "d283f0e3c98f9ed79aa8aa2e1bbfc85e",
+              "spread": true,
+              "checked": false,
+              "disabled": false,
+              "type": "RESOURCE"
+            }
+          ],
+          "href": null,
+          "pid": "root",
+          "spread": true,
+          "checked": false,
+          "disabled": false,
+          "type": "RESOURCE"
+        },
+        {
+          "id": "825290837695926272",
+          "title": "登陆系统",
+          "field": "name",
+          "children": [
+            {
+              "id": "825622294452768768",
+              "title": "支付系统",
+              "field": "name",
+              "children": [],
+              "href": null,
+              "pid": "825290837695926272",
+              "spread": true,
+              "checked": false,
+              "disabled": false,
+              "type": "RESOURCE"
+            },
+            {
+              "id": "825622590272835584",
+              "title": "CICD系统",
+              "field": "name",
+              "children": [],
+              "href": null,
+              "pid": "825290837695926272",
+              "spread": true,
+              "checked": false,
+              "disabled": false,
+              "type": "RESOURCE"
+            },
+            {
+              "id": "825622682857902080",
+              "title": "OAuth系统",
+              "field": "name",
+              "children": [],
+              "href": null,
+              "pid": "825290837695926272",
+              "spread": true,
+              "checked": false,
+              "disabled": false,
+              "type": "RESOURCE"
+            },
+            {
+              "id": "825623569697345536",
+              "title": "打卡系统",
+              "field": "name",
+              "children": [],
+              "href": null,
+              "pid": "825290837695926272",
+              "spread": true,
+              "checked": false,
+              "disabled": false,
+              "type": "RESOURCE"
+            },
+            {
+              "id": "825624531015045120",
+              "title": "权限认证系统",
+              "field": "name",
+              "children": [],
+              "href": null,
+              "pid": "825290837695926272",
+              "spread": true,
+              "checked": false,
+              "disabled": false,
+              "type": "RESOURCE"
+            }
+          ],
+          "href": null,
+          "pid": "root",
+          "spread": true,
+          "checked": false,
+          "disabled": false,
+          "type": "RESOURCE"
+        },
+        {
+          "id": "825292161212747776",
+          "title": "MongoDB操作规范",
+          "field": "name",
+          "children": [],
+          "href": null,
+          "pid": "root",
+          "spread": true,
+          "checked": false,
+          "disabled": false,
+          "type": "RESOURCE"
+        }
+      ],
+      "href": null,
+      "pid": "0",
+      "spread": true,
+      "checked": true,
+      "disabled": false,
+      "type": "RESOURCE"
+    }
+  ]
+}
