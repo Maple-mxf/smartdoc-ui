@@ -1,8 +1,12 @@
-import {CLOSE_NEW_PROJECT_FORM, OPEN_NEW_PROJECT_FORM, CREATE_PROJECT, API_ERROR, GET_PROJECT_LIST} from "./constants";
+import {CLOSE_NEW_PROJECT_FORM, OPEN_NEW_PROJECT_FORM,
+    CREATE_PROJECT, API_ERROR, GET_PROJECT_LIST} from "./constants";
 
 const init = {
     openNewProjectForm:false,
-    projects:[]
+    projects:[],
+    page:1,
+    size:5,
+    count:0,
 }
 
 export default (state = init, action) => {
@@ -15,7 +19,12 @@ export default (state = init, action) => {
         case CREATE_PROJECT:
             return {...state, openNewProjectForm: false}
         case GET_PROJECT_LIST:
-            return {...state,projects:action.projects}
+            return {...state,
+                projects:action.projects,
+                page:action.page,
+                size:action.size,
+                count:action.count}
+
         case API_ERROR:
             return {...state,   code:action.code, msg:action.errorMsg}
 

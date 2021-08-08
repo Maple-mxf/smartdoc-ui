@@ -15,8 +15,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {useDispatch, useSelector} from "react-redux";
 import {Dehaze} from "@material-ui/icons";
-import {Switch, Route, Link} from 'react-router-dom'
-import {GLOBAL_REDUCER_NAMESPACE} from './common/constants'
+import {Switch, Route,NavLink } from 'react-router-dom'
+import {GLOBAL_REDUCER_NAMESPACE} from './util/constants'
 
 const drawerWidth = 240;
 
@@ -75,9 +75,17 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+
+    active:{
+        color: 'red',
+    },
+    menu:{
+        textDecoration: 'none',
+        color: '#424242'
+    }
 }));
 
-export default function PersistentDrawerLeft() {
+export default function HomeComponent() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
@@ -113,7 +121,7 @@ export default function PersistentDrawerLeft() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Smart API Document
+
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -128,7 +136,7 @@ export default function PersistentDrawerLeft() {
             >
                 <div className={classes.drawerHeader}>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <Dehaze /> : <Dehaze />}
+                        <Dehaze />
                     </IconButton>
                 </div>
                 <Divider />
@@ -138,14 +146,18 @@ export default function PersistentDrawerLeft() {
                             <div key={index}>
                                 {
                                     groups.map((item,index)=>(
-                                        <Link to={item.path}  key={index}>
-                                            <ListItem button key={item.title}>
+                                        <NavLink to={item.path}
+                                                 key ={index}
+                                                 exact={item.exact}
+                                                 activeClassName={classes.active} >
+                                            <ListItem button key={item.title} className={classes.menu} >
                                                 <ListItemIcon>
                                                     <div>{item.iconComponent()}</div>
                                                 </ListItemIcon>
                                                 <ListItemText primary={item.title} />
                                             </ListItem>
-                                        </Link>
+                                        </NavLink>
+
                                     ))
                                 }
                                 {index === (routeList.length -1) ? null :  <Divider />}

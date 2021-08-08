@@ -16,12 +16,15 @@ import {Add, MoreVert} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {GET_PROJECT_LIST, OPEN_NEW_PROJECT_FORM} from "./store/constants";
+import {OPEN_NEW_PROJECT_FORM} from "./store/constants";
 import {useDispatch, useSelector} from "react-redux";
 import CreateProjectComponent from './create'
-import {getProjectList} from "./store/actionCreators";
-import {  PROJECT_REDUCER_NAMESPACE} from "../../common/constants";
-import {parseResponseMsg} from '../../common/http'
+import {getProjectAction, getProjectList} from "./store/actionCreators";
+import {  PROJECT_REDUCER_NAMESPACE} from "../../util/constants";
+import {parseResponseMsg} from '../../util/http'
+import { SnackbarProvider, useSnackbar } from 'notistack';
+import Pagination from "@material-ui/lab/Pagination";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,6 +56,12 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         margin: theme.spacing(1),
+    },
+    pageableNumBtn: {
+        '& > *': {
+            marginTop: theme.spacing(2),
+            width:'100%'
+        },
     },
 }));
 
@@ -109,9 +118,9 @@ const ProjectListItem = (props) => {
                                className={classes.inline}
                                color="textPrimary"
                            >
-                               {projectItem.name}
+                               {projectItem.desc}
                            </Typography>
-                           {projectItem.desc}
+
                        </React.Fragment>
                    }
                />
@@ -136,10 +145,44 @@ const ProjectListItem = (props) => {
 
 }
 
-const ProjectContent = (props)=> {
-    console.info("props",props)
-    const {classes,projects} = props
+export const FetchProjectList = (page,size,dispatch,handleVariant) => {
+    getProjectList(page,size)
+        .then(
+            (res) =>{
+                let {succ,errorMsg,data} = parseResponseMsg(res)
+                if (!succ){
+                    handleVariant(errorMsg,'error')
+                }else{
+                    dispatch(getProjectAction(data.content,data.pageable.pageNumber+1,
+                        data.pageable.pageSize,data.totalElements))
+                }
+            },
+            (err) => {
+                handleVariant(err,'error')
+            }
+        )
+}
 
+const ProjectContent = (props)=> {
+    const {classes} = props
+    const dispatch = useDispatch();
+
+    const { enqueueSnackbar } = useSnackbar();
+    const handleVariant = (msg,variant)  => {
+        enqueueSnackbar(msg, { variant });
+    };
+
+    const {projects,count,size,page} = useSelector(state => state[PROJECT_REDUCER_NAMESPACE]);
+
+    useEffect(() => {
+        FetchProjectList(page,size,dispatch,handleVariant)
+        return () => {
+        }
+    }, [])
+
+    const changePage = (event,currentPage) => {
+        FetchProjectList(currentPage,size,dispatch,handleVariant)
+    }
 
     return (
         <Grid container spacing={3}>
@@ -155,42 +198,30 @@ const ProjectContent = (props)=> {
                         }
                     </List>
                 </Paper>
+                <div className={classes.pageableNumBtn}>
+                    <Pagination count={ Math.ceil(count/size) }
+                                size="large"
+                                page={page}
+                                onChange={changePage}
+                                showFirstButton showLastButton />
+                </div>
             </Grid>
             <Grid item xs={6} sm={2} />
+
+
         </Grid>
     )
 }
 
 export default function Project(){
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        getProjectList()
-            .then(
-                (res) =>{
-                   let {succ,errorMsg,data} = parseResponseMsg(res)
-                    if (!succ){
-                        alert(errorMsg)
-                        return
-                    }
-                    dispatch({type:GET_PROJECT_LIST,projects:data.content})
-                },
-                (err) => {
-                    alert(err)
-                }
-            )
-        return () => {
-        }
-    }, [])
-
-    const projects = useSelector(state => state[PROJECT_REDUCER_NAMESPACE].projects);
-
     return (
         <div className={classes.root}>
-            <ProjectBar />
-            <ProjectContent projects={projects} classes={classes} />
-            <CreateProjectComponent />
+           <SnackbarProvider maxSnack={5} >
+               <ProjectBar />
+               <ProjectContent  classes={classes} />
+               <CreateProjectComponent />
+           </SnackbarProvider>
         </div>
     )
 }

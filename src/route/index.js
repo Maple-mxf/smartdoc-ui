@@ -4,30 +4,21 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import React from "react";
 
 // Project
-const ProjectIconComponent = () => {
-    return (<ListItemIcon><Widgets /></ListItemIcon>)
-}
+const ProjectIconComponent = () => (<ListItemIcon><Widgets /></ListItemIcon>)
 const ProjectComponent = Loadable(() => import('../main/project'))
 
-const MemberIconComponent = () => {
-    return (<ListItemIcon><Person /></ListItemIcon>)
-}
+const MemberIconComponent = () => (<ListItemIcon><Person /></ListItemIcon>)
 
-const GroupIconComponent = () => {
-    return (<ListItemIcon><Group /></ListItemIcon> )
-}
+const GroupIconComponent = () => (<ListItemIcon><Group /></ListItemIcon> )
 const GroupComponent = Loadable(()=>import('../main/group'))
 
-const DocumentIconComponent = () => {
-    return (<ListItemIcon>  <MenuBook /></ListItemIcon>)
-}
-const ConnectionServiceIconComponent = () => {
-    return (<ListItemIcon><ScreenShare /></ListItemIcon>)
-}
+const DocumentIconComponent = () => (<ListItemIcon>  <MenuBook /></ListItemIcon>)
+const DocumentComponent = Loadable(()=>import('../main/document'))
 
-const SettingsIconComponent = () => {
-    return (<ListItemIcon><Settings /></ListItemIcon>)
-}
+const ConnectionServiceIconComponent = () => (<ListItemIcon><ScreenShare /></ListItemIcon>)
+
+
+const SettingsIconComponent = () => (<ListItemIcon><Settings /></ListItemIcon>)
 
 const routeList = [
    [ {
@@ -58,7 +49,7 @@ const routeList = [
             path :"/home/document",
             exact:true,
             iconComponent:DocumentIconComponent,
-            mainComponent:ProjectComponent
+            mainComponent:DocumentComponent
         },
         {
             title: "Connection Services",

@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, compose, createStore,} from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import globalReducer from './reducer'
 import {reducer as projectReducer} from '../main/project/store'
-import {GLOBAL_REDUCER_NAMESPACE,PROJECT_REDUCER_NAMESPACE} from '../common/constants'
+import {GLOBAL_REDUCER_NAMESPACE,PROJECT_REDUCER_NAMESPACE} from '../util/constants'
 import thunk from 'redux-thunk';
 
 
