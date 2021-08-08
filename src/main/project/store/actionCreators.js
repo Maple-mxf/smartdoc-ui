@@ -1,6 +1,6 @@
-import {CLOSE_NEW_PROJECT_FORM, CREATE_PROJECT, GET_PROJECT_LIST, OPEN_NEW_PROJECT_FORM} from "./constants";
-import {getCreateProjectURL, getProjectListURL} from '../../../common/uri'
-import {get,post} from '../../../common/http'
+import {CLOSE_NEW_PROJECT_FORM, GET_PROJECT_LIST, OPEN_NEW_PROJECT_FORM} from "./constants";
+import {getCreateProjectURL, getProjectListURL} from '../../../util/uri'
+import {get,post} from '../../../util/http'
 
 export const openCreateProjectWindow = {
     type : OPEN_NEW_PROJECT_FORM,
@@ -10,6 +10,16 @@ export const openCreateProjectWindow = {
 export const closeCreateProjectWindow = {
     type : CLOSE_NEW_PROJECT_FORM,
     openNewProjectForm:false
+}
+
+export const getProjectAction = (projects,page,size,count)=> {
+    return {
+        type:GET_PROJECT_LIST,
+        projects,
+        page,
+        size,
+        count
+    }
 }
 
 // 创建项目
@@ -26,9 +36,9 @@ export const createProject = (data) => {
 }
 
 // 获取项目列表
-export const getProjectList = () => {
+export const getProjectList = (page,size) => {
     return new Promise(((resolve, reject) => {
-        get(getProjectListURL())
+        get(getProjectListURL(page-1,size))
             .then((res) => {
                 resolve(res)
             })
