@@ -124,7 +124,6 @@ const ProjectListItem = (props) => {
                        </React.Fragment>
                    }
                />
-
                <IconButton aria-label="delete" color="primary" onClick={handleClick}>
                    <MoreVert />
                </IconButton>

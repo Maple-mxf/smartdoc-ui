@@ -1,97 +1,108 @@
-import * as React from 'react';
-import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
+import React, {useEffect} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TreeView from '@material-ui/lab/TreeView';
+import TreeItem from '@material-ui/lab/TreeItem';
+import {getNavTreeAction, getNavTreeNodeList} from "./store/actionCreators";
+import {useDispatch, useSelector} from "react-redux";
+import {NAV_TREE_REDUCER_NAMESPACE} from "../../../util/constants";
+import {parseResponseMsg} from "../../../util/http";
+import ArrowRightOutlinedIcon from '@material-ui/icons/ArrowRightOutlined';
+import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
+import {NavLink} from "react-router-dom";
 
-export default function APITreeComponent(){
-    const hierarchicalData = [
-        { id: '01', name: 'Local Disk (C:)', expanded: true,
-            subChild: [
-                {
-                    id: '01-01', name: 'Program Files',
-                    subChild: [
-                        { id: '01-01-01', name: '7-Zip' },
-                        { id: '01-01-02', name: 'Git' },
-                        { id: '01-01-03', name: 'IIS Express' },
-                    ]
-                },
-                {
-                    id: '01-02', name: 'Users', expanded: true,
-                    subChild: [
-                        { id: '01-02-01', name: 'Smith' },
-                        { id: '01-02-02', name: 'Public' },
-                        { id: '01-02-03', name: 'Admin' },
-                    ]
-                },
-                {
-                    id: '01-03', name: 'Windows',
-                    subChild: [
-                        { id: '01-03-01', name: 'Boot' },
-                        { id: '01-03-02', name: 'FileManager' },
-                        { id: '01-03-03', name: 'System32' },
-                    ]
-                },
-            ]
-        },
-        {
-            id: '02', name: 'Local Disk (D:)',
-            subChild: [
-                {
-                    id: '02-01', name: 'Personals',
-                    subChild: [
-                        { id: '02-01-01', name: 'My photo.png' },
-                        { id: '02-01-02', name: 'Rental document.docx' },
-                        { id: '02-01-03', name: 'Pay slip.pdf' },
-                    ]
-                },
-                {
-                    id: '02-02', name: 'Projects',
-                    subChild: [
-                        { id: '02-02-01', name: 'ASP Application' },
-                        { id: '02-02-02', name: 'TypeScript Application' },
-                        { id: '02-02-03', name: 'React Application' },
-                    ]
-                },
-                {
-                    id: '02-03', name: 'Office',
-                    subChild: [
-                        { id: '02-03-01', name: 'Work details.docx' },
-                        { id: '02-03-02', name: 'Weekly report.docx' },
-                        { id: '02-03-03', name: 'Wish list.csv' },
-                    ]
-                },
-            ]
-        },
-        {
-            id: '03', name: 'Local Disk (E:)', icon: 'folder',
-            subChild: [
-                {
-                    id: '03-01', name: 'Pictures',
-                    subChild: [
-                        { id: '03-01-01', name: 'Wind.jpg' },
-                        { id: '03-01-02', name: 'Stone.jpg' },
-                        { id: '03-01-03', name: 'Home.jpg' },
-                    ]
-                },
-                {
-                    id: '03-02', name: 'Documents',
-                    subChild: [
-                        { id: '03-02-01', name: 'Environment Pollution.docx' },
-                        { id: '03-02-02', name: 'Global Warming.ppt' },
-                        { id: '03-02-03', name: 'Social Network.pdf' },
-                    ]
-                },
-                {
-                    id: '03-03', name: 'Study Materials',
-                    subChild: [
-                        { id: '03-03-01', name: 'UI-Guide.pdf' },
-                        { id: '03-03-02', name: 'Tutorials.zip' },
-                        { id: '03-03-03', name: 'TypeScript.7z' },
-                    ]
-                },
-            ]
-        }
-    ];
-   const fields = { dataSource:  hierarchicalData, id: 'id', text: 'name', child: 'subChild' };
+const useStyles = makeStyles({
+    root: {
+        height: 216,
+        flexGrow: 1,
+        maxWidth: 400,
+    },
+});
+
+// const TreeNavTreeItem = (props)=>{
+//     const {node} = props
+//     return (<TreeItem key={node.id}
+//                   nodeId={node.id}
+//                   label={node.title}
+//                   collapseIcon={ node.type ==='RESOURCE'? <ArrowDropDownOutlinedIcon />: null }
+//                   expandIcon = { node.type ==='RESOURCE'? <ArrowRightOutlinedIcon />: null}
+//     />)
+// }
+const TreeNavTreeView = (props) => {
+    const {nodes} = props;
     return (
-        <TreeViewComponent fields={fields}/>
+        <div>
+            {
+                nodes.map((node,index)=>{
+                    let path = `/home/document/${node.id}`
+                    return (
+                        node.type ==='RESOURCE' ?
+                        <TreeItem key={node.id}
+                                  nodeId={node.id}
+                                  label={node.title}
+                                  collapseIcon={ node.type ==='RESOURCE'? <ArrowDropDownOutlinedIcon />: null }
+                                  expandIcon = { node.type ==='RESOURCE'? <ArrowRightOutlinedIcon />: null}
+                        >
+                            <TreeNavTreeView key={index} nodes={node.children} />
+                        </TreeItem>
+                            :
+                            <NavLink to={path} key={node.id}>
+                                <TreeItem key={node.id}
+                                          nodeId={node.id}
+                                          label={node.title}
+                                          collapseIcon={ node.type ==='RESOURCE'? <ArrowDropDownOutlinedIcon />: null }
+                                          expandIcon = { node.type ==='RESOURCE'? <ArrowRightOutlinedIcon />: null}
+                                />
+                            </NavLink>
+                    )
+                })
+            }
+        </div>
     )
+}
+
+const FetchNodeList = (projectId,dispatch) => {
+    getNavTreeNodeList(projectId)
+        .then(
+            res => {
+                let {succ,errorMsg,data} = parseResponseMsg(res)
+                dispatch(getNavTreeAction(data))
+            },
+            err => {
+                console.info(err)
+            }
+        )
+}
+
+export default function ControlledTreeView() {
+    const classes = useStyles();
+    const [expanded, setExpanded] = React.useState([]);
+    const [selected, setSelected] = React.useState([]);
+
+    const dispatch = useDispatch();
+
+    const handleToggle = (event, nodeIds) => {
+        setExpanded(nodeIds);
+    };
+
+    const handleSelect = (event, nodeIds) => {
+        setSelected(nodeIds);
+    };
+
+    useEffect(() => {
+        FetchNodeList("802736426121695232",dispatch)
+        return () => {
+        }
+    }, [])
+    const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
+    return (
+        <TreeView
+            className={classes.root}
+            expanded={expanded}
+            selected={selected}
+            onNodeToggle={handleToggle}
+            onNodeSelect={handleSelect}
+        >
+            <TreeNavTreeView nodes={nodes} />
+        </TreeView>
+    );
 }
