@@ -2,13 +2,14 @@ import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
-import {getNavTreeAction, getNavTreeNodeList} from "./store/actionCreators";
 import {useDispatch, useSelector} from "react-redux";
 import {NAV_TREE_REDUCER_NAMESPACE} from "../../../util/constants";
 import {parseResponseMsg} from "../../../util/http";
 import ArrowRightOutlinedIcon from '@material-ui/icons/ArrowRightOutlined';
 import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
 import {NavLink} from "react-router-dom";
+import {getDocAction} from "../store/actionCreators";
+import {getNavTreeAction, getNavTreeNodeList} from "./store/actionCreators";
 
 const useStyles = makeStyles({
     root: {
@@ -18,15 +19,6 @@ const useStyles = makeStyles({
     },
 });
 
-// const TreeNavTreeItem = (props)=>{
-//     const {node} = props
-//     return (<TreeItem key={node.id}
-//                   nodeId={node.id}
-//                   label={node.title}
-//                   collapseIcon={ node.type ==='RESOURCE'? <ArrowDropDownOutlinedIcon />: null }
-//                   expandIcon = { node.type ==='RESOURCE'? <ArrowRightOutlinedIcon />: null}
-//     />)
-// }
 const TreeNavTreeView = (props) => {
     const {nodes} = props;
     return (

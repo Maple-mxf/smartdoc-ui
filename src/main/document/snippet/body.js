@@ -27,44 +27,46 @@ const rows = [
     createData('Value.data', 159, 6.0, 24, 4.0),
 ];
 
-function doMapToFlattenNodes(node, nodeIds) {
-    if (node.type !== 'RESOURCE') {
-        nodeIds.push(node.id)
-        return
-    }
-    for (let i = 0; i < node.children; i++) {
-        doMapToFlattenNodes(node.children[i])
-    }
-}
+// function doMapToFlattenNodes(node, nodeIds) {
+//     if (node.type !== 'RESOURCE') {
+//         nodeIds.push(node.id)
+//         return
+//     }
+//     for (let i = 0; i < node.children; i++) {
+//         doMapToFlattenNodes(node.children[i])
+//     }
+// }
+//
+// function mapToFlattenNodes(nodes) {
+//     let nodeIds = [];
+//     for (let i = 0; i < nodes.length; i++) {
+//         doMapToFlattenNodes(nodes[i])
+//     }
+//     return nodeIds
+// }
 
-function mapToFlattenNodes(nodes) {
-    let nodeIds = [];
-    for (let i = 0; i < nodes.length; i++) {
-        doMapToFlattenNodes(nodes[i])
-    }
-    return nodeIds
-}
-
-const HC = ()=> (<h1>HHHH</h1>)
+export const HC = ()=> (<h1>HHHH</h1>)
 
 // RequestTable
-export default function RequestTable() {
-    const classes = useStyles();
-    const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
-    return (
-            <div  >
-                <Switch>
-                    {
-                        mapToFlattenNodes(nodes)
-                            .map((nodeId,index) => (
-                                <Route component={HC} key={nodeId} path={'/home/document/'+nodeId} />
-                            ))
-                    }
-                </Switch>
-            </div>
-
-    )
-}
+// export default function RequestTable() {
+//     const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
+//     return (
+//             <div  >
+//                 <Switch>
+//                     {
+//                         mapToFlattenNodes(nodes)
+//                             .map((nodeId,index) => {
+//                                 let path=`/home/document/${nodeId}`
+//                                 return (
+//                                     <Route exact={true} component={HC} key={nodeId} path={path} />
+//                                 )
+//                             })
+//                     }
+//                 </Switch>
+//             </div>
+//
+//     )
+// }
 // <TableContainer component={Paper}>
 //     <Toolbar>
 //         Request Body

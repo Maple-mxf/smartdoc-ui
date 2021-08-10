@@ -46,26 +46,28 @@ const OperateBtns = (props) => {
 
 export default function BasicInfo(props){
     const  classes = useStyles()
-    const {title,url} = props
+    const {name,url,method,pythonCodeSample} = props
     return (
         <div className={classes.root}>
             <div>
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
                         <Typography variant="h5"   gutterBottom>
-                            {title}
+                            {name}
                         </Typography>
                     </Grid>
-                   {/* <Grid item xs={4} >
-                        <OperateBtns classes={classes} />
-                    </Grid>*/}
                 </Grid>
 
             </div>
             <div>
                 <SyntaxHighlighter language="http" style={darcula} showLineNumbers={true} wrapLongLines={true}>
-                    HTTP1.1 GET /api/user/batch
+                    HTTP1.1 <div>{method}</div> {url}
                 </SyntaxHighlighter>
+            </div>
+            <div>
+               {/* <SyntaxHighlighter language="python" style={darcula} showLineNumbers={true} wrapLongLines={true}>
+                    {pythonCodeSample}
+                </SyntaxHighlighter>*/}
             </div>
         </div>
     )
