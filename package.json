@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@material-ui/data-grid": "^4.0.0-alpha.35",
     "prop-types": "^15.7.2"
   },
   "proxy": {

@@ -8,6 +8,8 @@ import {Route, Switch} from "react-router-dom";
 import {getNavTreeAction, getNavTreeNodeList} from "./tree/store/actionCreators";
 import {parseResponseMsg} from "../../util/http";
 import {getDocAction, getDocById} from "./store/actionCreators";
+import Paper from "@material-ui/core/Paper";
+import {ApiDocComponent} from "./apidocComponent";
 
 const useStyles = makeStyles((theme)=>(
     {
@@ -39,7 +41,7 @@ const FetchDocById = (docId,dispatch) => {
 }
 
 const ContentComponent = (props) =>{
-    const {node} = props
+    const {node,classes} = props
     const dispatch = useDispatch()
 
     // 请求数据
@@ -54,14 +56,16 @@ const ContentComponent = (props) =>{
     console.info("doc : ", doc)
 
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={12}>
-                <BasicInfo name={doc.name} url={doc.url} method={doc.method} pythonCodeSample={doc.pythonCodeSample}/>
+        <Paper classes={classes.paper}>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <BasicInfo doc={doc}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <ApiDocComponent doc={doc} classes={classes}/>
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <h1>{node.id}</h1>
-            </Grid>
-        </Grid>
+        </Paper>
     )
 }
 
@@ -77,7 +81,7 @@ export default function ApiContent(){
                             let path=`/home/document/${node.id}`
                             return (
                                 <Route exact={true}
-                                       render={(props) => <ContentComponent node={node} {...props} /> }
+                                       render={(props) => <ContentComponent node={node} classes={classes} {...props} /> }
                                        key={node.id}
                                        path={path} />
                             )

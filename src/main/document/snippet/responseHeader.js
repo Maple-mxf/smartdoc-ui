@@ -9,41 +9,29 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Toolbar} from "@material-ui/core";
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});
-
-
-
-export default function RequestBodyTable(props) {
-
+export default function ResponseHeaderTable(props) {
     const {classes,rows} = props;
     return (
         <TableContainer component={Paper}>
-            <br/>
             <Toolbar>
-                Request Body
+                Response Header
             </Toolbar>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Field</TableCell>
-                        <TableCell align="right">Sample Value</TableCell>
-                        <TableCell align="right">Type</TableCell>
+                        <TableCell align="right">Example Value</TableCell>
                         <TableCell align="right">Require</TableCell>
                         <TableCell align="right">Description</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.path}>
+                    {rows.map((row,index) => (
+                        <TableRow key={index}>
                             <TableCell component="th" scope="row">
-                                {row.path}
+                                {row.field}
                             </TableCell>
                             <TableCell align="right">{row.value}</TableCell>
-                            <TableCell align="right">{row.type}</TableCell>
                             <TableCell align="right">{row.optional}</TableCell>
                             <TableCell align="right">{row.description}</TableCell>
                         </TableRow>

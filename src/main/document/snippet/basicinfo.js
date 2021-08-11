@@ -6,6 +6,7 @@ import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Button from "@material-ui/core/Button";
 import {Add, PlayArrow} from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles(theme => (
     {
@@ -46,29 +47,16 @@ const OperateBtns = (props) => {
 
 export default function BasicInfo(props){
     const  classes = useStyles()
-    const {name,url,method,pythonCodeSample} = props
+    const {doc, } = props;
     return (
         <div className={classes.root}>
-            <div>
-                <Grid container spacing={3}>
-                    <Grid item xs={8}>
-                        <Typography variant="h5"   gutterBottom>
-                            {name}
-                        </Typography>
-                    </Grid>
+            <Grid container spacing={3}>
+                <Grid item xs={8}>
+                    <Typography variant="h4"   gutterBottom>
+                        {doc.name}
+                    </Typography>
                 </Grid>
-
-            </div>
-            <div>
-                <SyntaxHighlighter language="http" style={darcula} showLineNumbers={true} wrapLongLines={true}>
-                    HTTP1.1 <div>{method}</div> {url}
-                </SyntaxHighlighter>
-            </div>
-            <div>
-               {/* <SyntaxHighlighter language="python" style={darcula} showLineNumbers={true} wrapLongLines={true}>
-                    {pythonCodeSample}
-                </SyntaxHighlighter>*/}
-            </div>
+            </Grid>
         </div>
     )
 }

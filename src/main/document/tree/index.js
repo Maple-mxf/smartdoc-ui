@@ -10,14 +10,24 @@ import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined'
 import {NavLink} from "react-router-dom";
 import {getDocAction} from "../store/actionCreators";
 import {getNavTreeAction, getNavTreeNodeList} from "./store/actionCreators";
+import Paper from "@material-ui/core/Paper";
+import {CardContent} from "@material-ui/core";
 
-const useStyles = makeStyles({
-    root: {
-        height: 216,
-        flexGrow: 1,
-        maxWidth: 400,
-    },
-});
+const useStyles = makeStyles((theme)=>(
+    {
+        root: {
+            height: 216,
+            flexGrow: 1,
+            maxWidth: 400,
+        },
+        card: {
+            padding: theme.spacing(2),
+            textAlign: 'left',
+            // color: theme.palette.text.secondary,
+            // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        },
+    }
+));
 
 const TreeNavTreeView = (props) => {
     const {nodes} = props;
@@ -87,14 +97,16 @@ export default function ControlledTreeView() {
     }, [])
     const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
     return (
-        <TreeView
-            className={classes.root}
-            expanded={expanded}
-            selected={selected}
-            onNodeToggle={handleToggle}
-            onNodeSelect={handleSelect}
-        >
-            <TreeNavTreeView nodes={nodes} />
-        </TreeView>
+        <CardContent className={classes.card}>
+            <TreeView
+                className={classes.root}
+                expanded={expanded}
+                selected={selected}
+                onNodeToggle={handleToggle}
+                onNodeSelect={handleSelect}
+            >
+                <TreeNavTreeView nodes={nodes} />
+            </TreeView>
+        </CardContent>
     );
 }

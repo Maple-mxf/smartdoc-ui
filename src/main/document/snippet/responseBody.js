@@ -17,14 +17,14 @@ const useStyles = makeStyles({
 
 
 
-export default function RequestBodyTable(props) {
+export default function ResponseBodyTable(props) {
 
     const {classes,rows} = props;
     return (
         <TableContainer component={Paper}>
             <br/>
             <Toolbar>
-                Request Body
+                Response Body
             </Toolbar>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
@@ -32,7 +32,6 @@ export default function RequestBodyTable(props) {
                         <TableCell>Field</TableCell>
                         <TableCell align="right">Sample Value</TableCell>
                         <TableCell align="right">Type</TableCell>
-                        <TableCell align="right">Require</TableCell>
                         <TableCell align="right">Description</TableCell>
                     </TableRow>
                 </TableHead>
@@ -44,7 +43,6 @@ export default function RequestBodyTable(props) {
                             </TableCell>
                             <TableCell align="right">{row.value}</TableCell>
                             <TableCell align="right">{row.type}</TableCell>
-                            <TableCell align="right">{row.optional}</TableCell>
                             <TableCell align="right">{row.description}</TableCell>
                         </TableRow>
                     ))}
