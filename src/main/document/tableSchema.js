@@ -35,6 +35,16 @@ export const ResponseBodySchema = [
     { field: 'description', headerName: 'description', width: 180, editable: true },
 ]
 
+export const TestHeaderData = [
+    {
+        id:1,
+        field:"name",
+        optional:true,
+        value:"a",
+        description:""
+    }
+]
+
 export const mapArrayKey = (array)=>{
     if (array === undefined || array.length === undefined)
     {

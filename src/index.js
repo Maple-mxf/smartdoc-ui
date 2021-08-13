@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import configStore from './store'
 import routeList from "./route";
+import BasicEditingGrid from "./main/document/sample";
 
 const Root = () => {
     const store = configStore({

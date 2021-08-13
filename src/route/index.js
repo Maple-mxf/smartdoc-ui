@@ -2,6 +2,7 @@ import Loadable from '@loadable/component'
 import {Group, MenuBook, Person, ScreenShare, Settings, Widgets} from "@material-ui/icons";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import React from "react";
+import DocumentComponent from '../main/document'
 
 // Project
 const ProjectIconComponent = () => (<ListItemIcon><Widgets /></ListItemIcon>)
@@ -13,7 +14,7 @@ const GroupIconComponent = () => (<ListItemIcon><Group /></ListItemIcon> )
 const GroupComponent = Loadable(()=>import('../main/group'))
 
 const DocumentIconComponent = () => (<ListItemIcon>  <MenuBook /></ListItemIcon>)
-const DocumentComponent = Loadable(()=>import('../main/document'))
+// const DocumentComponent = Loadable(()=>import('../main/document'))
 
 const ConnectionServiceIconComponent = () => (<ListItemIcon><ScreenShare /></ListItemIcon>)
 
