@@ -3,6 +3,7 @@ import {Group, MenuBook, Person, ScreenShare, Settings, Widgets} from "@material
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import React from "react";
 import DocumentComponent from '../main/document'
+import EcoIcon from '@material-ui/icons/Eco';
 
 // Project
 const ProjectIconComponent = () => (<ListItemIcon><Widgets /></ListItemIcon>)
@@ -15,6 +16,8 @@ const GroupComponent = Loadable(()=>import('../main/group'))
 
 const DocumentIconComponent = () => (<ListItemIcon>  <MenuBook /></ListItemIcon>)
 // const DocumentComponent = Loadable(()=>import('../main/document'))
+
+const EnvironmentIconComponent = () => (<ListItemIcon><EcoIcon /></ListItemIcon>)
 
 const ConnectionServiceIconComponent = () => (<ListItemIcon><ScreenShare /></ListItemIcon>)
 
@@ -51,6 +54,13 @@ const routeList = [
             exact:true,
             iconComponent:DocumentIconComponent,
             mainComponent:DocumentComponent
+        },
+        {
+            title: "Environment",
+            path :"/home/environment",
+            exact:true,
+            iconComponent:EnvironmentIconComponent,
+            mainComponent:ProjectComponent
         },
         {
             title: "Connection Services",
