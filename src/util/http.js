@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {func} from "prop-types";
 
 axios.defaults.timeout = 10000
 axios.defaults.headers['custom-defined-header-key'] = 'custom-defined-header-value'
@@ -7,7 +6,7 @@ axios.defaults.headers.common['common-defined-key-b'] = 'custom value: for all m
 axios.defaults.withCredentials=true
 
 // 临时token
-axios.defaults.headers.common['restdoc_console_access_token'] = "fb3879928ec8445744f2c3029b25038f"
+axios.defaults.headers.common['restdoc_console_access_token'] = "ae9123f3da8a4e31b21ed33f67f63836"
 
 export function get(url, params = {}) {
     return new Promise((resolve, reject) => {
@@ -37,6 +36,20 @@ export function post(url, data) {
     });
 }
 
+export function del(url, data) {
+    console.info("del",data)
+    return new Promise((resolve, reject) => {
+        axios.delete(url,  {data: data}).then(
+            (response) => {
+                resolve(response.data);
+            },
+            (err) => {
+                reject(err);
+            }
+        );
+    });
+}
+
 export function patch(url, data = {}) {
     return new Promise((resolve, reject) => {
         axios.patch(url, data).then(
@@ -44,7 +57,6 @@ export function patch(url, data = {}) {
                 resolve(response.data);
             },
             (err) => {
-                msag(err);
                 reject(err);
             }
         );
@@ -58,7 +70,6 @@ export function put(url, data = {}) {
                 resolve(response.data);
             },
             (err) => {
-                msag(err);
                 reject(err);
             }
         );
@@ -66,12 +77,10 @@ export function put(url, data = {}) {
 }
 
 //统一接口处理，返回数据
-export default function (fecth, url, param) {
-    let _data = "";
+export  function fetchServerData(method, url, param) {
     return new Promise((resolve, reject) => {
-        switch (fecth) {
+        switch (method) {
             case "get":
-                console.log("begin a get request,and url:", url);
                 get(url, param)
                     .then(function (response) {
                         resolve(response);
@@ -88,6 +97,24 @@ export default function (fecth, url, param) {
                     })
                     .catch(function (error) {
                         console.log("get request POST failed.", error);
+                        reject(error);
+                    });
+                break;
+            case "delete":
+                del(url, param)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+                break;
+            case "patch":
+                patch(url, param)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
                         reject(error);
                     });
                 break;
@@ -149,8 +176,7 @@ function msag(err) {
 }
 
 function landing(url, params, data) {
-    if (data.code === -1) {
-    }
+
 }
 
 /**

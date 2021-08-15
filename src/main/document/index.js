@@ -8,13 +8,13 @@ export default function Index() {
     return (
         <BrowserRouter>
             <Grid container spacing={0}>
-                <Grid container item xs={12} sm={2}>
+                <Grid container item xs={12} sm={3}>
                     <NavTree/>
                 </Grid>
                 <Grid container item xs={12} sm={8}>
                     <ApiContent />
                 </Grid>
-                <Grid container item xs={12} sm={2}>
+                <Grid container item xs={12} sm={1}>
                 </Grid>
             </Grid>
         </BrowserRouter>

@@ -1,6 +1,9 @@
-import {get} from "../../../util/http";
-import {GET_DOC} from "./constants";
-import {getDocByIdURL} from "../../../util/uri";
+import {fetchServerData, get, patch} from "../../../util/http";
+import {GET_DOC, SnippetType_RequestHeader} from "./constants";
+import {
+    getBatchDeleteDocSnippet, getCreateDocSnippet, getDocByIdURL,
+    getEditDocRequestHeaderURL
+} from "../../../util/uri";
 
 export const getDocAction = (doc) => {
     return {
@@ -9,6 +12,7 @@ export const getDocAction = (doc) => {
     }
 }
 
+// 过时
 export const getDocById = (docId) => {
     return new Promise(((resolve, reject) => {
         get(getDocByIdURL(docId))
@@ -19,4 +23,45 @@ export const getDocById = (docId) => {
                 reject(e)
             })
     }))
+}
+
+// 过时
+export const editDocRequestHeader = (docId,data) => {
+    return new Promise(((resolve, reject) => {
+        patch(getEditDocRequestHeaderURL(docId),data)
+            .then((res) => {
+                resolve(res)
+            })
+            .catch((e) => {
+                reject(e)
+            })
+    }))
+}
+
+export const batchDeleteSnippets = (docId,data) => {
+    console.info("batchDeleteSnippets",data)
+    return fetchServerData("delete",getBatchDeleteDocSnippet(docId),data)
+}
+
+export const createSnippets = (docId,snippetType,data) => {
+    let submitData ={
+        "snippetType": snippetType,
+        "matrixVariableDescriptor": null,
+        "responseHeaderFieldDescriptor": null,
+        "responseBodyFieldDescriptor": null,
+        "requestBodyFieldDescriptor": null,
+        "queryParamDescriptor": null,
+        "uriVarDescriptor": null
+    };
+    switch ( snippetType){
+        case SnippetType_RequestHeader:
+            submitData['requestHeaderFieldDescriptor'] = {
+                field:data.field,
+                value:data.value,
+                optional:data.optional,
+                description:data.description,
+            }
+            break;
+    }
+    return fetchServerData("post",getCreateDocSnippet(docId), submitData)
 }

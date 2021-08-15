@@ -1,71 +1,26 @@
 {
-  "id": "16b0cd7e6daad2272457f425694b13ac",
-  "method": "GET",
-  "projectId": "802736426121695232",
-  "name": "构建请求接口",
-  "resource": "9fe991e64d6db34dae0a59b84cca31bb",
-  "url": "/buildRequestParamDto",
-  "description": "/buildRequestParamDto",
+  "id": "",
+  "method": "",
+  "projectId": "",
+  "name": "",
+  "resource": "",
+  "url": "",
+  "description": "",
   "requestHeaderDescriptor": [
-    {
-      "field": "Content-Type",
-      "value": "*/*",
-      "optional": "是",
-      "description": "消息类型"
-    }
   ],
   "requestBodyDescriptor": [
-    {
-      "path": "name",
-      "value": "",
-      "optional": "是",
-      "description": "姓名",
-      "type": "string"
-    }
   ],
   "responseBodyDescriptors": [
-    {
-      "path": "code",
-      "value": "",
-      "optional": "否",
-      "description": "",
-      "type": "string"
-    },
-    {
-      "path": "data",
-      "value": "",
-      "optional": "否",
-      "description": "",
-      "type": "missing"
-    },
-    {
-      "path": "message",
-      "value": "",
-      "optional": "否",
-      "description": "",
-      "type": "string"
-    }
   ],
   "queryParamDescriptors": [
-    {
-      "field": "dto",
-      "value": "\n\t\t\n\t\t\n\n\t\t\t\t\n",
-      "description": null
-    }
   ],
   "uriVarDescriptors": [],
   "responseHeaderDescriptors": [
-    {
-      "field": "Content-Type",
-      "value": "application/json",
-      "optional": "否",
-      "description": ""
-    }
   ],
-  "requestFakeCodeSample": "GET  /buildRequestParamDto?dto={dto}  HTTP/1.1\nContent-Type: */*\n\n",
-  "responseFakeCodeSample": "{\n  \"code\" : \"\",\n  \"data\" : null,\n  \"message\" : \"\"\n}\n",
-  "curlCodeSample": "curl   -X    GET   -H    'Content-Type:*/*'   /buildRequestParamDto",
-  "javaCodeSample": "package testcase.sample;\n\nimport org.springframework.http.HttpEntity;\nimport org.springframework.http.HttpHeaders;\nimport org.springframework.http.HttpMethod;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.client.RestTemplate;\nimport org.springframework.http.HttpMethod.*;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\n/**\n * @since 2021/08/11\n */\npublic class JavaCodeUnitTestCaseSample {\n\n    @Test\n    public void testInvokeAPI() {\n        RestTemplate restTemplate = new RestTemplate();\n        HttpHeaders headers = new HttpHeaders();\n\n        // Add Headers\n        headers.addAll(\"Content-Type\",\"*/*\");\n\n        Map<String,Object> uriVars = new HashMap<>();\n        ResponseEntity<Object> responseEntity = restTemplate.exchange(\"/buildRequestParamDto\", GET, httpEntity, Object.class, uriVars);\n\n        System.err.println(String.format(\"status code : %d\", responseEntity.getStatusCodeValue()));\n        System.err.println(String.format(\"content-type : %s\", responseEntity.getHeaders().getContentType()));\n        System.err.println(String.format(\"response result : %s\", responseEntity.getBody()));\n    }\n}",
-  "pythonCodeSample": "#!/usr/bin/python\n# -*- coding: UTF-8 -*-\n\nfrom requests import request\n\nif __name__ == '__main__':\n\n       method = \"GET\"\n       headers = {}\n\n       headers['Content-Type'] = \"*/*\"\n\n       json = \"{\"name\":\"\"}\"\n       url = \"/buildRequestParamDto\".format()\n\n       response = request(method=method, url=url, json=json, headers=headers)\n       print(\"status code : \" + response.status_code)\n       print(\"response headers : \" + response.headers)\n       print(\"response content ：\" + response.content)",
-  "lastUpdateTime": 1611457701926
+  "requestFakeCodeSample": "",
+  "responseFakeCodeSample": "",
+  "curlCodeSample": "",
+  "javaCodeSample": "",
+  "pythonCodeSample": "",
+  "lastUpdateTime":  null
 }

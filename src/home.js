@@ -17,6 +17,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Dehaze} from "@material-ui/icons";
 import {Switch, Route,NavLink } from 'react-router-dom'
 import {GLOBAL_REDUCER_NAMESPACE} from './util/constants'
+import {SnackbarProvider} from "notistack";
 
 const drawerWidth = 240;
 
@@ -102,7 +103,8 @@ export default function HomeComponent() {
     };
 
     return (
-        <div className={classes.root}>
+        <SnackbarProvider maxSnack={5} >
+         <div className={classes.root}>
             <CssBaseline />
             <AppBar
                 position="fixed"
@@ -185,5 +187,6 @@ export default function HomeComponent() {
                 </div>
             </main>
         </div>
+        </SnackbarProvider>
     );
 }

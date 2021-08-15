@@ -22,8 +22,9 @@ import CreateProjectComponent from './create'
 import {getProjectAction, getProjectList} from "./store/actionCreators";
 import {  PROJECT_REDUCER_NAMESPACE} from "../../util/constants";
 import {parseResponseMsg} from '../../util/http'
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import {  useSnackbar } from 'notistack';
 import Pagination from "@material-ui/lab/Pagination";
+import {ErrorVariant} from "../../common/tip";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +83,7 @@ const ProjectBar = ()=>{
                         openNewProjectForm:true
                     })}
                 >
-                    New
+                    Create
                 </Button>
             </Grid>
             <Grid item xs={6} sm={2} />
@@ -150,14 +151,15 @@ export const FetchProjectList = (page,size,dispatch,handleVariant) => {
             (res) =>{
                 let {succ,errorMsg,data} = parseResponseMsg(res)
                 if (!succ){
-                    handleVariant(errorMsg,'error')
+                    handleVariant(errorMsg,ErrorVariant)
                 }else{
                     dispatch(getProjectAction(data.content,data.pageable.pageNumber+1,
                         data.pageable.pageSize,data.totalElements))
                 }
             },
             (err) => {
-                handleVariant(err,'error')
+                console.info("error ",err)
+                handleVariant(JSON.stringify(err),ErrorVariant)
             }
         )
 }
@@ -206,8 +208,6 @@ const ProjectContent = (props)=> {
                 </div>
             </Grid>
             <Grid item xs={6} sm={2} />
-
-
         </Grid>
     )
 }
@@ -216,11 +216,9 @@ export default function Project(){
     const classes = useStyles();
     return (
         <div className={classes.root}>
-           <SnackbarProvider maxSnack={5} >
                <ProjectBar />
                <ProjectContent  classes={classes} />
                <CreateProjectComponent />
-           </SnackbarProvider>
         </div>
     )
 }

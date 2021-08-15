@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import {useDispatch, useSelector} from "react-redux";
 import {DOC_REDUCER_NAMESPACE, NAV_TREE_REDUCER_NAMESPACE} from "../../util/constants";
 import {Route, Switch} from "react-router-dom";
-import {getNavTreeAction, getNavTreeNodeList} from "./tree/store/actionCreators";
 import {parseResponseMsg} from "../../util/http";
 import {getDocAction, getDocById} from "./store/actionCreators";
 import Paper from "@material-ui/core/Paper";
@@ -15,7 +14,6 @@ const useStyles = makeStyles((theme)=>(
     {
         root: {
             width: '100%',
-            // maxWidth: 500,
             margin: theme.spacing(2),
         },
         grid:{
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme)=>(
     }
 ));
 
-const FetchDocById = (docId,dispatch) => {
+export const FetchDocById = (docId,dispatch) => {
     getDocById(docId)
         .then(
             res => {
@@ -53,7 +51,6 @@ const ContentComponent = (props) =>{
 
     // 渲染页面
     const {doc} = useSelector(state => state[DOC_REDUCER_NAMESPACE]);
-    console.info("doc : ", doc)
 
     return (
         <Paper classes={classes.paper}>
