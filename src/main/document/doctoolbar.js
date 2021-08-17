@@ -24,13 +24,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { render } from "react-dom";
+import {render} from "react-dom";
 import AceEditor from "react-ace";
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
+import {func} from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
     },
     grid: {
-        margin:theme.spacing(1)
+        margin: theme.spacing(1)
     },
     form: {
         '& > *': {
@@ -61,24 +62,26 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
-    formDataTextField:{
+    formDataTextField: {
         margin: theme.spacing(1),
     },
-    margin:{
+    margin: {
         margin: theme.spacing(1),
     }
 }));
 
-export const DocToolbar = (props)=> {
+export const DocToolbar = (props) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     return (
         <div className={classes.root}>
-            <RunApiDocComponent open={open} classes={classes} handleClose={()=>{setOpen(false)}}/>
+            <RunApiDocComponent open={open} classes={classes} handleClose={() => {
+                setOpen(false)
+            }}/>
             <ButtonGroup color="secondary" aria-label="outlined secondary button group">
                 <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PlayArrow style={{ color: green[500] }} onClick={()=>setOpen(true) }/>
+                    <PlayArrow style={{color: green[500]}} onClick={() => setOpen(true)}/>
                 </IconButton>
             </ButtonGroup>
         </div>
@@ -89,7 +92,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const RunApiDocComponent = (props) => {
-    const {classes,open,handleClose} = props;
+    const {classes, open, handleClose} = props;
 
     return (
         <RunApiComponent
@@ -100,14 +103,14 @@ const RunApiDocComponent = (props) => {
     )
 }
 
-const RunApiComponent = (props)=> {
-    const {classes,open,handleClose} = props;
+const RunApiComponent = (props) => {
+    const {classes, open, handleClose} = props;
     return (
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar className={classes.appBar}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                        <CloseIcon />
+                        <CloseIcon/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         Smart API Caller
@@ -122,7 +125,7 @@ const RunApiComponent = (props)=> {
                     <LeftComponent classes={classes}/>
                 </Grid>
                 <Grid container item xs={12} sm={9} className={classes.grid}>
-                    <RightComponent classes={classes} />
+                    <RightComponent classes={classes}/>
                 </Grid>
             </Grid>
         </Dialog>
@@ -131,16 +134,16 @@ const RunApiComponent = (props)=> {
 
 const LeftComponent = (props) => {
     const {classes} = props;
-    const [tabValue,setTabValue] =React.useState('1');
+    const [tabValue, setTabValue] = React.useState('1');
     const handleTagChange = (event, newValue) => {
         setTabValue(newValue);
     };
     return (
-        <Paper elevation={4} style={{height:700,width:'100%'}} className={classes.paper}>
+        <Paper elevation={4} style={{height: 700, width: '100%'}} className={classes.paper}>
             <TabContext value={tabValue}>
-                <TabList   aria-label="simple tabs example" onChange={handleTagChange}>
-                    <Tab label="History"  value="1" icon={<HistoryIcon />} />
-                    <Tab label="Environment" value="2" icon={<EcoIcon />} />
+                <TabList aria-label="simple tabs example" onChange={handleTagChange}>
+                    <Tab label="History" value="1" icon={<HistoryIcon/>}/>
+                    <Tab label="Environment" value="2" icon={<EcoIcon/>}/>
                 </TabList>
                 <TabPanel value='1' index={0}>
                 </TabPanel>
@@ -154,67 +157,17 @@ const LeftComponent = (props) => {
 const RightComponent = (props) => {
     const {classes} = props;
 
-    const [method, setMethod] = React.useState('GET');
-    const [open, setOpen] = React.useState(false);
-    const [formDataTextFieldNum, setFormDataTextFieldNum] = React.useState(1)
-
-    const handleChange = (event) => setMethod(event.target.value);;
-    const handleClose = () => setOpen(false);
-    const handleOpen = () => setOpen(true);
-
-    const [tabValue,setTabValue] =React.useState('1');
+    const [tabValue, setTabValue] = React.useState('1');
     const handleTagChange = (event, newValue) => setTabValue(newValue);
-    const increFormDataTextFieldNum = (props)=> {
-        console.info("props",props)
-        setFormDataTextFieldNum(formDataTextFieldNum+1);
-    }
-
-    const formDataTextFields = []
-    const createFormDataTextFields = (num) => {
-        for (let i = 0; i < num; i++) {
-            formDataTextFields.push(
-                <div>
-                    <TextField id="key-basic"
-                               label="Key"
-                               autoFocus
-                               color="primary"
-                               style={{width:'20%'}}
-                               margin="dense"
-                               className={classes.formDataTextField}
-
-                               placeholder="Key"
-                    />
-                    <TextField id="Value-basic"
-                               label="Value"
-                               autoFocus
-                               color="primary"
-                               style={{width:'30%'}}
-                               onClick={i===(num-1) ? increFormDataTextFieldNum:null}
-                               className={classes.formDataTextField}
-                               margin="dense"
-                               placeholder="Value"
-                    />
-                    {
-                        (i === 0) ? null:
-                            <IconButton aria-label="delete" className={classes.margin} color='secondary'>
-                            <DeleteIcon fontSize="medium" />
-                        </IconButton>
-                    }
-                </div>
-            )
-        }
-
-    }
-    createFormDataTextFields(formDataTextFieldNum)
 
     return (
-        <Paper elevation={4} style={{height:700,width:'100%'}} className={classes.paper}>
+        <Paper elevation={4} style={{height: 700, width: '100%'}} className={classes.paper}>
             <form className={classes.root} noValidate autoComplete="off">
                 <TextField id="standard-basic"
                            label="request URL"
                            autoFocus
                            color="primary"
-                           style={{width:'80%'}}
+                           style={{width: '80%'}}
                            margin="dense"
                            placeholder="Enter request URL here"
                 />
@@ -226,7 +179,6 @@ const RightComponent = (props) => {
                 {/*        open={open}*/}
                 {/*        onClose={handleClose}*/}
                 {/*        onOpen={handleOpen}*/}
-                {/*        onChange={handleChange}*/}
                 {/*    >*/}
 
                 {/*        <MenuItem value="GET">GET</MenuItem>*/}
@@ -237,20 +189,15 @@ const RightComponent = (props) => {
                 <div>
                     <TabContext value={tabValue}>
                         <TabList aria-label="simple tabs example" onChange={handleTagChange}>
-                            <Tab label="Form-Data"  value="1"  />
-                            <Tab label="x-www-form-urlencoded" value="2"  />
-                            <Tab label="raw" value="3"   />
+                            <Tab label="Form-Data" value="1"/>
+                            <Tab label="x-www-form-urlencoded" value="2"/>
+                            <Tab label="raw" value="3"/>
                         </TabList>
-                        <TabPanel value='1' index={0}>
-                            <div>
-                                {formDataTextFields.map((item,index)=>{
-                                    return (
-                                        <div key={index}>{item}</div>
-                                    )
-                                })}
-                            </div>
+                        <TabPanel value='1' index={0} >
+                            <FormDataParamBlock classes={classes}/>
                         </TabPanel>
                         <TabPanel value='2' index={1}>
+                            <FormDataParamBlock classes={classes}/>
                         </TabPanel>
                         <TabPanel value='3' index={2}>
                             <AceEditor
@@ -258,7 +205,8 @@ const RightComponent = (props) => {
                                 mode="json"
                                 theme="terminal"
                                 name="blah2"
-                                onChange={(newValue)=>{}}
+                                onChange={(newValue) => {
+                                }}
                                 fontSize={14}
                                 showPrintMargin={true}
                                 showGutter={true}
@@ -275,5 +223,122 @@ const RightComponent = (props) => {
                 </div>
             </form>
         </Paper>
+    )
+}
+
+
+const FormDataParamBlock = (props) =>{
+    const {classes} = props;
+    const [formLinesData, setFormLinesData] = React.useState([
+        {
+            id: 0,
+            showDelBtn: false,
+            value1:"",
+            value2:""
+        }
+    ])
+
+    const clickValueTextFieldFunc = (id) => {
+        return () => {
+            const newFormLinesData = [...formLinesData, {
+                id: id + 1,
+                showDelBtn: true,
+                value1:"",
+                value2:""
+            }]
+            setFormLinesData(newFormLinesData)
+        }
+    }
+
+    const clickDelBtnFunc = (id) => {
+        return () => setFormLinesData(formLinesData.filter(item => item.id !== id))
+    }
+
+    const valueOnChange = (valueType,id) => {
+        return (e)=>{
+            const value = e.target.value;
+            const targetObj = formLinesData.find(t => t.id === id)
+            const newObj =  JSON.parse(JSON.stringify(targetObj));
+            if (undefined === targetObj) return;
+
+            const newFormLinesData = []
+            if ('value1' === valueType){
+                newObj.value1 = value;
+            }
+            if ('value2' === valueType){
+                newObj.value2 = value;
+            }
+
+            formLinesData.forEach((item,index)=>{
+                if (item.id === id){
+                    newFormLinesData.push(newObj)
+                }else{
+                    newFormLinesData.push(item,)
+                }
+            })
+
+            setFormLinesData(newFormLinesData)
+        }
+    }
+
+    return (<div>
+        {
+            formLinesData.map((item, index) => {
+                return (
+                    <FormDataLine key={index}
+                                  id={item.id}
+                                  classes={classes}
+                                  showDelBtn={item.showDelBtn}
+                                  clickValueTextFieldFunc={clickValueTextFieldFunc}
+                                  clickDelBtnFunc={clickDelBtnFunc}
+                                  lastItemId={formLinesData[formLinesData.length-1].id}
+                                  valueOnChange={valueOnChange}
+                                  value1={item.value1}
+                                  value2={item.value2}
+                    />
+                )
+            })
+        }
+    </div>)
+}
+
+const FormDataLine = (props) => {
+    const {classes, id, showDelBtn, clickValueTextFieldFunc,clickDelBtnFunc,lastItemId,
+    value1,value2,valueOnChange} = props;
+    return (
+        <div>
+            <TextField id="key-basic"
+                       label="Key"
+                       color="primary"
+                       style={{width: '20%'}}
+                       margin="dense"
+                       value={value1}
+                       className={classes.formDataTextField}
+                       placeholder="Key"
+                       onChange={valueOnChange('value1',id)}
+            />
+            <TextField id="Value-basic"
+                       label="Value"
+                       color="primary"
+                       style={{width: '30%'}}
+                       className={classes.formDataTextField}
+                       margin="dense"
+                       value={value2}
+                       placeholder="Value"
+                       onChange={valueOnChange('value2',id)}
+                       onClick={(lastItemId === id)? clickValueTextFieldFunc(id) : null}
+            />
+            {
+                showDelBtn ?
+                    <IconButton aria-label="delete"
+                                className={classes.margin}
+                                color='secondary'
+                                onClick={clickDelBtnFunc(id)}
+                    >
+                        <HighlightOffIcon fontSize="medium"/>
+                    </IconButton>
+                    :null
+            }
+        </div>
     )
 }
