@@ -3,7 +3,7 @@ import React from "react";
 import NavTree from "./tree"
 import ApiContent from "./apicontent";
 import {BrowserRouter } from "react-router-dom";
-import {DocToolbar} from "./doctoolbar";
+import {DocToolbar} from "./explore/doctoolbar";
 
 export default function Index() {
     return (

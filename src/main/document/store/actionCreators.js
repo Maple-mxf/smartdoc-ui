@@ -1,5 +1,5 @@
 import {fetchServerData, get, patch} from "../../../util/http";
-import {GET_DOC, SnippetType_RequestHeader} from "./constants";
+import {CHANGE_PARAM_TYPE, GET_DOC, SnippetType_RequestHeader} from "./constants";
 import {
     getBatchDeleteDocSnippet, getCreateDocSnippet, getDocByIdURL,
     getEditDocRequestHeaderURL
@@ -9,6 +9,13 @@ export const getDocAction = (doc) => {
     return {
         type:GET_DOC,
         doc
+    }
+}
+
+export const changeParamTypeTag = (bodyParamTypeTabs) => {
+    return {
+        type: CHANGE_PARAM_TYPE,
+        bodyParamTypeTabs
     }
 }
 

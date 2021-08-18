@@ -12,6 +12,7 @@
     "@material-ui/x-grid": "^4.0.0-alpha.37",
     "@material-ui/x-grid-data-generator": "latest",
     "@syncfusion/ej2-react-navigations": "^19.2.51",
+    "@uiw/react-monacoeditor": "^3.3.0",
     "ace-builds": "^1.4.12",
     "axios": "^0.18.0",
     "clsx": "^1.1.1",
