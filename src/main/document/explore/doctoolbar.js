@@ -19,8 +19,8 @@ import Tab from "@material-ui/core/Tab";
 import EcoIcon from '@material-ui/icons/Eco';
 import TabPanel from "@material-ui/lab/TabPanel";
 import TextField from "@material-ui/core/TextField";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import List from "@material-ui/core/List";
+import Icon from '@material-ui/core/Icon';
+import ClearIcon from '@material-ui/icons/Clear';
 
 // Code Editor plugin
 import AceEditor from "react-ace";
@@ -32,7 +32,7 @@ import 'ace-builds/src-noconflict/ext-beautify'
 import "ace-builds/src-noconflict/worker-json";
 import {EmptyTipComponent} from "../../../common/commonComponent";
 import {BtnTabComponent} from "./btnTab";
-
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 120,
     },
     formDataTextField: {
-        margin: theme.spacing(1),
+        marginLeft:'3vh'
     },
     margin: {
         margin: theme.spacing(1),
@@ -78,6 +78,9 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         paddingBottom: 50,
     },
+    button: {
+        margin: theme.spacing(1),
+    },
 }));
 
 export const DocToolbar = (props) => {
@@ -86,7 +89,7 @@ export const DocToolbar = (props) => {
 
     return (
         <div className={classes.root}>
-            <RunApiDocComponent open={open} classes={classes} handleClose={() => {
+            <RunApiComponent open={open} classes={classes} handleClose={() => {
                 setOpen(false)
             }}/>
             <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setOpen(true)}>
@@ -99,22 +102,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const RunApiDocComponent = (props) => {
-    const {classes, open, handleClose} = props;
-
-    return (
-        <RunApiComponent
-            classes={classes}
-            open={open}
-            handleClose={handleClose}
-        />
-    )
-}
-
 const RunApiComponent = (props) => {
     const {classes, open, handleClose} = props;
+    const [url,setUrl] = React.useState('');
     return (
-        <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+        <Dialog  fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar className={classes.appBar}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
@@ -128,12 +120,15 @@ const RunApiComponent = (props) => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            <Grid container spacing={0}>
+            <Grid container spacing={0}  >
                 <Grid container item xs={12} sm={2} className={classes.grid}>
-                    <LeftComponent classes={classes}/>
+                    <LeftComponent classes={classes} />
                 </Grid>
-                <Grid container item xs={12} sm={9} className={classes.grid}>
-                    <RightComponent classes={classes}/>
+                <Grid container item xs={12} sm={8} className={classes.grid}>
+                    <RightComponent classes={classes} url={url} setUrl={setUrl} />
+                </Grid>
+                <Grid container item xs={12} sm={1} className={classes.grid}>
+                    <ExtensionComponent classes={classes} />
                 </Grid>
             </Grid>
         </Dialog>
@@ -141,13 +136,13 @@ const RunApiComponent = (props) => {
 }
 
 const LeftComponent = (props) => {
-    const {classes} = props;
+    const {classes, } = props;
     const [tabValue, setTabValue] = React.useState('1');
     const handleTagChange = (event, newValue) => {
         setTabValue(newValue);
     };
     return (
-        <Paper elevation={4} style={{height: '90vh', width: '100%'}} className={classes.paper}>
+        <Paper elevation={4} style={{ height:'85vh', width: '100%'}} className={classes.paper}>
             <TabContext value={tabValue}>
                 <TabList aria-label="simple tabs example" onChange={handleTagChange}>
                     <Tab label="History" value="1" icon={<HistoryIcon/>}/>
@@ -165,42 +160,64 @@ const LeftComponent = (props) => {
 }
 
 const RightComponent = (props) => {
-    const {classes} = props;
-
+    const {classes,url,setUrl} = props;
+    const onUrlChange = (value)=> setUrl(value)
     return (
-        <Paper elevation={4} style={{height: '90vh', width: '100%',overflow:'auto'}} className={classes.paper}>
+        <Paper elevation={4} style={{ height:'85vh',width: '100%',overflow:'auto'}} className={classes.paper}>
             <form className={classes.root} noValidate autoComplete="off">
                 <TextField id="standard-basic"
                            label="request URL"
                            autoFocus
+                           size='small'
                            color="primary"
+                           onChange={onUrlChange}
                            style={{width: '80%'}}
                            margin="dense"
                            placeholder="Enter request URL here"
                 />
-
-
+                <BtnTabComponent classes={classes}/>
                 <div>
-                   {/* <TabContext value={tabValue}>
-                        <TabList aria-label="simple tabs example" onChange={handleTagChange}>
-                            <Tab label="form-Data" value="1"/>
-                            <Tab label="x-www-form-urlencoded" value="2"/>
-                            <Tab label="raw" value="3"/>
-                        </TabList>
-                        <TabPanel value='1' index={0}>
-                            <FormDataParamBlock classes={classes}/>
-                        </TabPanel>
-                        <TabPanel value='2' index={1}>
-                            <FormDataParamBlock classes={classes}/>
-                        </TabPanel>
-                        <TabPanel value='3' index={2}>
-                            <CodeParamBlock classes={classes}/>
-                        </TabPanel>
-                    </TabContext>*/}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        endIcon={<Icon>send</Icon>}
+                        disabled={url.length === 0  }
+                    >
+                        Send
+                    </Button>
 
-                    <BtnTabComponent classes={classes}/>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        endIcon={<ClearIcon />}
+                    >
+                        Clear
+                    </Button>
                 </div>
             </form>
+        </Paper>
+    )
+}
+
+const ExtensionComponent = (props) => {
+    const {classes} = props;
+    return (
+        <Paper elevation={4} style={{height:'85vh',width: '100%',overflow:'auto', textAlign:'center'}}  className={classes.paper}>
+            <Button size="medium"  variant="outlined" className={classes.margin} color="primary" style={{marginTop:'10vh'}}>
+                Header VAR
+            </Button>
+
+            <Button size="medium"  variant="outlined" className={classes.margin} color="primary" style={{marginTop:'1vh'}}>
+                URL Param
+            </Button>
+
+            <Badge color="secondary" overlap="circular" badgeContent=" " variant="dot">
+                <Button size="medium"  variant="outlined" className={classes.margin} color="primary" style={{marginTop:'1vh'}}>
+                    Matrix Var
+                </Button>
+            </Badge>
         </Paper>
     )
 }

@@ -23,25 +23,25 @@ const init = {
         "lastUpdateTime": null
     },
 
-    bodyParamTypeTabs:[
+    bodyParamTypeTabs: [
         {
-            id:1,
-            name:"raw",
-            active:true,
-            color:'primary',
+            id: 2,
+            name: "form-data",
+            active: false,
+            color: 'default',
         },
         {
-            id:2,
-            name:"form-data",
-            active:false,
-            color:'default',
+            id: 3,
+            name: "x-www-form-urlencoded",
+            active: false,
+            color: 'default',
         },
         {
-            id:3,
-            name:"x-www-form-urlencoded",
-            active:false,
-            color:'default',
-        }
+            id: 1,
+            name: "raw",
+            active: true,
+            color: 'primary',
+        },
     ]
 }
 

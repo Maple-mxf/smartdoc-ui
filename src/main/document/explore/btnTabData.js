@@ -6,40 +6,41 @@ import IconButton from "@material-ui/core/IconButton";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 
-export const RawComponent = (props) =>{
-    const {open} = props;
+export const RawComponent = (props) => {
+    const {open, codeType} = props;
+    const [codeContent, setCodeContent] = React.useState("")
+    const handleContentChange = (code) => setCodeContent(code);
     if (!open) return null;
     return (
-        <div>
-            <AceEditor
-                style={{
-                    height: '62vh',
-                    width: '100%',
-                }}
-                placeholder='Start Coding'
-                mode='json'
-                theme='monokai'
-                name='basic-code-editor'
+        <AceEditor
+            style={{
+                height: '56vh',
+                width: '100%',
+            }}
+            mode={codeType}
+            theme='monokai'
+            name='basic-code-editor'
+            value={codeContent}
+            onChange={handleContentChange}
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
 
-                fontSize={20}
-                showPrintMargin={true}
-                showGutter={true}
-                highlightActiveLine={true}
+            setOptions={{
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+                enableSnippets: true,
+                showLineNumbers: true,
+                tabSize: 4,
+            }}
+        />
 
-                setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    showLineNumbers: true,
-                    tabSize: 4,
-                }}
-            />
-        </div>
     )
 }
 
 export const FormDataParamBlock = (props) => {
-    const {classes,open} = props;
+    const {classes, open} = props;
     const [formLinesData, setFormLinesData] = React.useState([
         {
             id: 0,
@@ -92,7 +93,7 @@ export const FormDataParamBlock = (props) => {
         }
     }
 
-    if (!open)return null;
+    if (!open) return null;
 
     return (
         <React.Fragment>
@@ -133,9 +134,10 @@ const FormDataLine = (props) => {
                        label="Key"
                        color="primary"
                        style={{width: '20%'}}
-                       margin="dense"
+                       // margin="dense"
                        value={value1}
-                       className={classes.formDataTextField}
+                       size='small'
+
                        placeholder="Key"
                        onChange={valueOnChange('value1', id)}
             />
@@ -144,7 +146,8 @@ const FormDataLine = (props) => {
                        color="primary"
                        style={{width: '30%'}}
                        className={classes.formDataTextField}
-                       margin="dense"
+                       // margin="dense"
+                       size='small'
                        value={value2}
                        placeholder="Value"
                        onChange={valueOnChange('value2', id)}
@@ -155,6 +158,7 @@ const FormDataLine = (props) => {
                     <IconButton aria-label="delete"
                                 className={classes.margin}
                                 color='secondary'
+                                size='small'
                                 onClick={clickDelBtnFunc(id)}
                     >
                         <HighlightOffIcon fontSize="medium"/>
