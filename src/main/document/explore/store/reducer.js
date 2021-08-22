@@ -1,8 +1,15 @@
 import {
+    CHANGE_MATRIX_VAR_LINE,
     CHANGE_OPEN_HEADER_FORM_SWITCH,
+    CHANGE_OPEN_MATRIX_VAR_FORM_SWITCH,
+    CHANGE_OPEN_URI_VAR_FORM_SWITCH,
+    CHANGE_OPEN_URL_PARAM_FORM_SWITCH,
     CHANGE_PARAM_TYPE,
-    CHANGE_REQUEST_FORM_LINE, CHANGE_REQUEST_HEADER_LINE,
+    CHANGE_REQUEST_FORM_LINE,
+    CHANGE_REQUEST_HEADER_LINE,
     CHANGE_REQUEST_X_FORM_LINE,
+    CHANGE_URI_VAR_LINE,
+    CHANGE_URL_PARAM_LINE,
     CHANGE_URL_VALUE
 } from "./constants";
 
@@ -18,12 +25,6 @@ const initExploreDoc = {
     "queryParamDescriptors": [],
     "uriVarDescriptors": [],
     "responseHeaderDescriptors": [],
-    "requestFakeCodeSample": "",
-    "responseFakeCodeSample": "",
-    "curlCodeSample": "",
-    "javaCodeSample": "",
-    "pythonCodeSample": "",
-    "lastUpdateTime": null,
     bodyParamTypeTabs: [
         {
             id: 2,
@@ -44,9 +45,12 @@ const initExploreDoc = {
             color: 'primary',
         },
     ],
-    requestHeaderLines: requestHeaderIncreaseFormLine,
-    formLines: initIncreaseFormLine,
-    xformLines: initIncreaseFormLine,
+    requestHeaderLines: [...requestHeaderIncreaseFormLine],
+    uriVarLines: [...initIncreaseFormLine],
+    urlParamLines: [...initIncreaseFormLine],
+    matrixVarLines: [...initIncreaseFormLine],
+    formLines: [...initIncreaseFormLine],
+    xformLines: [...initIncreaseFormLine],
     exploreOpenHeaderForm: false,
     exploreOpenURLParamForm: false,
     exploreOpenMatrixVarForm: false,
@@ -61,12 +65,26 @@ export default (state = initExploreDoc, action) => {
             return {...state,url: action.url}
         case CHANGE_OPEN_HEADER_FORM_SWITCH:
             return  {...state, exploreOpenHeaderForm: action.exploreOpenHeaderForm};
+        case CHANGE_OPEN_URI_VAR_FORM_SWITCH:
+            return  {...state, exploreOpenURIVarVarForm: action.exploreOpenURIVarVarForm};
+        case CHANGE_OPEN_URL_PARAM_FORM_SWITCH:
+            return  {...state, exploreOpenURLParamForm: action.exploreOpenURLParamForm};
+        case CHANGE_OPEN_MATRIX_VAR_FORM_SWITCH:
+            return  {...state, exploreOpenMatrixVarForm: action.exploreOpenMatrixVarForm};
+
         case CHANGE_REQUEST_X_FORM_LINE:
             return  {...state, xformLines: action.lines};
         case CHANGE_REQUEST_FORM_LINE:
             return {...state, formLines: action.lines};
         case CHANGE_REQUEST_HEADER_LINE:
             return {...state, requestHeaderLines: action.lines};
+        case CHANGE_URI_VAR_LINE:
+            return {...state, uriVarLines: action.lines};
+        case CHANGE_URL_PARAM_LINE:
+            return {...state, urlParamLines: action.lines};
+        case CHANGE_MATRIX_VAR_LINE:
+            return {...state, matrixVarLines:action.lines}
+
         default:
             return state;
     }

@@ -10,6 +10,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import ClearIcon from "@material-ui/icons/Clear";
+import {URIVarComponent} from "./URIVarComponent";
+import {URLParamComponent} from "./URLParamComponent";
+import {MatrixVarComponent} from "./MatrixVarComponent";
 
 
 export const ExploreRightMainComponent = (props) => {
@@ -37,6 +40,9 @@ export const ExploreRightMainComponent = (props) => {
                            placeholder="Enter request URL here"
                 />
                 <RequestHeaderComponent classes={classes}/>
+                <URIVarComponent classes={classes} />
+                <MatrixVarComponent  classes={classes} />
+                <URLParamComponent classes={classes} />
                 <RequestBodyTypeSelectorComponent codeType={codeType} setCodeType={setCodeType}/>
                 <RequestBodyComponent classes={classes} codeType={codeType}/>
                 <ExploreContentControllerComponent classes={classes}/>

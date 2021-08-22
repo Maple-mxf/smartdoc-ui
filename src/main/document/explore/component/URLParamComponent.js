@@ -2,28 +2,28 @@ import {useDispatch, useSelector} from "react-redux";
 import {DOC_EXPLORE_REDUCER_NAMESPACE} from "../../../../util/constants";
 import React from "react";
 import {DynamicFormComponent} from "./DynamicFormComponent";
-import {changeRequestHeaderLinesAction} from "../store/actionCreators";
+import {changeURLParamLinesAction} from "../store/actionCreators";
 import Zoom from "@material-ui/core/Zoom";
 import Paper from "@material-ui/core/Paper";
 
-export const RequestHeaderComponent = (props) => {
+export const URLParamComponent = (props) => {
     const {classes,} = props;
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
-    const exploreOpenHeaderForm = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE].exploreOpenHeaderForm);
+    const exploreOpenURLParamForm = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE].exploreOpenURLParamForm);
     const dispatch = useDispatch();
-    console.info("exploreDocData",exploreDocData);
+
     return (
         <div>
             {
-                exploreOpenHeaderForm ?
-                    <Zoom in={exploreOpenHeaderForm}>
+                exploreOpenURLParamForm ?
+                    <Zoom in={exploreOpenURLParamForm}>
                         <Paper elevation={0} >
                             <DynamicFormComponent
                                 classes={classes}
-                                formLines={exploreDocData.requestHeaderLines}
-                                keyPlaceholder="Header Key"
+                                formLines={exploreDocData.urlParamLines}
+                                keyPlaceholder="Query Param Key"
                                 setFormLines={(newLines)=>{
-                                    dispatch(changeRequestHeaderLinesAction(newLines))
+                                    dispatch(changeURLParamLinesAction(newLines))
                                 }}
                                 open
                             />

@@ -40,7 +40,7 @@ export const ExploreDialogComponent = (props) => {
                 <Grid container item xs={12} sm={7} className={classes.grid}>
                     <ExploreRightMainComponent classes={classes}/>
                 </Grid>
-                <Grid container item xs={12} sm={2} className={classes.grid}>
+                <Grid container item xs={12} sm={1} className={classes.grid}>
                     <RightControllerButtonComponent classes={classes}/>
                 </Grid>
             </Grid>
