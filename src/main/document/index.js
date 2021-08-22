@@ -3,7 +3,7 @@ import React from "react";
 import NavTree from "./tree"
 import ApiContent from "./apicontent";
 import {BrowserRouter } from "react-router-dom";
-import {DocToolbar} from "./explore/doctoolbar";
+import {ExploreComponent} from "./explore";
 
 export default function Index() {
     return (
@@ -16,7 +16,8 @@ export default function Index() {
                     <ApiContent />
                 </Grid>
                 <Grid container item xs={12} sm={1}>
-                    <DocToolbar />
+                    {/* eslint-disable-next-line react/jsx-no-undef */}
+                    <ExploreComponent />
                 </Grid>
             </Grid>
         </BrowserRouter>

@@ -8,9 +8,7 @@ import {parseResponseMsg} from "../../../util/http";
 import ArrowRightOutlinedIcon from '@material-ui/icons/ArrowRightOutlined';
 import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
 import {NavLink} from "react-router-dom";
-import {getDocAction} from "../store/actionCreators";
 import {getNavTreeAction, getNavTreeNodeList} from "./store/actionCreators";
-import Paper from "@material-ui/core/Paper";
 import {CardContent} from "@material-ui/core";
 
 const useStyles = makeStyles((theme)=>(
@@ -23,8 +21,7 @@ const useStyles = makeStyles((theme)=>(
         card: {
             padding: theme.spacing(2),
             textAlign: 'left',
-            // color: theme.palette.text.secondary,
-            // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+
         },
     }
 ));

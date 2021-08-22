@@ -1,0 +1,5 @@
+export const CHANGE_URL_VALUE = "changeUrlValue"
+export const CHANGE_OPEN_HEADER_FORM_SWITCH = "changeOpenHeaderFormSwitch"
+export const CHANGE_REQUEST_X_FORM_LINE = "changeRequestXFormLine"
+export const CHANGE_REQUEST_FORM_LINE = "changeRequestFormLine"
+export const CHANGE_PARAM_TYPE="changeParamType"

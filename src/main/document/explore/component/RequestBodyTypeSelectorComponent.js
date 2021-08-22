@@ -1,18 +1,18 @@
 import {useDispatch, useSelector} from "react-redux";
-import {DOC_REDUCER_NAMESPACE} from "../../../../util/constants";
+import {DOC_EXPLORE_REDUCER_NAMESPACE} from "../../../../util/constants";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import React from "react";
-import {changeParamTypeTagAction} from "../../store/actionCreators";
 import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import {BootstrapInputComponent} from "./BootstrapInputComponent";
+import {changeParamTypeTagAction} from "../store/actionCreators";
 
 
 export const RequestBodyTypeSelectorComponent = (props) => {
     const {codeType,setCodeType} = props;
     const handleChange = (event) => setCodeType(event.target.value);
-    const bodyParamTypeTabs = useSelector(state => state[DOC_REDUCER_NAMESPACE].bodyParamTypeTabs);
+    const bodyParamTypeTabs = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE].bodyParamTypeTabs);
     const dispatch = useDispatch();
 
     const onClickTab = (id) => {
