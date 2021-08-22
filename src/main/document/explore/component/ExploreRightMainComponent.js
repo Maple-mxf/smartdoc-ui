@@ -9,11 +9,10 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
-import ClearIcon from "@material-ui/icons/Clear";
 import {URIVarComponent} from "./URIVarComponent";
 import {URLParamComponent} from "./URLParamComponent";
 import {MatrixVarComponent} from "./MatrixVarComponent";
-
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 export const ExploreRightMainComponent = (props) => {
     const {classes} = props;
@@ -68,9 +67,10 @@ const ExploreContentControllerComponent = (props) => {
 
             <Button
                 variant="contained"
-                color="secondary"
+                color="default"
                 className={classes.button}
-                endIcon={<ClearIcon/>}
+                endIcon={<VisibilityIcon/>}
+                disabled={exploreDocData.url.length === 0}
             >
                 Clear
             </Button>

@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import {IncreaseFormLineComponent} from "./IncreaseFormLineComponent";
 
 export const DynamicFormComponent = (props) => {
-    const {classes, open, formLines,setFormLines,keyPlaceholder } = props;
+    const {classes, open, formLines,setFormLines,keyPlaceholder,autoCompleteOptions } = props;
 
     const clickValueTextFieldFunc = (id) => {
         return () => {
@@ -62,6 +62,7 @@ export const DynamicFormComponent = (props) => {
                                                    valueOnChange={valueOnChange}
                                                    value1={item.value1}
                                                    value2={item.value2}
+                                                   autoCompleteOptions={autoCompleteOptions}
                         />
                     )
                 })
