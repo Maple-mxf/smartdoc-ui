@@ -1,12 +1,13 @@
 import {
     CHANGE_OPEN_HEADER_FORM_SWITCH,
     CHANGE_PARAM_TYPE,
-    CHANGE_REQUEST_FORM_LINE,
+    CHANGE_REQUEST_FORM_LINE, CHANGE_REQUEST_HEADER_LINE,
     CHANGE_REQUEST_X_FORM_LINE,
     CHANGE_URL_VALUE
 } from "./constants";
 
 const initIncreaseFormLine = [{id: 1, value1: '', value2: '', showDelBtn: false}]
+const requestHeaderIncreaseFormLine = [{id: 1, value1: 'Content-Type', value2: 'application/json', showDelBtn: false}]
 
 const initExploreDoc = {
     "id": "",
@@ -43,7 +44,7 @@ const initExploreDoc = {
             color: 'primary',
         },
     ],
-    requestHeaderFormLines: initIncreaseFormLine,
+    requestHeaderLines: requestHeaderIncreaseFormLine,
     formLines: initIncreaseFormLine,
     xformLines: initIncreaseFormLine,
     exploreOpenHeaderForm: false,
@@ -57,14 +58,15 @@ export default (state = initExploreDoc, action) => {
         case CHANGE_PARAM_TYPE:
             return {...state, bodyParamTypeTabs: action.bodyParamTypeTabs}
         case CHANGE_URL_VALUE:
-            const docData = {...state.exploreDocData, url: action.url}
-            return {...state, exploreDocData: docData}
+            return {...state,url: action.url}
         case CHANGE_OPEN_HEADER_FORM_SWITCH:
             return  {...state, exploreOpenHeaderForm: action.exploreOpenHeaderForm};
         case CHANGE_REQUEST_X_FORM_LINE:
             return  {...state, xformLines: action.lines};
         case CHANGE_REQUEST_FORM_LINE:
             return {...state, formLines: action.lines};
+        case CHANGE_REQUEST_HEADER_LINE:
+            return {...state, requestHeaderLines: action.lines};
         default:
             return state;
     }

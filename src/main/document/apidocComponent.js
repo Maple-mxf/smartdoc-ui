@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import {darcula} from "react-syntax-highlighter/dist/cjs/styles/prism";
 import {DocDataEditDataGrid} from "./apidocDataEditGrid";
-import {getRequestHeaderRowId, HeaderSchema} from "./tableSchema";
+import {getRequestHeaderRowId, HeaderSchema} from "./schema";
 import {useSnackbar} from "notistack";
 import {batchDeleteSnippets, createSnippets, editDocRequestHeader } from "./store/actionCreators";
 import {parseResponseMsg} from "../../util/http";
@@ -18,6 +18,7 @@ import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import {SnippetType_RequestHeader, SnippetType_ResponseHeader} from "./store/constants";
 import AssignmentIcon from '@material-ui/icons/Assignment';
+
 export const ApiDocComponent = (props) => {
     const {doc} = props
 

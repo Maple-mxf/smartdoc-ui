@@ -26,6 +26,7 @@ export const RequestBodyComponent = (props) => {
                         return <DynamicFormComponent key={index}
                                                      classes={classes}
                                                      open={item.active}
+                                                     keyPlaceholder="Form key"
                                                      formLines={exploreDocData.formLines}
                                                      setFormLines={(newFormLines) => {
                                                          dispatch(changeFormLinesAction(newFormLines))
@@ -38,6 +39,7 @@ export const RequestBodyComponent = (props) => {
                         return <DynamicFormComponent key={index}
                                                      classes={classes}
                                                      open={item.active}
+                                                     keyPlaceholder="Form key"
                                                      formLines={exploreDocData.xformLines}
                                                      setFormLines={(newFormLines) => {
                                                          dispatch(changeXFormLinesAction(newFormLines))

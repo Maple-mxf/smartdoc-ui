@@ -32,37 +32,42 @@ export const ExploreRightMainComponent = (props) => {
                            color="primary"
                            value={exploreDocData.url}
                            onChange={onUrlChange}
-                           style={{width: '80%'}}
+                           style={{width: '50%'}}
                            margin="dense"
                            placeholder="Enter request URL here"
                 />
-            <RequestBodyTypeSelectorComponent  codeType={codeType}
-                                               setCodeType={setCodeType}/>
-            <RequestHeaderComponent classes={classes} />
-            <RequestBodyComponent classes={classes}
-                                  codeType={codeType}
-            />
-                <div>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        endIcon={<Icon>send</Icon>}
-                        disabled={exploreDocData.url.length === 0}
-                    >
-                        Send
-                    </Button>
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.button}
-                        endIcon={<ClearIcon/>}
-                    >
-                        Clear
-                    </Button>
-                </div>
+                <RequestHeaderComponent classes={classes}/>
+                <RequestBodyTypeSelectorComponent codeType={codeType} setCodeType={setCodeType}/>
+                <RequestBodyComponent classes={classes} codeType={codeType}/>
+                <ExploreContentControllerComponent classes={classes}/>
             </form>
         </Paper>
+    )
+}
+
+const ExploreContentControllerComponent = (props) => {
+    const {classes} = props;
+    const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
+    return (
+        <div>
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                endIcon={<Icon>send</Icon>}
+                disabled={exploreDocData.url.length === 0}
+            >
+                Send
+            </Button>
+
+            <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                endIcon={<ClearIcon/>}
+            >
+                Clear
+            </Button>
+        </div>
     )
 }

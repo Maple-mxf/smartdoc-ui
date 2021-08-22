@@ -9,15 +9,15 @@ export const RawComponent = (props) => {
     return (
         <AceEditor
             style={{
-                height: '56vh',
-                width: '100%',
+                height: '35vh',
+                width: '95%',
             }}
             mode={codeType}
             theme='monokai'
             name='basic-code-editor'
             value={codeContent}
             onChange={handleContentChange}
-            fontSize={14}
+            fontSize={13}
             showPrintMargin={true}
             showGutter={true}
             highlightActiveLine={true}

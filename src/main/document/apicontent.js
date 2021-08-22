@@ -50,7 +50,8 @@ const ContentComponent = (props) =>{
     }, [])
 
     // 渲染页面
-    const {doc} = useSelector(state => state[DOC_REDUCER_NAMESPACE]);
+    const doc = useSelector(state => state[DOC_REDUCER_NAMESPACE].doc);
+    console.info("doc",doc)
 
     return (
         <Paper classes={classes.paper}>

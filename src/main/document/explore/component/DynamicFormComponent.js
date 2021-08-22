@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import {IncreaseFormLineComponent} from "./IncreaseFormLineComponent";
 
 export const DynamicFormComponent = (props) => {
-    const {classes, open, formLines,setFormLines } = props;
+    const {classes, open, formLines,setFormLines,keyPlaceholder } = props;
 
     const clickValueTextFieldFunc = (id) => {
         return () => {
@@ -47,28 +47,25 @@ export const DynamicFormComponent = (props) => {
     if (!open) return null;
 
     return (
-        <React.Fragment>
-            <List className={classes.list}>
-                {
-                    formLines.map((item, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                <IncreaseFormLineComponent key={index}
-                                                           id={item.id}
-                                                           classes={classes}
-                                                           showDelBtn={item.showDelBtn}
-                                                           clickValueTextFieldFunc={clickValueTextFieldFunc}
-                                                           clickDelBtnFunc={clickDelBtnFunc}
-                                                           lastItemId={formLines[formLines.length - 1].id}
-                                                           valueOnChange={valueOnChange}
-                                                           value1={item.value1}
-                                                           value2={item.value2}
-                                />
-                            </React.Fragment>
-                        )
-                    })
-                }
-            </List>
-        </React.Fragment>
+        <List className={classes.list}>
+            {
+                formLines.map((item, index) => {
+                    return (
+                        <IncreaseFormLineComponent key={index}
+                                                   id={item.id}
+                                                   keyPlaceholder={keyPlaceholder}
+                                                   classes={classes}
+                                                   showDelBtn={item.showDelBtn}
+                                                   clickValueTextFieldFunc={clickValueTextFieldFunc}
+                                                   clickDelBtnFunc={clickDelBtnFunc}
+                                                   lastItemId={formLines[formLines.length - 1].id}
+                                                   valueOnChange={valueOnChange}
+                                                   value1={item.value1}
+                                                   value2={item.value2}
+                        />
+                    )
+                })
+            }
+        </List>
     )
 }

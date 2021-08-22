@@ -21,12 +21,13 @@ const initDoc = {
     "lastUpdateTime": null
 }
 
+const doc={doc:initDoc}
 
-export default (state = initDoc, action) => {
+
+export default (state = doc, action) => {
     switch (action.type) {
         case GET_DOC:
             return {...state, doc: action.doc}
-
         default:
             return state;
     }

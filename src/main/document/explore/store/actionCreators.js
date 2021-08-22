@@ -2,6 +2,7 @@ import {
     CHANGE_OPEN_HEADER_FORM_SWITCH,
     CHANGE_PARAM_TYPE,
     CHANGE_REQUEST_FORM_LINE,
+    CHANGE_REQUEST_HEADER_LINE,
     CHANGE_REQUEST_X_FORM_LINE,
     CHANGE_URL_VALUE
 } from "./constants";
@@ -41,3 +42,10 @@ export const changeOpenHeaderFormSwitch = (exploreOpenHeaderForm)=>{
         exploreOpenHeaderForm
     }
 }
+
+export const changeRequestHeaderLinesAction = (lines)=> (
+    {
+        type:CHANGE_REQUEST_HEADER_LINE,
+        lines
+    }
+)

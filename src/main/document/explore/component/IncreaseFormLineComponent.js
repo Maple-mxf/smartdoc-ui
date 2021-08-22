@@ -13,17 +13,18 @@ export const IncreaseFormLineComponent = (props) => {
         lastItemId,
         value1,
         value2,
-        valueOnChange
+        valueOnChange,
+        keyPlaceholder,
     } = props;
     return (
         <div>
             <TextField id="key-basic"
-                       label="Key"
+                       label={keyPlaceholder}
                        color="primary"
                        style={{width: '20%'}}
                        value={value1}
                        size='small'
-                       placeholder="Key"
+                       placeholder={keyPlaceholder}
                        onChange={valueOnChange('value1', id)}
             />
             <TextField id="Value-basic"
