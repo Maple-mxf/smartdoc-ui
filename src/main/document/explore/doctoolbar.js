@@ -31,8 +31,11 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/ext-beautify'
 import "ace-builds/src-noconflict/worker-json";
 import {EmptyTipComponent} from "../../../common/commonComponent";
-import {BtnTabComponent} from "./btnTab";
+import {ExploreMainComponent} from "./component/ExploreMainComponent";
 import Badge from "@material-ui/core/Badge";
+import {useDispatch, useSelector} from "react-redux";
+import {DOC_REDUCER_NAMESPACE} from "../../../util/constants";
+import {changeOpenHeaderFormSwitch, changeUrlValueAction} from "../store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 120,
     },
     formDataTextField: {
-        marginLeft:'3vh'
+        marginLeft: '3vh'
     },
     margin: {
         margin: theme.spacing(1),
@@ -93,7 +96,7 @@ export const DocToolbar = (props) => {
                 setOpen(false)
             }}/>
             <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setOpen(true)}>
-                <PlayArrow style={{color: green[500]}} />
+                <PlayArrow style={{color: green[500]}}/>
             </IconButton>
         </div>
     )
@@ -104,9 +107,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const RunApiComponent = (props) => {
     const {classes, open, handleClose} = props;
-    const [url,setUrl] = React.useState('');
+
     return (
-        <Dialog  fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+        <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar className={classes.appBar}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
@@ -120,15 +123,15 @@ const RunApiComponent = (props) => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            <Grid container spacing={0}  >
+            <Grid container spacing={0}>
                 <Grid container item xs={12} sm={2} className={classes.grid}>
-                    <LeftComponent classes={classes} />
+                    <LeftComponent classes={classes}/>
                 </Grid>
                 <Grid container item xs={12} sm={8} className={classes.grid}>
-                    <RightComponent classes={classes} url={url} setUrl={setUrl} />
+                    <RightComponent classes={classes}/>
                 </Grid>
                 <Grid container item xs={12} sm={1} className={classes.grid}>
-                    <ExtensionComponent classes={classes} />
+                    <ExtensionComponent classes={classes}/>
                 </Grid>
             </Grid>
         </Dialog>
@@ -136,23 +139,23 @@ const RunApiComponent = (props) => {
 }
 
 const LeftComponent = (props) => {
-    const {classes, } = props;
+    const {classes,} = props;
     const [tabValue, setTabValue] = React.useState('1');
     const handleTagChange = (event, newValue) => {
         setTabValue(newValue);
     };
     return (
-        <Paper elevation={4} style={{ height:'85vh', width: '100%'}} className={classes.paper}>
+        <Paper elevation={4} style={{height: '85vh', width: '100%'}} className={classes.paper}>
             <TabContext value={tabValue}>
                 <TabList aria-label="simple tabs example" onChange={handleTagChange}>
                     <Tab label="History" value="1" icon={<HistoryIcon/>}/>
                     <Tab label="Environment" value="2" icon={<EcoIcon/>}/>
                 </TabList>
                 <TabPanel value='1' index={0}>
-                    <EmptyTipComponent />
+                    <EmptyTipComponent/>
                 </TabPanel>
                 <TabPanel value='2' index={1}>
-                    <EmptyTipComponent />
+                    <EmptyTipComponent/>
                 </TabPanel>
             </TabContext>
         </Paper>
@@ -160,29 +163,36 @@ const LeftComponent = (props) => {
 }
 
 const RightComponent = (props) => {
-    const {classes,url,setUrl} = props;
-    const onUrlChange = (value)=> setUrl(value)
+    const {classes} = props;
+
+    const exploreDocData = useSelector(state => state[DOC_REDUCER_NAMESPACE].exploreDocData);
+    const dispatch = useDispatch()
+
+    const onUrlChange = (e) => {
+        dispatch(changeUrlValueAction(e.target.value))
+    }
     return (
-        <Paper elevation={4} style={{ height:'85vh',width: '100%',overflow:'auto'}} className={classes.paper}>
+        <Paper elevation={4} style={{height: '85vh', width: '100%', overflow: 'auto'}} className={classes.paper}>
             <form className={classes.root} noValidate autoComplete="off">
                 <TextField id="standard-basic"
                            label="request URL"
                            autoFocus
                            size='small'
                            color="primary"
+                           value={exploreDocData.url}
                            onChange={onUrlChange}
                            style={{width: '80%'}}
                            margin="dense"
                            placeholder="Enter request URL here"
                 />
-                <BtnTabComponent classes={classes}/>
+                <ExploreMainComponent classes={classes}/>
                 <div>
                     <Button
                         variant="contained"
                         color="primary"
                         className={classes.button}
                         endIcon={<Icon>send</Icon>}
-                        disabled={url.length === 0  }
+                        disabled={exploreDocData.url.length === 0}
                     >
                         Send
                     </Button>
@@ -191,7 +201,7 @@ const RightComponent = (props) => {
                         variant="contained"
                         color="secondary"
                         className={classes.button}
-                        endIcon={<ClearIcon />}
+                        endIcon={<ClearIcon/>}
                     >
                         Clear
                     </Button>
@@ -203,18 +213,29 @@ const RightComponent = (props) => {
 
 const ExtensionComponent = (props) => {
     const {classes} = props;
+    const exploreDocData = useSelector(state => state[DOC_REDUCER_NAMESPACE].exploreDocData);
+    let dispatch = useDispatch();
     return (
-        <Paper elevation={4} style={{height:'85vh',width: '100%',overflow:'auto', textAlign:'center'}}  className={classes.paper}>
-            <Button size="medium"  variant="outlined" className={classes.margin} color="primary" style={{marginTop:'10vh'}}>
+        <Paper elevation={4} style={{height: '85vh', width: '100%', overflow: 'auto', textAlign: 'center'}}
+               className={classes.paper}>
+            <Button size="medium" variant="outlined" className={classes.margin} color="primary"
+                    style={{marginTop: '10vh'}}
+                    onClick={()=>{
+                        dispatch(changeOpenHeaderFormSwitch((!exploreDocData.exploreOpenHeaderForm)))
+                    }}
+            >
                 Header VAR
             </Button>
 
-            <Button size="medium"  variant="outlined" className={classes.margin} color="primary" style={{marginTop:'1vh'}}>
+            <Button size="medium" variant="outlined" className={classes.margin} color="primary"
+                    style={{marginTop: '1vh'}}>
                 URL Param
             </Button>
 
-            <Badge color="secondary" overlap="circular" badgeContent=" " variant="dot">
-                <Button size="medium"  variant="outlined" className={classes.margin} color="primary" style={{marginTop:'1vh'}}>
+            <Badge badgeContent={4} color="secondary">
+                <Button size="medium" variant="outlined" className={classes.margin} color="primary"
+                        style={{marginTop: '1vh'}}
+                >
                     Matrix Var
                 </Button>
             </Badge>
