@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Grid from "@material-ui/core/Grid";
 
 export const IncreaseFormLineComponent = (props) => {
     const {
@@ -19,61 +20,69 @@ export const IncreaseFormLineComponent = (props) => {
         autoCompleteOptions
     } = props;
     return (
-        <div>
-            {
-                autoCompleteOptions?
-                    <Autocomplete
-                        style={{width: '20%'}}
-                        id="free-solo-demo"
-                        freeSolo
-                        size='small'
-                        options={autoCompleteOptions.map((option) => option.title)}
-                        renderInput={(params) => (
-                            <TextField {...params}
-                                       id="key-basic"
-                                       size='small'
-                                       color="primary"
+        <Grid container spacing={1}>
+            <Grid item xs={12} sm={3} >
+                {
+                    autoCompleteOptions?
+                        <Autocomplete
+                            id="free-solo-demo"
+                            freeSolo
+                            size='small'
+                            fullWidth
+                            options={autoCompleteOptions.map((option) => option.title)}
+                            renderInput={(params) => (
+                                <TextField {...params}
+                                           id="key-basic"
+                                           size='small'
+                                           color="primary"
+                                           value={value1}
+                                           label={keyPlaceholder}
+                                           placeholder={keyPlaceholder}
+                                           onChange={valueOnChange('value1', id)}
+                                />
 
-                                       label={keyPlaceholder}
-                                       placeholder={keyPlaceholder}
-                                       onChange={valueOnChange('value1', id)}
-                            />
+                            )}
+                        />:<TextField id="key-basic"
+                                      label={keyPlaceholder}
+                                      color="primary"
+                                      fullWidth
+                                      value={value1}
+                                      size='small'
+                                      placeholder={keyPlaceholder}
+                                      onChange={valueOnChange('value1', id)}
+                        />
+                }
 
-                        )}
-                    />:<TextField id="key-basic"
-                                  label={keyPlaceholder}
-                                  color="primary"
-                                  style={{width: '20%'}}
-                                  value={value1}
-                                  size='small'
-                                  placeholder={keyPlaceholder}
-                                  onChange={valueOnChange('value1', id)}
-                    />
-            }
+            </Grid>
 
-            <TextField id="Value-basic"
-                       label="Value"
-                       color="primary"
-                       style={{width: '30%'}}
-                       className={classes.formDataTextField}
-                       size='small'
-                       value={value2}
-                       placeholder="Value"
-                       onChange={valueOnChange('value2', id)}
-                       onClick={(lastItemId === id) ? clickValueTextFieldFunc(id) : null}
-            />
-            {
-                showDelBtn ?
-                    <IconButton aria-label="delete"
-                                className={classes.margin}
-                                color='secondary'
-                                size='small'
-                                onClick={clickDelBtnFunc(id)}
-                    >
-                        <HighlightOffIcon fontSize="medium"/>
-                    </IconButton>
-                    : null
-            }
-        </div>
+            <Grid item xs={12} sm={3} >
+                <TextField id="Value-basic"
+                           label="Value"
+                           color="primary"
+                           fullWidth
+                           className={classes.formDataTextField}
+                           size='small'
+                           value={value2}
+                           placeholder="Value"
+                           onChange={valueOnChange('value2', id)}
+                           onClick={(lastItemId === id) ? clickValueTextFieldFunc(id) : null}
+                />
+
+            </Grid>
+            <Grid item xs={12} sm={1} >
+                {
+                    showDelBtn ?
+                        <IconButton aria-label="delete"
+                                    className={classes.margin}
+                                    color='secondary'
+                                    size='small'
+                                    onClick={clickDelBtnFunc(id)}
+                        >
+                            <HighlightOffIcon fontSize="medium"/>
+                        </IconButton>
+                        : null
+                }
+            </Grid>
+        </Grid>
     )
 }

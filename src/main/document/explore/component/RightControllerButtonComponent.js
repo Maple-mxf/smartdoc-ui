@@ -9,6 +9,7 @@ import {
 } from "../store/actionCreators";
 import React from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
 
 export const RightControllerButtonComponent = (props) => {
     const {classes} = props;
@@ -25,20 +26,22 @@ export const RightControllerButtonComponent = (props) => {
     let matrixVarLen =describeLength(exploreDocData.matrixVarLines)
 
     return (
-        <Paper elevation={exploreDocData.requestHeaderLines.length}
+        <Paper elevation={5}
                style={{height: '85vh', width: '100%',overflow: 'auto', textAlign: 'center'}}
                className={classes.paper}>
 
             <ButtonGroup
                 orientation="vertical"
-                color="primary"
+                size="small"
                 aria-label="vertical contained primary button group"
-                variant="contained"
                 style={{ marginTop:'5vh',}}
             >
 
                 <Button
-                    variant={exploreDocData.exploreOpenHeaderForm ? 'contained' : 'outlined'}
+                    style={{textAlign:"left"}}
+                    color={exploreDocData.exploreOpenHeaderForm ? 'primary' : 'default'}
+                    variant={exploreDocData.exploreOpenHeaderForm ? 'contained' : 'default'}
+
                     onClick={() => {
                         dispatch(changeOpenHeaderFormSwitch(!exploreDocData.exploreOpenHeaderForm))
                     }}
@@ -47,7 +50,9 @@ export const RightControllerButtonComponent = (props) => {
                 </Button>
 
                 <Button
-                    variant={exploreDocData.exploreOpenURLParamForm ? 'contained' : 'outlined'}
+                    color={exploreDocData.exploreOpenURLParamForm ? 'primary' : 'default'}
+                    variant={exploreDocData.exploreOpenURLParamForm ? 'contained' : 'text'}
+
                     onClick={() => {
                         dispatch(changeOpenURLParamFormSwitch(!exploreDocData.exploreOpenURLParamForm))
                     }}
@@ -55,7 +60,10 @@ export const RightControllerButtonComponent = (props) => {
                 </Button>
 
                 <Button
-                    variant={exploreDocData.exploreOpenMatrixVarForm ? 'contained' : 'outlined'}
+
+                    color={exploreDocData.exploreOpenMatrixVarForm ? 'primary' : 'default'}
+                    variant={exploreDocData.exploreOpenMatrixVarForm ? 'contained' : 'default'}
+
                     onClick={() => {
                         dispatch(changeOpenMatrixVarFormSwitch(!exploreDocData.exploreOpenMatrixVarForm))
                     }}
@@ -63,7 +71,9 @@ export const RightControllerButtonComponent = (props) => {
                 </Button>
 
                 <Button
-                    variant={exploreDocData.exploreOpenURIVarVarForm ? 'contained' : 'outlined'}
+                    color={exploreDocData.exploreOpenURIVarVarForm ? 'primary' : 'default'}
+                    variant={exploreDocData.exploreOpenURIVarVarForm ? 'contained' : 'default'}
+
                     onClick={() => {
                         dispatch(changeOpenURIVarFormSwitch(!exploreDocData.exploreOpenURIVarVarForm))
                     }}
