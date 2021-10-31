@@ -6,7 +6,7 @@ axios.defaults.headers.common['common-defined-key-b'] = 'custom value: for all m
 axios.defaults.withCredentials=true
 
 // 临时token
-axios.defaults.headers.common['restdoc_console_access_token'] = "b4d1516af2dafb6fe3344a3416a0b4c1"
+axios.defaults.headers.common['restdoc_console_access_token'] = "077b4de0c0da6b8bdc4cfd058187172f"
 
 export function get(url, params = {}) {
     return new Promise((resolve, reject) => {

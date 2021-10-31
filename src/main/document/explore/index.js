@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     paper: {
-        paddingBottom: 50,
+        /* paddingBottom: 0,*/
     },
     button: {
         margin: theme.spacing(1),

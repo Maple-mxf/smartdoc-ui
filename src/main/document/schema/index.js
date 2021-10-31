@@ -13,8 +13,8 @@ export const URIVarSchema = [
 export const HeaderSchema = [
     { field: 'field', headerName: 'field', width: 180, editable: false },
     { field: 'optional', headerName: 'optional', width: 180, editable: false },
-    { field: 'value', headerName: 'value', width: 300, editable: true },
-    { field: 'description', headerName: 'description', width: 330,editable: true },
+    { field: 'value', headerName: 'value', width: 280, editable: true },
+    { field: 'description', headerName: 'description', width: 300,editable: true },
 ]
 
 export const RequestBodySchema = [

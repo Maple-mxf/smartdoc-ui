@@ -1,13 +1,11 @@
 import React, {useEffect} from "react";
-import BasicInfo from "./snippet/basicinfo";
+import BaseInfoComponent from "./snippet/baseInfoComponent";
 import {makeStyles} from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import {useDispatch, useSelector} from "react-redux";
 import {DOC_REDUCER_NAMESPACE, NAV_TREE_REDUCER_NAMESPACE} from "../../util/constants";
 import {Route, Switch} from "react-router-dom";
 import {parseResponseMsg} from "../../util/http";
 import {getDocAction, getDocById} from "./store/actionCreators";
-import Paper from "@material-ui/core/Paper";
 import {ApiDocComponent} from "./apidocComponent";
 
 const useStyles = makeStyles((theme)=>(
@@ -51,19 +49,12 @@ const ContentComponent = (props) =>{
 
     // 渲染页面
     const doc = useSelector(state => state[DOC_REDUCER_NAMESPACE].doc);
-    console.info("doc",doc)
 
     return (
-        <Paper classes={classes.paper}>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <BasicInfo doc={doc}/>
-                </Grid>
-                <Grid item xs={12}>
-                    <ApiDocComponent doc={doc} classes={classes}/>
-                </Grid>
-            </Grid>
-        </Paper>
+        <div>
+            <BaseInfoComponent doc={doc}/>
+            <ApiDocComponent doc={doc} classes={classes}/>
+        </div>
     )
 }
 

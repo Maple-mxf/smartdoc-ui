@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,9 +15,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {useDispatch, useSelector} from "react-redux";
 import {Dehaze} from "@material-ui/icons";
-import {Switch, Route,NavLink } from 'react-router-dom'
+import {Switch, Route, NavLink, Link} from 'react-router-dom'
 import {GLOBAL_REDUCER_NAMESPACE} from './util/constants'
 import {SnackbarProvider} from "notistack";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const drawerWidth = 240;
 
@@ -25,6 +26,18 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
+
+    itemsRoot: {
+        '&$selected': {
+            // backgroundColor: 'orange',
+            '&:hover': {
+                backgroundColor: 'yellow',
+            }
+        },
+    },
+
+    selected: {},
+
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
@@ -77,10 +90,11 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
     },
 
-    active:{
-        color: 'red',
+    active: {
+        backgroundColor: 'blank'
     },
-    menu:{
+
+    menu: {
         textDecoration: 'none',
         color: '#424242'
     }
@@ -88,6 +102,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomeComponent() {
     const classes = useStyles();
+
+
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
 
@@ -103,90 +119,97 @@ export default function HomeComponent() {
     };
 
     return (
-        <SnackbarProvider maxSnack={5} >
-         <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <Dehaze />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {routeList.map((groups, index) => {
-                        return (
-                            <div key={index}>
-                                {
-                                    groups.map((item,index)=>(
-                                        <NavLink to={item.path}
-                                                 key ={index}
-                                                 exact={item.exact}
-                                                 activeClassName={classes.active} >
-                                            <ListItem button key={item.title} className={classes.menu} >
-                                                <ListItemIcon>
-                                                    <div>{item.iconComponent()}</div>
-                                                </ListItemIcon>
-                                                <ListItemText primary={item.title} />
-                                            </ListItem>
-                                        </NavLink>
-
-                                    ))
-                                }
-                                {index === (routeList.length -1) ? null :  <Divider />}
-                            </div>
-                        )
+        <SnackbarProvider maxSnack={5}>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <AppBar
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
                     })}
-                </List>
-            </Drawer>
-            <main
-                className={clsx(classes.content, {
-                    [classes.contentShift]: open,
-                })}
-            >
-                <div className={classes.drawerHeader} />
-                <div>
-                    <Switch>
-                        {
-                            routeList.length ? routeList.map((groups,index) => {
-                              return  groups.map((item,i) =>(
-                                    <Route key={i+index} path={item.path} exact={item.exact} component={item.mainComponent} />
-                                ))
-                            }) : null
-                        }
-                    </Switch>
-                </div>
-            </main>
-        </div>
+                >
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, open && classes.hide)}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography variant="h6" noWrap>
+
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <div className={classes.drawerHeader}>
+                        <IconButton onClick={handleDrawerClose}>
+                            <Dehaze/>
+                        </IconButton>
+                    </div>
+                    <Divider/>
+                    <List>
+                        {routeList.map((groups, index) => {
+                            return (
+                                <div key={index}>
+                                    {
+                                        groups.map((item, index) => (
+                                            <NavLink to={item.path}
+                                                     key={index}
+                                                     exact={item.exact}
+                                                     style={{textDecoration: 'none', color: '#424242'}}
+                                            >
+                                                <ListItem button
+                                                          key={item.title}
+                                                          selected
+                                                          classes={{
+                                                              root: classes.itemsRoot,
+                                                              selected: classes.selected
+                                                          }}>
+                                                    <ListItemIcon>
+                                                        <div>{item.iconComponent()}</div>
+                                                    </ListItemIcon>
+                                                    <ListItemText primary={item.title}/>
+                                                </ListItem>
+                                            </NavLink>
+                                        ))
+                                    }
+                                    {index === (routeList.length - 1) ? null : <Divider/>}
+                                </div>
+                            )
+                        })}
+                    </List>
+                </Drawer>
+                <main
+                    className={clsx(classes.content, {
+                        [classes.contentShift]: open,
+                    })}
+                >
+                    <div className={classes.drawerHeader}/>
+                    <div>
+                        <Switch>
+                            {
+                                routeList.length ? routeList.map((groups, index) => {
+                                    return groups.map((item, i) => (
+                                        <Route key={i + index} path={item.path} exact={item.exact}
+                                               component={item.mainComponent}/>
+                                    ))
+                                }) : null
+                            }
+                        </Switch>
+                    </div>
+                </main>
+            </div>
         </SnackbarProvider>
     );
 }

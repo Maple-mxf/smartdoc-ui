@@ -1,4 +1,3 @@
-import Grid from "@material-ui/core/Grid";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
@@ -81,85 +80,81 @@ export const ApiDocComponent = (props) => {
     }
 
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={12}>
+        <div>
+            <CreateSnippetForm
+                title={snippetFormTitle}
+                text={snippetFormText}
+                open={openCreateSnippetForm}
+                showOptionalSelector={snippetFormShowOptionalSelector}
+                handleClose={handlerCreateSnippetFormClose}
+                handleSubmit={handleSubmitData(doc.id, SnippetType_RequestHeader,dispatch,handleVariant)}
+            />
 
-                <CreateSnippetForm
-                    title={snippetFormTitle}
-                    text={snippetFormText}
-                    open={openCreateSnippetForm}
-                    showOptionalSelector={snippetFormShowOptionalSelector}
-                    handleClose={handlerCreateSnippetFormClose}
-                    handleSubmit={handleSubmitData(doc.id, SnippetType_RequestHeader,dispatch,handleVariant)}
-                />
+            <Typography variant="subtitle1" gutterBottom>
+                Request Example
+            </Typography>
 
-                <Typography variant="subtitle1" gutterBottom>
-                    Request Example
-                </Typography>
+            <SyntaxHighlighter language="http" style={darcula}   wrapLongLines={true}>
+                {doc.requestFakeCodeSample === undefined ? "" : doc.requestFakeCodeSample}
+            </SyntaxHighlighter>
 
-                <SyntaxHighlighter language="http" style={darcula} showLineNumbers={true} wrapLongLines={true}>
-                    {doc.requestFakeCodeSample === undefined ? "" : doc.requestFakeCodeSample}
-                </SyntaxHighlighter>
+            <br/>
 
-                <br/>
+            <Typography variant="subtitle1" gutterBottom>
+                Response Example
+            </Typography>
 
-                <Typography variant="subtitle1" gutterBottom>
-                    Response Example
-                </Typography>
+            <SyntaxHighlighter language="json" style={darcula}  wrapLongLines={true}>
+                {doc.responseFakeCodeSample === undefined ? "" : doc.responseFakeCodeSample}
+            </SyntaxHighlighter>
 
-                <SyntaxHighlighter language="json" style={darcula} showLineNumbers={true} wrapLongLines={true}>
-                    {doc.responseFakeCodeSample === undefined ? "" : doc.responseFakeCodeSample}
-                </SyntaxHighlighter>
+            <TabContext value={tabValue}>
+                <TabList   aria-label="simple tabs example" onChange={handleTagChange}>
+                    <Tab label="Request Header"  value="1" icon={<AssignmentIcon />} />
+                    <Tab label="Request Header" value="2"  />
+                </TabList>
 
-                <TabContext value={tabValue}>
-                    <TabList   aria-label="simple tabs example" onChange={handleTagChange}>
-                        <Tab label="Request Header"  value="1" icon={<AssignmentIcon />} />
-                        <Tab label="Request Header" value="2"  />
-                    </TabList>
-
-                    <TabPanel value='1' index={0}>
-                        <DocDataEditDataGrid rows={ doc.requestHeaderDescriptor }
-                                             columns={ HeaderSchema }
-                                             handleVariant={handleVariant}
-                                             getRowIdFunc={getRequestHeaderRowId}
-                                             editCommitFunc={editDocRequestHeaderFunc(doc.id, dispatch, handleVariant)}
-                                             batchDeleteFunc={batchDeleteFunc(doc.id, SnippetType_RequestHeader, dispatch, handleVariant,)}
-                                             createSnippetFunc={createSnippetFunc(
-                                                 doc.id,
-                                                 SnippetType_RequestHeader,
-                                                 handleVariant,
-                                                 dispatch,
-                                                 setDialogPropFuncs,
-                                                 {
-                                                     title: "Create Header",
-                                                     text: "",
-                                                     showOptionalSelector: true
-                                                 }
-                                             )}
-                        />
-                    </TabPanel>
-                    <TabPanel value='2' index={1}>
-                        <DocDataEditDataGrid rows={ doc.responseHeaderDescriptors }
-                                             columns={ HeaderSchema }
-                                             handleVariant={handleVariant}
-                                             getRowIdFunc={getRequestHeaderRowId}
-                                             editCommitFunc={editDocRequestHeaderFunc(doc.id, dispatch, handleVariant)}
-                                             batchDeleteFunc={batchDeleteFunc(doc.id, SnippetType_ResponseHeader, dispatch, handleVariant,)}
-                                             createSnippetFunc={createSnippetFunc(doc.id, SnippetType_ResponseHeader,
-                                                 handleVariant, dispatch,
-                                                 setDialogPropFuncs,
-                                                 {
-                                                     title: "Create ",
-                                                     text: "",
-                                                     showOptionalSelector: true
-                                                 }
-                                             )}
-                        />
-                    </TabPanel>
-                </TabContext>
-
-            </Grid>
-        </Grid>
+                <TabPanel value='1' index={0}>
+                    <DocDataEditDataGrid rows={ doc.requestHeaderDescriptor }
+                                         columns={ HeaderSchema }
+                                         handleVariant={handleVariant}
+                                         getRowIdFunc={getRequestHeaderRowId}
+                                         editCommitFunc={editDocRequestHeaderFunc(doc.id, dispatch, handleVariant)}
+                                         batchDeleteFunc={batchDeleteFunc(doc.id, SnippetType_RequestHeader, dispatch, handleVariant,)}
+                                         createSnippetFunc={createSnippetFunc(
+                                             doc.id,
+                                             SnippetType_RequestHeader,
+                                             handleVariant,
+                                             dispatch,
+                                             setDialogPropFuncs,
+                                             {
+                                                 title: "Create Header",
+                                                 text: "",
+                                                 showOptionalSelector: true
+                                             }
+                                         )}
+                    />
+                </TabPanel>
+                <TabPanel value='2' index={1}>
+                    <DocDataEditDataGrid rows={ doc.responseHeaderDescriptors }
+                                         columns={ HeaderSchema }
+                                         handleVariant={handleVariant}
+                                         getRowIdFunc={getRequestHeaderRowId}
+                                         editCommitFunc={editDocRequestHeaderFunc(doc.id, dispatch, handleVariant)}
+                                         batchDeleteFunc={batchDeleteFunc(doc.id, SnippetType_ResponseHeader, dispatch, handleVariant,)}
+                                         createSnippetFunc={createSnippetFunc(doc.id, SnippetType_ResponseHeader,
+                                             handleVariant, dispatch,
+                                             setDialogPropFuncs,
+                                             {
+                                                 title: "Create ",
+                                                 text: "",
+                                                 showOptionalSelector: true
+                                             }
+                                         )}
+                    />
+                </TabPanel>
+            </TabContext>
+        </div>
     )
 }
 

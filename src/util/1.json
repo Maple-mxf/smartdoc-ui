@@ -1,0 +1,74 @@
+{
+  "t": {
+    "$date": "2021-10-31T14:00:09.872+08:00"
+  },
+  "s": "I",
+  "c": "COMMAND",
+  "id": 51803,
+  "ctx": "conn3",
+  "msg": "Slow query",
+  "attr": {
+    "type": "command",
+    "ns": "non_standard.restdoc_restweb_document",
+    "command": {
+      "find": "restdoc_restweb_document",
+      "filter": {
+        "resource": {
+          "$in": [
+            "root",
+            "9fe991e64d6db34dae0a59b84cca31bb",
+            "d283f0e3c98f9ed79aa8aa2e1bbfc85e",
+            "825290837695926272",
+            "825292161212747776",
+            "825622294452768768",
+            "825622590272835584",
+            "825622682857902080",
+            "825623569697345536",
+            "825624531015045120"
+          ]
+        },
+        "projectId": "802736426121695232"
+      },
+      "$db": "non_standard"
+    },
+    "planSummary": "IXSCAN { projectId: \"hashed\" }",
+    "keysExamined": 5,
+    "docsExamined": 5,
+    "cursorExhausted": true,
+    "numYields": 0,
+    "nreturned": 5,
+    "queryHash": "2F46F2DD",
+    "planCacheKey": "63F7617F",
+    "reslen": 5804,
+    "locks": {
+      "ReplicationStateTransition": {
+        "acquireCount": {
+          "w": 1
+        }
+      },
+      "Global": {
+        "acquireCount": {
+          "r": 1
+        }
+      },
+      "Database": {
+        "acquireCount": {
+          "r": 1
+        }
+      },
+      "Collection": {
+        "acquireCount": {
+          "r": 1
+        }
+      },
+      "Mutex": {
+        "acquireCount": {
+          "r": 1
+        }
+      }
+    },
+    "storage": {},
+    "protocol": "op_msg",
+    "durationMillis": 347
+  }
+}
