@@ -18,8 +18,6 @@ import {Dehaze} from "@material-ui/icons";
 import {Switch, Route, NavLink, Link} from 'react-router-dom'
 import {GLOBAL_REDUCER_NAMESPACE} from './util/constants'
 import {SnackbarProvider} from "notistack";
-import MenuItem from "@material-ui/core/MenuItem";
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -29,14 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
     itemsRoot: {
         '&$selected': {
-            // backgroundColor: 'orange',
+            backgroundColor: 'white',
             '&:hover': {
-                backgroundColor: 'yellow',
+                backgroundColor: 'orange',
             }
         },
     },
 
-    selected: {},
+    selected: {
+        backgroundColor: "red",
+    },
 
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -88,10 +88,6 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
-    },
-
-    active: {
-        backgroundColor: 'blank'
     },
 
     menu: {
@@ -171,11 +167,13 @@ export default function HomeComponent() {
                                             >
                                                 <ListItem button
                                                           key={item.title}
-                                                          selected
+                                                          selected={true}
                                                           classes={{
                                                               root: classes.itemsRoot,
                                                               selected: classes.selected
-                                                          }}>
+                                                          }}
+
+                                                >
                                                     <ListItemIcon>
                                                         <div>{item.iconComponent()}</div>
                                                     </ListItemIcon>
