@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
     "@loadable/component": "^5.15.0",
     "@material-ui/core": "^4.5.1",
     "@material-ui/data-grid": "latest",
@@ -11,6 +13,8 @@
     "@material-ui/pickers": "^3.2.7",
     "@material-ui/x-grid": "^4.0.0-alpha.37",
     "@material-ui/x-grid-data-generator": "latest",
+    "@mui/icons-material": "^5.0.4",
+    "@mui/material": "^5.0.6",
     "@syncfusion/ej2-react-navigations": "^19.2.51",
     "@uiw/react-monacoeditor": "^3.3.0",
     "ace-builds": "^1.4.12",
@@ -57,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@mui/lab": "^5.0.0-alpha.53",
     "prop-types": "^15.7.2",
     "react-scripts": "latest"
   },
