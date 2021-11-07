@@ -1,14 +1,16 @@
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import {MoreVert} from "@material-ui/icons";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Divider from "@material-ui/core/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import {MoreVert} from "@mui/icons-material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
+import {useTheme} from "@mui/material";
+
 
 export const ProjectListComponent = (props) => {
     const {classes, projectItem} = props;
@@ -21,12 +23,14 @@ export const ProjectListComponent = (props) => {
         setAnchorEl(null);
     };
 
+    let theme = useTheme();
+
     let homeChar = projectItem.name.substr(0, 1).toUpperCase()
     return (
         <div>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar className={classes.orange}>{homeChar}</Avatar>
+                    <Avatar sx={{bgcolor: theme.palette.primary.dark}}>{homeChar}</Avatar>
                 </ListItemAvatar>
                 <ListItemText
                     primary={projectItem.name}
@@ -45,7 +49,7 @@ export const ProjectListComponent = (props) => {
                     }
                 />
                 <IconButton aria-label="delete" color="primary" onClick={handleClick}>
-                    <MoreVert />
+                    <MoreVert/>
                 </IconButton>
                 <Menu
                     id="simple-menu"
@@ -58,7 +62,7 @@ export const ProjectListComponent = (props) => {
                     <MenuItem onClick={handleClose}>Delete</MenuItem>
                 </Menu>
             </ListItem>
-            <Divider variant="inset" component="li" />
+            <Divider variant="inset" component="li"/>
         </div>
     )
 

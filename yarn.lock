@@ -1185,7 +1185,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.15.4":
+"@babel/runtime@^7.15.4", "@babel/runtime@^7.7.6":
   version "7.16.0"
   resolved "https://registry.npmmirror.com/@babel/runtime/download/@babel/runtime-7.16.0.tgz#e27b977f2e2088ba24748bf99b5e1dece64e4f0b"
   integrity sha1-4nuXfy4giLokdIv5m14d7OZOTws=
@@ -6266,6 +6266,13 @@ history@^4.9.0:
     tiny-warning "^1.0.0"
     value-equal "^1.0.1"
 
+history@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.npmmirror.com/history/download/history-5.1.0.tgz#2e93c09c064194d38d52ed62afd0afc9d9b01ece"
+  integrity sha1-LpPAnAZBlNONUu1ir9CvydmwHs4=
+  dependencies:
+    "@babel/runtime" "^7.7.6"
+
 hmac-drbg@^1.0.1:
   version "1.0.1"
   resolved "https://registry.nlark.com/hmac-drbg/download/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -10140,6 +10147,13 @@ react-router@5.2.0:
     react-is "^16.6.0"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
+
+react-router@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.npmmirror.com/react-router/download/react-router-6.0.1.tgz?cache=0&sync_timestamp=1636154339440&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact-router%2Fdownload%2Freact-router-6.0.1.tgz#3fe93ad11f91fb55e242a42628414cb47219e652"
+  integrity sha1-P+k60R+R+1XiQqQmKEFMtHIZ5lI=
+  dependencies:
+    history "^5.1.0"
 
 react-scripts@latest:
   version "4.0.3"

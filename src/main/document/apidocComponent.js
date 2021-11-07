@@ -10,7 +10,7 @@ import {parseResponseMsg} from "../../util/http";
 import {useDispatch} from "react-redux";
 import {ErrorVariant, SuccessVariant, WarningVariant} from "../../common/tip";
 import CreateSnippetForm from "./snippet/create";
-import {FetchDocById} from "./apicontent";
+import {FetchDocById} from "./component/ApiContentComponent";
 import Tab from '@material-ui/core/Tab';
 import TabPanel from "@material-ui/lab/TabPanel";
 import TabContext from "@material-ui/lab/TabContext";

@@ -1,9 +1,15 @@
 import React from 'react';
 import ControlledTreeView from "./component/TableContentComponent";
+import {Box} from "@mui/material";
 
-export default function (){
+export const LeftTreeWidth = 450;
+
+export default function () {
     return (
-        <ControlledTreeView />
+        <Box>
+            {/*<SearchDocumentViewComponent />*/}
+            <ControlledTreeView />
+        </Box>
     )
 }
 

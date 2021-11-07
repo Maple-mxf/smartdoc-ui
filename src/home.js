@@ -1,110 +1,112 @@
-import React from 'react';
-import clsx from 'clsx';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import {useDispatch, useSelector} from "react-redux";
-import {Dehaze} from "@material-ui/icons";
-import {Switch, Route, NavLink, Link} from 'react-router-dom'
-import {GLOBAL_REDUCER_NAMESPACE} from './util/constants'
-import {SnackbarProvider} from "notistack";
-const drawerWidth = 240;
+import * as React from 'react';
+import {styled, useTheme} from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import MenuIcon from '@mui/icons-material/Menu';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MuiAppBar from '@mui/material/AppBar';
+import {ListItemButton} from "@mui/material";
+import {useSelector} from "react-redux";
+import {GLOBAL_REDUCER_NAMESPACE} from "./util/constants";
+import {NavLink, Route, Switch, useLocation} from "react-router-dom";
+import {getRouteItemByPath} from "./route";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
+const drawerWidth = 250;
+
+const StyleListItemLabComponent = styled(ListItemButton)(({theme}) => ({
+    "&.Mui-selected": {
+        color: theme.palette.primary.main,
+        backgroundColor: theme.palette.action.selected,
+        borderLeftStyle: 'solid',
+        borderWidth: '5px',
     },
-
-    itemsRoot: {
-        '&$selected': {
-            backgroundColor: 'white',
-            '&:hover': {
-                backgroundColor: 'orange',
-            }
-        },
-    },
-
-    selected: {
-        backgroundColor: "red",
+    "&:hover": {
+        color: theme.palette.primary.main,
+        backgroundColor: theme.palette.action.hover,
+        transform: `scale(1.01)`
     },
 
-    appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
-    },
-    contentShift: {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    },
-
-    menu: {
-        textDecoration: 'none',
-        color: '#424242'
-    }
 }));
 
+const openedMixin = (theme) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+});
+
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+        width: `calc(${theme.spacing(9)} + 1px)`,
+    },
+});
+
+const DrawerHeader = styled('div')(({theme}) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({theme, open}) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    backgroundColor: theme.palette.background.paper,
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+
+const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
+    ({theme, open}) => ({
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        ...(open && {
+            ...openedMixin(theme),
+            '& .MuiDrawer-paper': openedMixin(theme),
+        }),
+        ...(!open && {
+            ...closedMixin(theme),
+            '& .MuiDrawer-paper': closedMixin(theme),
+        }),
+    }),
+);
+
 export default function HomeComponent() {
-    const classes = useStyles();
-
-
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-
-    const routeList = useSelector(state => state[GLOBAL_REDUCER_NAMESPACE].routeList);
-    const dispatch = useDispatch();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -114,100 +116,86 @@ export default function HomeComponent() {
         setOpen(false);
     };
 
+    const routeList = useSelector(state => state[GLOBAL_REDUCER_NAMESPACE].routeList);
+    let location = useLocation();
+    let routeItem = getRouteItemByPath(location.pathname);
+    const initLabId = (routeItem === undefined || routeItem === null) ? "" : routeItem.id;
+    const [selectedLab, setSelectedLab] = React.useState(initLabId);
+    const handleListItemClick = (event, index) => {
+        setSelectedLab(index);
+    };
+
     return (
-        <SnackbarProvider maxSnack={5}>
-            <div className={classes.root}>
-                <CssBaseline/>
-                <AppBar
-                    position="fixed"
-                    className={clsx(classes.appBar, {
-                        [classes.appBarShift]: open,
-                    })}
-                >
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            className={clsx(classes.menuButton, open && classes.hide)}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" noWrap>
-
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <div className={classes.drawerHeader}>
-                        <IconButton onClick={handleDrawerClose}>
-                            <Dehaze/>
-                        </IconButton>
-                    </div>
-                    <Divider/>
-                    <List>
-                        {routeList.map((groups, index) => {
-                            return (
-                                <div key={index}>
-                                    {
-                                        groups.map((item, index) => (
-                                            <NavLink to={item.path}
-                                                     key={index}
-                                                     exact={item.exact}
-                                                     style={{textDecoration: 'none', color: '#424242'}}
+        <Box sx={{display: 'flex'}}>
+            <CssBaseline/>
+            <AppBar position="fixed" open={open}>
+                <Toolbar>
+                    <IconButton
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{
+                            marginRight: '36px',
+                            ...(open && {display: 'none'}),
+                        }}
+                    >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" noWrap component="div">
+                        Mini variant drawer
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer variant="permanent" open={open}>
+                <DrawerHeader>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
+                    </IconButton>
+                </DrawerHeader>
+                <Divider/>
+                <List>
+                    {routeList.map((groups, index) => {
+                        return (
+                            <div key={index}>
+                                {
+                                    groups.map((item, index) => (
+                                        <NavLink to={item.path}
+                                                 key={index}
+                                                 exact={item.exact}
+                                                 strict={false}
+                                                 style={{textDecoration: 'none', color: '#424242'}}
+                                        >
+                                            <StyleListItemLabComponent
+                                                selected={selectedLab === item.id}
+                                                onClick={(event) => handleListItemClick(event, item.id)}
                                             >
-                                                <ListItem button
-                                                          key={item.title}
-                                                          selected={true}
-                                                          classes={{
-                                                              root: classes.itemsRoot,
-                                                              selected: classes.selected
-                                                          }}
-
-                                                >
-                                                    <ListItemIcon>
-                                                        <div>{item.iconComponent()}</div>
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={item.title}/>
-                                                </ListItem>
-                                            </NavLink>
-                                        ))
-                                    }
-                                    {index === (routeList.length - 1) ? null : <Divider/>}
-                                </div>
-                            )
-                        })}
-                    </List>
-                </Drawer>
-                <main
-                    className={clsx(classes.content, {
-                        [classes.contentShift]: open,
-                    })}
-                >
-                    <div className={classes.drawerHeader}/>
-                    <div>
-                        <Switch>
-                            {
-                                routeList.length ? routeList.map((groups, index) => {
-                                    return groups.map((item, i) => (
-                                        <Route key={i + index} path={item.path} exact={item.exact}
-                                               component={item.mainComponent}/>
+                                                <ListItemIcon>
+                                                    {selectedLab === item.id ? item.filledIcon(theme) : item.outlinedIcon()}
+                                                </ListItemIcon>
+                                                <ListItemText primary={item.title}/>
+                                            </StyleListItemLabComponent>
+                                        </NavLink>
                                     ))
-                                }) : null
-                            }
-                        </Switch>
-                    </div>
-                </main>
-            </div>
-        </SnackbarProvider>
+                                }
+                                {index === (routeList.length - 1) ? null : <Divider/>}
+                            </div>
+                        )
+                    })}
+                </List>
+            </Drawer>
+            <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                <DrawerHeader/>
+                <Switch>
+                    {
+                        routeList.length ? routeList.map((groups, index) => {
+                            return groups.map((item, i) => (
+                                <Route key={i + index} path={item.path} exact={item.exact}
+                                       component={item.mainComponent}/>
+                            ))
+                        }) : null
+                    }
+                </Switch>
+            </Box>
+        </Box>
     );
 }

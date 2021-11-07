@@ -1,82 +1,134 @@
 import Loadable from '@loadable/component'
-import {Group, MenuBook, Person, ScreenShare, Settings, Widgets} from "@material-ui/icons";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import React from "react";
 import DocumentComponent from '../main/document'
-import EcoIcon from '@material-ui/icons/Eco';
+import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import DocumentScannerOutlinedIcon from '@mui/icons-material/DocumentScannerOutlined';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import SettingsSystemDaydreamIcon from '@mui/icons-material/SettingsSystemDaydream';
+import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSystemDaydreamOutlined';
+import DeveloperModeOutlinedIcon from '@mui/icons-material/DeveloperModeOutlined';
+import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import {Groups, Settings, Widgets} from "@mui/icons-material";
 
 // Project
-const ProjectIconComponent = () => (<ListItemIcon><Widgets /></ListItemIcon>)
+const ProjectOutlinedIconComponent = () => (<WidgetsOutlinedIcon/>)
+const ProjectFilledIconComponent = () => (<Widgets color="primary"/>)
 const ProjectComponent = Loadable(() => import('../main/project'))
 
-const MemberIconComponent = () => (<ListItemIcon><Person /></ListItemIcon>)
+// Member
+const MemberFilledIconComponent = () => (<PersonIcon color="primary"/>)
+const MemberOutlinedIconComponent = () => (<PersonOutlineOutlinedIcon/>)
 
-const GroupIconComponent = () => (<ListItemIcon><Group /></ListItemIcon> )
-const GroupComponent = Loadable(()=>import('../main/group'))
+// Group
+const GroupFilledIconComponent = (theme) => (<Groups color='primary'/>)
+const GroupOutlinedIconComponent = () => (<GroupsOutlinedIcon/>)
+const GroupComponent = Loadable(() => import('../main/group'))
 
-const DocumentIconComponent = () => (<ListItemIcon>  <MenuBook /></ListItemIcon>)
-// const DocumentComponent = Loadable(()=>import('../main/document'))
+// Document
+const DocumentFilledIconComponent = () => (<DocumentScannerIcon color='primary'/>)
+const DocumentOutlineIconComponent = () => (<DocumentScannerOutlinedIcon/>)
 
-const EnvironmentIconComponent = () => (<ListItemIcon><EcoIcon /></ListItemIcon>)
+const EnvironmentFilledIconComponent = () => (<SettingsSystemDaydreamIcon color='primary'/>)
+const EnvironmentOutlinedIconComponent = () => (<SettingsSystemDaydreamOutlinedIcon/>)
 
-const ConnectionServiceIconComponent = () => (<ListItemIcon><ScreenShare /></ListItemIcon>)
+const ConnectionServiceFilledIconComponent = () => (<DeveloperModeIcon color='primary'/>)
+const ConnectionServiceOutlinedIconComponent = () => (<DeveloperModeOutlinedIcon/>)
 
 
-const SettingsIconComponent = () => (<ListItemIcon><Settings /></ListItemIcon>)
+const SettingsOutlinedIconComponent = () => (<SettingsOutlinedIcon/>)
+const SettingsFilledIconComponent = () => (<Settings color='primary'/>)
 
 const routeList = [
-   [ {
-       title: "Project",
-       path :"/home/project",
-       exact:true,
-       iconComponent:ProjectIconComponent,
-       mainComponent:ProjectComponent
-   },
-       {
-           title: "Group",
-           path :"/home/group",
-           exact:true,
-           iconComponent:GroupIconComponent,
-           mainComponent:GroupComponent
-       },
-       {
-           title: "Member",
-           path :"/home/member",
-           exact:true,
-           iconComponent:MemberIconComponent,
-           mainComponent:ProjectComponent
-       },
-   ],
+    [{
+        id: "Project1",
+        title: "Project",
+        path: "/home/project",
+        exact: true,
+        filledIcon: ProjectFilledIconComponent,
+        outlinedIcon: ProjectOutlinedIconComponent,
+        iconComponent: ProjectOutlinedIconComponent,
+        mainComponent: ProjectComponent
+    },
+        {
+            id: "Group1",
+            title: "Group",
+            path: "/home/group",
+            exact: true,
+            iconComponent: GroupOutlinedIconComponent,
+            filledIcon: GroupFilledIconComponent,
+            outlinedIcon: GroupOutlinedIconComponent,
+            mainComponent: GroupComponent
+        },
+        {
+            id: "Member1",
+            title: "Member",
+            path: "/home/member",
+            exact: true,
+            iconComponent: MemberFilledIconComponent,
+            filledIcon: MemberFilledIconComponent,
+            outlinedIcon: MemberOutlinedIconComponent,
+            mainComponent: ProjectComponent
+        },
+    ],
     [
         {
-            title: "API Document",
-            path :"/home/document",
-            exact:true,
-            iconComponent:DocumentIconComponent,
-            mainComponent:DocumentComponent
+            id: "Document2",
+            title: "Document",
+            path: "/home/document",
+            exact: true,
+            iconComponent: DocumentOutlineIconComponent,
+            filledIcon: DocumentFilledIconComponent,
+            outlinedIcon: DocumentOutlineIconComponent,
+            mainComponent: DocumentComponent
         },
         {
+            id: "Environment2",
             title: "Environment",
-            path :"/home/environment",
-            exact:true,
-            iconComponent:EnvironmentIconComponent,
-            mainComponent:ProjectComponent
+            path: "/home/environment",
+            exact: true,
+            iconComponent: EnvironmentOutlinedIconComponent,
+            filledIcon: EnvironmentFilledIconComponent,
+            outlinedIcon: EnvironmentOutlinedIconComponent,
+            mainComponent: ProjectComponent
         },
         {
-            title: "Connection Services",
-            path :"/home/connectionServices",
-            exact:true,
-            iconComponent:ConnectionServiceIconComponent,
-            mainComponent:ProjectComponent
+            id: "Services2",
+            title: "Services",
+            path: "/home/connectionServices",
+            exact: true,
+            iconComponent: ConnectionServiceOutlinedIconComponent,
+            filledIcon: ConnectionServiceFilledIconComponent,
+            outlinedIcon: ConnectionServiceOutlinedIconComponent,
+            mainComponent: ProjectComponent
         },
         {
+            id: "Settings2",
             title: "Settings",
-            path :"/home/settings",
-            exact:true,
-            iconComponent:SettingsIconComponent,
-            mainComponent:ProjectComponent
+            path: "/home/settings",
+            exact: true,
+            iconComponent: SettingsOutlinedIconComponent,
+            filledIcon: SettingsFilledIconComponent,
+            outlinedIcon: SettingsOutlinedIconComponent,
+            mainComponent: ProjectComponent
         },
     ]
 ]
+
+export function getRouteItemByPath(path) {
+    for (let i = routeList[0].length - 1; i >= 0; i--) {
+        if (routeList[0][i].path === path) {
+            return routeList[0][i];
+        }
+    }
+    for (let i = routeList[1].length - 1; i >= 0; i--) {
+        if (routeList[1][i].path === path) {
+            return routeList[1][i];
+        }
+    }
+}
 
 export default routeList
