@@ -79,7 +79,7 @@ const routeList = [
             id: "Document2",
             title: "Document",
             path: "/home/document",
-            exact: true,
+            exact: false,
             iconComponent: DocumentOutlineIconComponent,
             filledIcon: DocumentFilledIconComponent,
             outlinedIcon: DocumentOutlineIconComponent,
@@ -118,15 +118,34 @@ const routeList = [
     ]
 ]
 
+//var str = "js实现用{two}自符串替换占位符{two} {three}  {one} ".format({one: "I",two: "LOVE",three: "YOU"});
+//var str2 = "js实现用{1}自符串替换占位符{1} {2}  {0} ".format("I","LOVE","YOU");
+String.prototype.format = function () {
+    if (arguments.length == 0) return this;
+    var param = arguments[0];
+    var s = this;
+    if (typeof (param) == 'object') {
+        for (var key in param)
+            s = s.replace(new RegExp("\\{" + key + "\\}", "g"), param[key]);
+        return s;
+    } else {
+        for (var i = 0; i < arguments.length; i++)
+            s = s.replace(new RegExp("\\{" + i + "\\}", "g"), arguments[i]);
+        return s;
+    }
+}
+
 export function getRouteItemByPath(path) {
     for (let i = routeList[0].length - 1; i >= 0; i--) {
-        if (routeList[0][i].path === path) {
-            return routeList[0][i];
+        var pattern = new RegExp(routeList[0][i].path + "(/.*)?")
+        if (pattern.test(path)){
+            return routeList[0][i]
         }
     }
     for (let i = routeList[1].length - 1; i >= 0; i--) {
-        if (routeList[1][i].path === path) {
-            return routeList[1][i];
+        var pattern = new RegExp(routeList[1][i].path + "(/.*)?")
+        if (pattern.test(path)){
+            return routeList[1][i]
         }
     }
 }

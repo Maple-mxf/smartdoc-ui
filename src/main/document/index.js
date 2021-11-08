@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Index() {
+export default function Index(props) {
+
     const classes = useStyles();
 
     return (
@@ -32,14 +33,14 @@ export default function Index() {
                     <Grid item xs={12} sm={3}>
                         <ApiNavTreeComponent/>
                     </Grid>
-                    <Divider orientation="vertical" flexItem light variant='fullWidth' />
+                    <Divider orientation="vertical" flexItem light variant='fullWidth'/>
                     <Grid item xs={12} sm={8}>
                         <Paper style={{width: '130vh',}}
                                elevation={4}>
                             <ApiContent/>
                         </Paper>
                     </Grid>
-                   {/* <Grid item xs={1} sm={1}>
+                    {/* <Grid item xs={1} sm={1}>
                         <ExploreComponent/>
                     </Grid>*/}
                 </Grid>

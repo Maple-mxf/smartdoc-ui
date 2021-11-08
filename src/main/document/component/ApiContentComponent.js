@@ -56,14 +56,14 @@ export default function ApiContent() {
             {
                 mapToFlattenNodes(nodes)
                     .map((node, index) => {
-                        let path = `/home/document/${node.id}`
+                        let path = `/home/document?id=${node.id}`
                         return (
                             <Route exact={true}
                                    key={node.id}
                                    render={(props) => {
                                        return <TestComponent {...props} name={path}/>
                                    }}
-                                   path='/home/document/:id'
+                                   path={path}
 
                             />
                         )

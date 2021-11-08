@@ -18,7 +18,7 @@ import {parseResponseMsg} from "../../../../util/http";
 import {LeftTreeWidth} from "../index";
 import {useTheme} from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 
 const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
     color: theme.palette.text.primary,
@@ -93,13 +93,14 @@ StyledTreeItem.propTypes = {
     labelText: PropTypes.string.isRequired
 };
 
+
 function TableContentTreeComponent(props) {
     const {nodes} = props;
     return (
         <div>
             {
                 nodes.map((node, index) => {
-                        let path = `/home/document/${node.id}`
+                        let path = `/home/document?id=${node.id}`
                         return (
                             node.type === 'RESOURCE' ?
                                 <StyledTreeItem
@@ -117,7 +118,7 @@ function TableContentTreeComponent(props) {
                                     />
                                 </StyledTreeItem>
                                 :
-                                <NavLink to={path} key={node.id} style={{textDecoration: 'none' }}>
+                                <NavLink to={path} key={node.id} style={{textDecoration: 'none'}}>
                                     <StyledTreeItem
                                         key={node.id}
                                         nodeId={node.id}
@@ -136,9 +137,20 @@ function TableContentTreeComponent(props) {
     )
 }
 
+// A custom hook that builds on useLocation to parse
+// the query string for you.
+function useQuery() {
+    const {search} = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 export default function TableContentTreeViewComponent(props) {
     const dispatch = useDispatch();
     const theme = useTheme();
+
+    let query = useQuery();
+
+    let selectedDocId = query.get("id");
 
     useEffect(() => {
         FetchNodeList("802736426121695232", dispatch)
@@ -154,6 +166,7 @@ export default function TableContentTreeViewComponent(props) {
             defaultCollapseIcon={<ArrowDropDownIcon/>}
             defaultExpandIcon={<ArrowRightIcon/>}
             defaultEndIcon={<div style={{width: 24}}/>}
+            selected={selectedDocId}
             sx={{
                 height: 700,
                 flexGrow: 1,

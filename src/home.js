@@ -10,7 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MuiAppBar from '@mui/material/AppBar';
 import {ListItemButton} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {GLOBAL_REDUCER_NAMESPACE} from "./util/constants";
 import {NavLink, Route, Switch, useLocation} from "react-router-dom";
 import {getRouteItemByPath} from "./route";
@@ -19,6 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import {getSwitchLeftMenuAction} from "./store/actionCreators";
 
 const drawerWidth = 250;
 
@@ -107,6 +108,7 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
 export default function HomeComponent() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
+    const dispatch = useDispatch();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -117,6 +119,7 @@ export default function HomeComponent() {
     };
 
     const routeList = useSelector(state => state[GLOBAL_REDUCER_NAMESPACE].routeList);
+
     let location = useLocation();
     let routeItem = getRouteItemByPath(location.pathname);
     const initLabId = (routeItem === undefined || routeItem === null) ? "" : routeItem.id;
@@ -161,9 +164,9 @@ export default function HomeComponent() {
                                     groups.map((item, index) => (
                                         <NavLink to={item.path}
                                                  key={index}
-                                                 exact={item.exact}
                                                  strict={false}
                                                  style={{textDecoration: 'none', color: '#424242'}}
+                                                 state={{nodeId: item.id}}
                                         >
                                             <StyleListItemLabComponent
                                                 selected={selectedLab === item.id}
@@ -190,7 +193,8 @@ export default function HomeComponent() {
                         routeList.length ? routeList.map((groups, index) => {
                             return groups.map((item, i) => (
                                 <Route key={i + index} path={item.path} exact={item.exact}
-                                       component={item.mainComponent}/>
+                                       component={item.mainComponent}
+                                />
                             ))
                         }) : null
                     }

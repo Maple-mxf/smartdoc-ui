@@ -3,7 +3,7 @@ import routeList from "../route";
 
 const init = {
     menuIsOpen: true,
-    "routeList":routeList
+    "routeList": routeList,
 }
 
 export default (state = init, action) => {
