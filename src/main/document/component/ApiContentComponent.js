@@ -5,7 +5,9 @@ import {DOC_REDUCER_NAMESPACE, NAV_TREE_REDUCER_NAMESPACE} from "../../../util/c
 import {Route, Switch} from "react-router-dom";
 import {parseResponseMsg} from "../../../util/http";
 import {getDocAction, getDocById} from "../store/actionCreators";
-import {ApiDocComponent} from "../apidocComponent";
+import NotFoundComponent from "../../../404";
+import {Box, useTheme} from "@mui/material";
+
 
 export const FetchDocById = (docId, dispatch) => {
     getDocById(docId)
@@ -21,8 +23,10 @@ export const FetchDocById = (docId, dispatch) => {
 }
 
 const ContentComponent = (props) => {
-    const {node, classes} = props
+    const {node} = props
     const dispatch = useDispatch()
+
+    const theme = useTheme();
 
     // 请求数据
     useEffect(() => {
@@ -35,19 +39,15 @@ const ContentComponent = (props) => {
     const doc = useSelector(state => state[DOC_REDUCER_NAMESPACE].doc);
 
     return (
-        <div>
+        <Box sx={{
+            padding: theme.spacing(2)
+        }}>
             <BaseInfoComponent doc={doc}/>
-            <ApiDocComponent doc={doc} classes={classes}/>
-        </div>
+            {/*<ApiDocComponent doc={doc} classes={classes}/>*/}
+        </Box>
     )
 }
 
-function TestComponent(props) {
-    const {name} = props;
-    return (
-        <div>{name}</div>
-    );
-}
 
 export default function ApiContent() {
     const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
@@ -56,12 +56,12 @@ export default function ApiContent() {
             {
                 mapToFlattenNodes(nodes)
                     .map((node, index) => {
-                        let path = `/home/document?id=${node.id}`
+                        let path = `/home/document/:id`
                         return (
                             <Route exact={true}
                                    key={node.id}
-                                   render={(props) => {
-                                       return <TestComponent {...props} name={path}/>
+                                   render={() => {
+                                       return <ContentComponent node={node}/>
                                    }}
                                    path={path}
 
@@ -69,6 +69,7 @@ export default function ApiContent() {
                         )
                     })
             }
+            <Route component={NotFoundComponent}/>
         </Switch>
     )
 }

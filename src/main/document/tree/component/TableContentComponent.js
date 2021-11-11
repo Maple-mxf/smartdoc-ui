@@ -1,5 +1,5 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+import PropTypes, {func, node} from "prop-types";
 import {styled} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import TreeView from "@mui/lab/TreeView";
@@ -10,12 +10,10 @@ import Api from "@mui/icons-material/Api";
 import FolderOpen from "@mui/icons-material/FolderOpen";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import { useSelector} from "react-redux";
+import {useCallback, useEffect, useState} from "react";
 import {NAV_TREE_REDUCER_NAMESPACE} from "../../../../util/constants";
-import {getNavTreeAction, getNavTreeNodeList} from "../store/actionCreators";
-import {parseResponseMsg} from "../../../../util/http";
-import {LeftTreeWidth} from "../index";
+import {LeftTreeHeight, LeftTreeWidth} from "../index";
 import {useTheme} from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import {NavLink, useLocation} from "react-router-dom";
@@ -30,7 +28,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
         "&:hover": {
             color: theme.palette.primary.main,
             backgroundColor: theme.palette.action.hover,
-            transform: `scale(1.01)`
+         /*   transform: `scale(1.01)`*/
         },
         "&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused": {
             backgroundColor: `${theme.palette.action.selected}`,
@@ -100,7 +98,7 @@ function TableContentTreeComponent(props) {
         <div>
             {
                 nodes.map((node, index) => {
-                        let path = `/home/document?id=${node.id}`
+                        let path = `/home/document/${node.id}`
                         return (
                             node.type === 'RESOURCE' ?
                                 <StyledTreeItem
@@ -144,36 +142,86 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
+function getExpandNodeIds(nodes, selectedNodeId) {
+    const defaultExpandedNodeIds = ['root'];
+    const targetNode = {id: selectedNodeId};
+    let flattenNodes = mapToFlattenNodes(nodes)
+    for (let i = 0; i < flattenNodes.length; i++) {
+        if (flattenNodes[i].id === targetNode.id) {
+            getAllParentNodeIds(flattenNodes,
+                {...targetNode, pid: flattenNodes[i].pid},
+                defaultExpandedNodeIds);
+
+            break;
+        }
+    }
+    console.info('getExpandNodeIds=========' + JSON.stringify(defaultExpandedNodeIds) + "selectedNodeId" + selectedNodeId)
+    return defaultExpandedNodeIds;
+}
+
 export default function TableContentTreeViewComponent(props) {
-    const dispatch = useDispatch();
     const theme = useTheme();
 
-    let query = useQuery();
+    const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
 
-    let selectedDocId = query.get("id");
+
+    let selectedNodeId = "root";
+    let location = useLocation();
+    var re = /^\/home\/document\/(.*)$/;
+    let matchRes = location.pathname.match(re);
+    if (matchRes && matchRes.length === 2) {
+        selectedNodeId = matchRes[1]
+    }
+
+    let [defaultExpanded, setDefaultExpanded] = useState(['root']);
+    const [targetSelectNode, setTargetSelectNode] = useState(selectedNodeId);
+
+    // useCallback第二个参数设置的是依赖值
+    // 只要依赖的值发生变化，就会触发此函数
+    // 用useCallback包一层的目的是使得当前组件在被重新rerender的时候不会触发生成新的函数引用对象
+    const setExpandFunc = useCallback(() => {
+        if (selectedNodeId !== 'root') {
+            let expandNodeIds = getExpandNodeIds(nodes, selectedNodeId);
+            setDefaultExpanded(expandNodeIds)
+        }
+    }, [nodes]);
 
     useEffect(() => {
-        FetchNodeList("802736426121695232", dispatch)
-        return () => {
-        }
-    }, [])
-    const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
+            // 组件挂载时执行
+            setExpandFunc();
+
+            // 组件卸载时执行的逻辑
+            return () => {
+            }
+        },
+        // 组件数据更新时执行的逻辑
+        [setExpandFunc]);
 
     return (
         <TreeView
             aria-label="gmail"
-            defaultExpanded={["root"]}
+            expanded={defaultExpanded}
             defaultCollapseIcon={<ArrowDropDownIcon/>}
             defaultExpandIcon={<ArrowRightIcon/>}
             defaultEndIcon={<div style={{width: 24}}/>}
-            selected={selectedDocId}
+            selected={targetSelectNode}
+            onNodeSelect={(event, value) => {
+                setTargetSelectNode(value)
+            }}
+
+            onNodeToggle={(event, nodeIds) => {
+                console.info(event)
+                console.info("onNodeToggle" + JSON.stringify(nodeIds))
+                setDefaultExpanded(nodeIds)
+            }}
             sx={{
-                height: 700,
+                height: LeftTreeHeight-10,
                 flexGrow: 1,
-                maxWidth: LeftTreeWidth,
+                maxWidth: LeftTreeWidth-10,
                 overflowY: "auto",
                 backgroundColor: theme.palette.background.paper,
             }}
+
         >
             <TableContentTreeComponent nodes={nodes}/>
         </TreeView>
@@ -181,15 +229,28 @@ export default function TableContentTreeViewComponent(props) {
     );
 }
 
-const FetchNodeList = (projectId, dispatch) => {
-    getNavTreeNodeList(projectId)
-        .then(
-            res => {
-                let {succ, errorMsg, data} = parseResponseMsg(res)
-                dispatch(getNavTreeAction(data))
-            },
-            err => {
-                console.info(err)
-            }
-        )
+
+function getAllParentNodeIds(nodes, targetNode, res) {
+    if (targetNode.id === 'root') return;
+    for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i].id === targetNode.pid && nodes[i].id !== 'root') {
+            res.push(nodes[i].id)
+            getAllParentNodeIds(nodes, {...nodes[i]}, res)
+        }
+    }
+}
+
+function doMapToFlattenNodes(node, routeNodes) {
+    routeNodes.push(node)
+    for (let i = 0; i < node.children.length; i++) {
+        doMapToFlattenNodes(node.children[i], routeNodes)
+    }
+}
+
+function mapToFlattenNodes(nodes) {
+    let routeNodes = [];
+    for (let i = 0; i < nodes.length; i++) {
+        doMapToFlattenNodes(nodes[i], routeNodes)
+    }
+    return routeNodes
 }

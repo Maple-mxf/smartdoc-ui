@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {getSwitchLeftMenuAction} from "./store/actionCreators";
+import NotFoundComponent from "./404";
 
 const drawerWidth = 250;
 
@@ -198,6 +199,7 @@ export default function HomeComponent() {
                             ))
                         }) : null
                     }
+                    <Route component={NotFoundComponent}/>
                 </Switch>
             </Box>
         </Box>

@@ -1,26 +1,20 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {Box, useTheme} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import CustomCodeComponent from "../../../style/component/code";
 
-const useStyles = makeStyles(theme => (
-    {
-        root: {
-            width: '100%',
-        },
-        button: {
-            margin: theme.spacing(1),
-        },
-    }
-));
-
-export default function BaseInfoComponent(props){
-    const  classes = useStyles()
-    const {doc, } = props;
+export default function BaseInfoComponent(props) {
+    let theme = useTheme();
+    const {doc,} = props;
     return (
-        <div className={classes.root}>
-            <Typography variant="h4"   gutterBottom>
+        <Box>
+            <Typography variant="h5" align='left' gutterBottom paragraph>
                 {doc.name}
             </Typography>
-        </div>
+
+            <CustomCodeComponent codeText={doc.curlCodeSample} language='shell' tag='request'/>
+            <CustomCodeComponent codeText={doc.responseFakeCodeSample} language='json' tag='response'/>
+
+        </Box>
     )
 }

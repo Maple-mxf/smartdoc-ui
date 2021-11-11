@@ -1,6 +1,6 @@
 import {fetchServerData, get, patch} from "../../../util/http";
 import {
-    GET_DOC,
+    GET_DOC, SELECTED_DOC_NODE_ID,
     SnippetType_RequestHeader
 } from "./constants";
 import {
@@ -40,6 +40,14 @@ export const editDocRequestHeader = (docId, data) => {
                 reject(e)
             })
     }))
+}
+
+//
+export const getSelectedDocNodeIdAction = (nodeId) => {
+    return {
+        type: SELECTED_DOC_NODE_ID,
+        nodeId
+    }
 }
 
 export const batchDeleteSnippets = (docId, data) => {
