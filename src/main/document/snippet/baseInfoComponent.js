@@ -1,10 +1,10 @@
 import React from 'react';
-import {Box, useTheme} from "@mui/material";
+import {Box} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import CustomCodeComponent from "../../../style/component/code";
+import {FakeSampleComponent} from "../component/FakeSampleComponent";
+import LeftTableTabComponent from "../component/LeftTableTabComponent";
 
 export default function BaseInfoComponent(props) {
-    let theme = useTheme();
     const {doc,} = props;
     return (
         <Box>
@@ -12,8 +12,9 @@ export default function BaseInfoComponent(props) {
                 {doc.name}
             </Typography>
 
-            <CustomCodeComponent codeText={doc.curlCodeSample} language='shell' tag='request'/>
-            <CustomCodeComponent codeText={doc.responseFakeCodeSample} language='json' tag='response'/>
+            <FakeSampleComponent doc={doc}/>
+
+            <LeftTableTabComponent doc={doc}/>
 
         </Box>
     )

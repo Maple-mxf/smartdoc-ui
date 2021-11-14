@@ -10,7 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MuiAppBar from '@mui/material/AppBar';
 import {ListItemButton} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {GLOBAL_REDUCER_NAMESPACE} from "./util/constants";
 import {NavLink, Route, Switch, useLocation} from "react-router-dom";
 import {getRouteItemByPath} from "./route";
@@ -19,8 +19,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import {getSwitchLeftMenuAction} from "./store/actionCreators";
 import NotFoundComponent from "./404";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 250;
 
@@ -36,7 +36,6 @@ const StyleListItemLabComponent = styled(ListItemButton)(({theme}) => ({
         backgroundColor: theme.palette.action.hover,
         transform: `scale(1.01)`
     },
-
 }));
 
 const openedMixin = (theme) => ({
@@ -65,7 +64,6 @@ const DrawerHeader = styled('div')(({theme}) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 
@@ -108,8 +106,7 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
 
 export default function HomeComponent() {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
-    const dispatch = useDispatch();
+    const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -145,9 +142,19 @@ export default function HomeComponent() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
+                    <Typography variant="h6" noWrap component="div" sx={{color: theme.palette.primary.main}}>
+                        ElephantDoc
                     </Typography>
+
+                    <IconButton
+                        sx={{
+                            position: 'fixed',
+                            right: '1rem'
+                        }}
+
+                    >
+                        <AccountCircleIcon color='primary' />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>

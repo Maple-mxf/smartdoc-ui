@@ -5,7 +5,7 @@ import {darcula} from "react-syntax-highlighter/dist/cjs/styles/prism";
 import {DocDataEditDataGrid} from "./apidocDataEditGrid";
 import {getRequestHeaderRowId, HeaderSchema} from "./schema";
 import {useSnackbar} from "notistack";
-import {batchDeleteSnippets, createSnippets, editDocRequestHeader } from "./store/actionCreators";
+import {batchDeleteSnippets, createSnippets, editDocRequestHeader} from "./store/actionCreators";
 import {parseResponseMsg} from "../../util/http";
 import {useDispatch} from "react-redux";
 import {ErrorVariant, SuccessVariant, WarningVariant} from "../../common/tip";
@@ -21,7 +21,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 export const ApiDocComponent = (props) => {
     const {doc} = props
 
-    const [tabValue,setTabValue] =React.useState('1')
+    const [tabValue, setTabValue] = React.useState('1')
     const [openCreateSnippetForm, setOpenCreateSnippetForm] = React.useState(false)
     const [snippetFormTitle, setSnippetFormTitle] = React.useState("CREAT")
     const [snippetFormText, setSnippetFormText] = React.useState("")
@@ -34,46 +34,46 @@ export const ApiDocComponent = (props) => {
     const dispatch = useDispatch();
 
     const handlerCreateSnippetFormClose = (setFormDateEmptyFunc) => {
-        return ()=>{
+        return () => {
             setOpenCreateSnippetForm(false)
             setFormDateEmptyFunc()
         }
     }
-    
+
     const handleTagChange = (event, newValue) => {
         setTabValue(newValue);
     };
 
-    const handleSubmitData = (docId,snippetType,dispatch,handleVariant) => {
-        return (formData,setFormDateEmptyFunc) => {
+    const handleSubmitData = (docId, snippetType, dispatch, handleVariant) => {
+        return (formData, setFormDateEmptyFunc) => {
             return () => {
                 // TODO  临时代码
-                if (formData.field === undefined || formData.field.length ===0){
+                if (formData.field === undefined || formData.field.length === 0) {
                     handleVariant("Field required", WarningVariant)
                     return
                 }
-               createSnippets(docId,snippetType,formData)
-                   .then(
-                       res =>{
-                           let {succ, errorMsg, data } = parseResponseMsg(res)
-                           if (!succ) {
-                               handleVariant(errorMsg, ErrorVariant)
-                               return
-                           }
-                           setOpenCreateSnippetForm(false)
-                           handleVariant("Completed", SuccessVariant)
-                           FetchDocById(docId,dispatch)
-                           setFormDateEmptyFunc()
-                       },
-                       err => {
-                           handleVariant(JSON.stringify(err), ErrorVariant)
-                       }
-                   )
-           }
+                createSnippets(docId, snippetType, formData)
+                    .then(
+                        res => {
+                            let {succ, errorMsg, data} = parseResponseMsg(res)
+                            if (!succ) {
+                                handleVariant(errorMsg, ErrorVariant)
+                                return
+                            }
+                            setOpenCreateSnippetForm(false)
+                            handleVariant("Completed", SuccessVariant)
+                            FetchDocById(docId, dispatch)
+                            setFormDateEmptyFunc()
+                        },
+                        err => {
+                            handleVariant(JSON.stringify(err), ErrorVariant)
+                        }
+                    )
+            }
         }
     }
 
-    const setDialogPropFuncs ={
+    const setDialogPropFuncs = {
         setOpenCreateSnippetForm,
         setSnippetFormTitle, setSnippetFormText,
         setSnippetFormShowOptionalSelector
@@ -87,14 +87,14 @@ export const ApiDocComponent = (props) => {
                 open={openCreateSnippetForm}
                 showOptionalSelector={snippetFormShowOptionalSelector}
                 handleClose={handlerCreateSnippetFormClose}
-                handleSubmit={handleSubmitData(doc.id, SnippetType_RequestHeader,dispatch,handleVariant)}
+                handleSubmit={handleSubmitData(doc.id, SnippetType_RequestHeader, dispatch, handleVariant)}
             />
 
             <Typography variant="subtitle1" gutterBottom>
                 Request Example
             </Typography>
 
-            <SyntaxHighlighter language="http" style={darcula}   wrapLongLines={true}>
+            <SyntaxHighlighter language="http" style={darcula} wrapLongLines={true}>
                 {doc.requestFakeCodeSample === undefined ? "" : doc.requestFakeCodeSample}
             </SyntaxHighlighter>
 
@@ -104,19 +104,19 @@ export const ApiDocComponent = (props) => {
                 Response Example
             </Typography>
 
-            <SyntaxHighlighter language="json" style={darcula}  wrapLongLines={true}>
+            <SyntaxHighlighter language="json" style={darcula} wrapLongLines={true}>
                 {doc.responseFakeCodeSample === undefined ? "" : doc.responseFakeCodeSample}
             </SyntaxHighlighter>
 
             <TabContext value={tabValue}>
-                <TabList   aria-label="simple tabs example" onChange={handleTagChange}>
-                    <Tab label="Request Header"  value="1" icon={<AssignmentIcon />} />
-                    <Tab label="Request Header" value="2"  />
+                <TabList aria-label="simple tabs example" onChange={handleTagChange}>
+                    <Tab label="Request Header" value="1" icon={<AssignmentIcon/>}/>
+                    <Tab label="Request Header" value="2"/>
                 </TabList>
 
                 <TabPanel value='1' index={0}>
-                    <DocDataEditDataGrid rows={ doc.requestHeaderDescriptor }
-                                         columns={ HeaderSchema }
+                    <DocDataEditDataGrid rows={doc.requestHeaderDescriptor}
+                                         columns={HeaderSchema}
                                          handleVariant={handleVariant}
                                          getRowIdFunc={getRequestHeaderRowId}
                                          editCommitFunc={editDocRequestHeaderFunc(doc.id, dispatch, handleVariant)}
@@ -136,8 +136,8 @@ export const ApiDocComponent = (props) => {
                     />
                 </TabPanel>
                 <TabPanel value='2' index={1}>
-                    <DocDataEditDataGrid rows={ doc.responseHeaderDescriptors }
-                                         columns={ HeaderSchema }
+                    <DocDataEditDataGrid rows={doc.responseHeaderDescriptors}
+                                         columns={HeaderSchema}
                                          handleVariant={handleVariant}
                                          getRowIdFunc={getRequestHeaderRowId}
                                          editCommitFunc={editDocRequestHeaderFunc(doc.id, dispatch, handleVariant)}
@@ -179,7 +179,7 @@ const batchDeleteFunc = (docId, snippetType, dispatch, handleVariant) => {
                         return
                     }
                     handleVariant("Completed", SuccessVariant)
-                    FetchDocById(docId,dispatch)
+                    FetchDocById(docId, dispatch)
                 },
                 err => {
                     handleVariant(JSON.stringify(err), ErrorVariant)
@@ -204,7 +204,7 @@ const editDocRequestHeaderFunc = (docId, dispatch, handleVariant) => {
                         return
                     }
                     handleVariant("Completed", SuccessVariant)
-                    FetchDocById(docId,dispatch)
+                    FetchDocById(docId, dispatch)
                 },
                 err => {
                     let errString = ""

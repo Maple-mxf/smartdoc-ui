@@ -7,6 +7,8 @@ import {parseResponseMsg} from "../../../util/http";
 import {getDocAction, getDocById} from "../store/actionCreators";
 import NotFoundComponent from "../../../404";
 import {Box, useTheme} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import ApiDocumentToobarListComponent from "./ApiDocumentToobarListComponent";
 
 
 export const FetchDocById = (docId, dispatch) => {
@@ -40,10 +42,16 @@ const ContentComponent = (props) => {
 
     return (
         <Box sx={{
-            padding: theme.spacing(2)
+            padding: theme.spacing(1)
         }}>
-            <BaseInfoComponent doc={doc}/>
-            {/*<ApiDocComponent doc={doc} classes={classes}/>*/}
+            <Grid container spacing={0}>
+                <Grid item xs={12} sm={10}>
+                    <BaseInfoComponent doc={doc}/>
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                    <ApiDocumentToobarListComponent doc={doc}/>
+                </Grid>
+            </Grid>
         </Box>
     )
 }

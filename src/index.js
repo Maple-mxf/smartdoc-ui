@@ -6,6 +6,8 @@ import configStore from './store'
 import routeList from "./route";
 import HomeComponent from "./home";
 import {SnackbarProvider} from "notistack";
+import RichTextComponent from "./style/component/richText";
+import NavigationTableContent from "./style/component/tableContent";
 
 const Root = () => {
     const store = configStore({
@@ -16,11 +18,9 @@ const Root = () => {
             <SnackbarProvider maxSnack={5}>
                 <Router>
                     <Switch>
-                        <Route exact path='/' render={() => (
-                            <Redirect to='/home'/>
-                        )}/>
                         <Route path='/home' component={HomeComponent}/>
-
+                        <Route path='/richText' component={RichTextComponent}/>
+                        <Route path='/nav' component={NavigationTableContent}/>
                     </Switch>
                 </Router>
             </SnackbarProvider>
