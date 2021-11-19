@@ -1,9 +1,9 @@
 import {useDispatch} from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import {Add} from "@material-ui/icons";
 import {OPEN_NEW_PROJECT_FORM} from "../store/constants";
 import React from "react";
+import {MainButton} from "../../../style/component/button";
 
 export const ProjectToolBarComponent = (props)=>{
     const {classes} =props;
@@ -12,9 +12,8 @@ export const ProjectToolBarComponent = (props)=>{
         <Grid container spacing={3}>
             <Grid item xs={6} sm={2} />
             <Grid item xs={6} sm={8} >
-                <Button
+                <MainButton
                     variant="contained"
-                    color="primary"
                     className={classes.button}
                     endIcon={<Add />}
                     onClick={()=> dispatch({
@@ -23,7 +22,7 @@ export const ProjectToolBarComponent = (props)=>{
                     })}
                 >
                     Create
-                </Button>
+                </MainButton>
             </Grid>
             <Grid item xs={6} sm={2} />
         </Grid>

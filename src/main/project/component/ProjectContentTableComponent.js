@@ -2,12 +2,17 @@ import {useDispatch, useSelector} from "react-redux";
 import {useSnackbar} from "notistack";
 import {PROJECT_REDUCER_NAMESPACE} from "../../../util/constants";
 import React, {useEffect} from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
+
+
 import {ProjectListComponent} from "./ListProjectComponent";
-import Pagination from "@material-ui/lab/Pagination";
 import {FetchProjectList} from "../index";
+
+import useTheme from "@mui/material/styles/useTheme";
+
+import {MainPagination} from "../../../style/component/pagination";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import List from "@mui/material/List";
 
 export const ProjectContentTableComponent = (props) => {
     const {classes} = props
@@ -45,8 +50,9 @@ export const ProjectContentTableComponent = (props) => {
                     </List>
                 </Paper>
                 <div className={classes.pageableNumBtn}>
-                    <Pagination count={ Math.ceil(count/size) }
+                    <MainPagination count={ Math.ceil(count/size) }
                                 size="large"
+                                color='primary'
                                 page={page}
                                 onChange={changePage}
                                 showFirstButton showLastButton />

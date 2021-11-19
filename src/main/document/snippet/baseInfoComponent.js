@@ -1,26 +1,21 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {Box} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import {FakeSampleComponent} from "../component/FakeSampleComponent";
+import LeftTableTabComponent from "../component/LeftTableTabComponent";
 
-const useStyles = makeStyles(theme => (
-    {
-        root: {
-            width: '100%',
-        },
-        button: {
-            margin: theme.spacing(1),
-        },
-    }
-));
-
-export default function BaseInfoComponent(props){
-    const  classes = useStyles()
-    const {doc, } = props;
+export default function BaseInfoComponent(props) {
+    const {doc,} = props;
     return (
-        <div className={classes.root}>
-            <Typography variant="h4"   gutterBottom>
+        <Box>
+            <Typography variant="h5" align='left' gutterBottom paragraph>
                 {doc.name}
             </Typography>
-        </div>
+
+            <FakeSampleComponent doc={doc}/>
+
+            <LeftTableTabComponent doc={doc}/>
+
+        </Box>
     )
 }

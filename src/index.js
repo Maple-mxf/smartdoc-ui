@@ -1,25 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './home'
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import configStore from './store'
 import routeList from "./route";
+import HomeComponent from "./home";
+import {SnackbarProvider} from "notistack";
+import RichTextComponent from "./style/component/richText";
+import NavigationTableContent from "./style/component/tableContent";
 
 const Root = () => {
     const store = configStore({
-        "routeList":routeList
+        "routeList": routeList
     })
     return (
         <Provider store={store}>
-            <Router>
-                <Switch>
-                    <Route exact path='/' render={() => (
-                        <Redirect to='/home'/>
-                    )}/>
-                    <Route path='/home' component={Home}/>
-                </Switch>
-            </Router>
+            <SnackbarProvider maxSnack={5}>
+                <Router>
+                    <Switch>
+                        <Route path='/home' component={HomeComponent}/>
+                        <Route path='/richText' component={RichTextComponent}/>
+                        <Route path='/nav' component={NavigationTableContent}/>
+                    </Switch>
+                </Router>
+            </SnackbarProvider>
         </Provider>
     )
 }

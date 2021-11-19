@@ -1,5 +1,5 @@
 import {
-    GET_DOC
+    GET_DOC, SELECTED_DOC_NODE_ID
 } from "./constants";
 
 const initDoc = {
@@ -18,16 +18,21 @@ const initDoc = {
     "curlCodeSample": "",
     "javaCodeSample": "",
     "pythonCodeSample": "",
-    "lastUpdateTime": null
+    "lastUpdateTime": null,
+
+    //
+    "selectedDocNodeId": "",
 }
 
-const doc={doc:initDoc}
+const doc = {doc: initDoc}
 
 
 export default (state = doc, action) => {
     switch (action.type) {
         case GET_DOC:
             return {...state, doc: action.doc}
+        case SELECTED_DOC_NODE_ID:
+            return {...state, selectedDocNodeId: action.selectedDocNodeId};
         default:
             return state;
     }

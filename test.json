@@ -1,0 +1,14 @@
+{
+  "buckets": [
+    {
+      "key": "1321121231233123",
+      "doc_count": 2
+    },
+    {
+      "key": "1321123123",
+      "doc_count": 1
+    }
+  ],
+  "doc_count_error_upper_bound": 0,
+  "sum_other_doc_count": 0
+}

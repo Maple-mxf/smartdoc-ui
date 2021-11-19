@@ -5,7 +5,6 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 // Code Editor plugin
-import AceEditor from "react-ace";
 import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/mode-xml'
 import 'ace-builds/src-noconflict/theme-monokai'
