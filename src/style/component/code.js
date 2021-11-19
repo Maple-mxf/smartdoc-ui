@@ -89,7 +89,7 @@ export default function CustomCodeComponent(props) {
                                customStyle={{
                                    borderLeftStyle: 'solid',
                                    borderColor: theme.palette.primary.main,
-                                   borderWidth: '6px',
+                                   borderWidth: '5px',
                                    backgroundColor: theme.palette.grey.A100,
                                    marginTop: "1rem",
 
