@@ -1795,6 +1795,22 @@
     esm "^3.2.25"
     yargs "^17.0.1"
 
+"@mui-treasury/styles@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.nlark.com/@mui-treasury/styles/download/@mui-treasury/styles-1.13.1.tgz#96c86f362056eaeb528740bf4cf128d3cd5c56b7"
+  integrity sha1-lshvNiBW6utSh0C/TPEo081cVrc=
+  dependencies:
+    "@mui-treasury/utils" "^0.4.1"
+    color "^3.1.2"
+
+"@mui-treasury/utils@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.nlark.com/@mui-treasury/utils/download/@mui-treasury/utils-0.4.1.tgz#075645cec98b2e976766e505d9ac8b52778438b3"
+  integrity sha1-B1ZFzsmLLpdnZuUF2ayLUneEOLM=
+  dependencies:
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+
 "@mui/core@5.0.0-alpha.53":
   version "5.0.0-alpha.53"
   resolved "https://registry.npmmirror.com/@mui/core/download/@mui/core-5.0.0-alpha.53.tgz#ede1445be3bf5a93d25bdd8ead23afdfb1b68f8b"
@@ -4180,7 +4196,7 @@ color-string@^1.6.0:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color@^3.0.0:
+color@^3.0.0, color@^3.1.2:
   version "3.2.1"
   resolved "https://registry.nlark.com/color/download/color-3.2.1.tgz?cache=0&sync_timestamp=1628105303224&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcolor%2Fdownload%2Fcolor-3.2.1.tgz#3544dc198caf4490c3ecc9a790b54fe9ff45e164"
   integrity sha1-NUTcGYyvRJDD7MmnkLVP6f9F4WQ=
@@ -8432,6 +8448,11 @@ monaco-editor@^0.26.0:
   resolved "https://registry.nlark.com/monaco-editor/download/monaco-editor-0.26.1.tgz#62bb5f658bc95379f8abb64b147632bd1c019d73"
   integrity sha1-YrtfZYvJU3n4q7ZLFHYyvRwBnXM=
 
+monaco-editor@^0.30.1:
+  version "0.30.1"
+  resolved "https://registry.npmmirror.com/monaco-editor/download/monaco-editor-0.30.1.tgz#47f8d18a0aa2264fc5654581741ab8d7bec01689"
+  integrity sha512-B/y4+b2O5G2gjuxIFtCE2EkM17R2NM7/3F8x0qcPsqy4V83bitJTIO4TIeZpYlzu/xy6INiY/+84BEm6+7Cmzg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.nlark.com/move-concurrently/download/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -10261,6 +10282,13 @@ react-material-ui-form-validator@^2.1.3:
   dependencies:
     prop-types "^15.0.0"
     react-form-validator-core "1.1.0"
+
+react-monaco-editor@^0.46.0:
+  version "0.46.0"
+  resolved "https://registry.npmmirror.com/react-monaco-editor/download/react-monaco-editor-0.46.0.tgz#ac97d5429cd8821d466f0e8e0536ea2a90bbc6d0"
+  integrity sha1-rJfVQpzYgh1Gbw6OBTbqKpC7xtA=
+  dependencies:
+    prop-types "^15.7.2"
 
 react-redux@^7.1.1:
   version "7.2.4"
@@ -12367,11 +12395,6 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   integrity sha1-wdjRSTFtPqhShIiVy2oL/oh7h98=
   dependencies:
     minimalistic-assert "^1.0.0"
-
-web-vitals@^1.0.1:
-  version "1.1.2"
-  resolved "https://registry.nlark.com/web-vitals/download/web-vitals-1.1.2.tgz#06535308168986096239aa84716e68b4c6ae6d1c"
-  integrity sha1-BlNTCBaJhgliOaqEcW5otMaubRw=
 
 webidl-conversions@^5.0.0:
   version "5.0.0"

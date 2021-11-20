@@ -12,10 +12,9 @@ export default function BaseInfoComponent(props) {
                 {doc.name}
             </Typography>
 
-            <FakeSampleComponent doc={doc}/>
+            {/*<FakeSampleComponent doc={doc}/>*/}
 
             <LeftTableTabComponent doc={doc}/>
-
         </Box>
     )
 }

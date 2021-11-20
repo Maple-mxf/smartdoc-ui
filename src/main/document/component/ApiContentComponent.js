@@ -45,7 +45,7 @@ const ContentComponent = (props) => {
             padding: theme.spacing(1)
         }}>
             <Grid container spacing={0}>
-                <Grid item xs={12} sm={10}>
+                <Grid item xs={12} sm={11}>
                     <BaseInfoComponent doc={doc}/>
                 </Grid>
                 <Grid item xs={12} sm={1}>
@@ -57,7 +57,7 @@ const ContentComponent = (props) => {
 }
 
 
-export default function ApiContent() {
+export default function ApiContentComponent() {
     const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
     return (
         <Switch>

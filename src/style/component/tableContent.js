@@ -18,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import {NavLink} from "react-router-dom";
 import Api from "@mui/icons-material/Api";
 import Description from "@mui/icons-material/Description";
+import HomeIcon from '@mui/icons-material/Home';
 
 const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
         color: theme.palette.text.primary,
@@ -170,7 +171,7 @@ const CustomContent = React.forwardRef(
                             onClick={handleClick}
                             sx={{position: 'absolute', right: '2%', top: '15%'}}
                         >
-                            <MoreHorizIcon  fontSize="inherit"/>
+                            <MoreHorizIcon fontSize="inherit"/>
                         </IconButton>
                     ) : null
                 }
@@ -237,7 +238,7 @@ const CustomTreeItem = (props) => (
 
 export default function NavigationTableContent(props) {
     const theme = useTheme();
-    const {nodes, genLinkFunc,expanded, selected,setTargetSelectNode,setDefaultExpanded} = props;
+    const {nodes, genLinkFunc, expanded, selected, setTargetSelectNode, setDefaultExpanded} = props;
     return (
         <TreeView
             aria-label="icon expansion"
@@ -278,10 +279,11 @@ function RecursionTreeNodeContentComponent(props) {
             {nodes.map((node, index) => {
                 return (
                     node.type === 'RESOURCE' ?
-                        <CustomTreeItem nodeId={node.id} label={node.title} nodeicon={FolderOpen} key={node.id}>
+                        <CustomTreeItem nodeId={node.id} label={node.title}
+                                        nodeicon={node.id === 'root' ? HomeIcon : FolderOpen} key={node.id}>
                             <RecursionTreeNodeContentComponent nodes={node.children} genLinkFunc={genLinkFunc}/>
                         </CustomTreeItem> :
-                        <NavLink to={genLinkFunc(node)} key={node.id} style={{textDecoration: 'none'}} >
+                        <NavLink to={genLinkFunc(node)} key={node.id} style={{textDecoration: 'none'}}>
                             <CustomTreeItem nodeId={node.id} label={node.title}
                                             nodeicon={(node.type === 'API' ? Api : Description)}/>
                         </NavLink>

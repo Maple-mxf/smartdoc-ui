@@ -13,7 +13,7 @@ export default function MainDataGrid(props) {
                   editMode='row'
                   columns={columns1}
                   headerHeight={65}
-
+                  // height='10vh'
                   disableColumnMenu
                   showCellRightBorder
             // 隐藏部分属性

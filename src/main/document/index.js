@@ -1,6 +1,6 @@
 import React from "react";
 import ApiNavTreeComponent from "./tree"
-import ApiContent from "./component/ApiContentComponent";
+import ApiContentComponent from "./component/ApiContentComponent";
 import {BrowserRouter} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getNavTreeAction, getNavTreeNodeList} from "./tree/store/actionCreators";
@@ -37,7 +37,7 @@ export default function Index() {
                     <ApiNavTreeComponent/>
                 </Grid>
                 <Grid item xs={12} sm={9}>
-                    <ApiContent/>
+                    <ApiContentComponent/>
                 </Grid>
 
             </Grid>
