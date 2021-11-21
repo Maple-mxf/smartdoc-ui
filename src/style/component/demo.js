@@ -1,61 +1,49 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import TableViewIcon from "@mui/icons-material/TableView";
-import CodeIcon from "@mui/icons-material/Code";
-import Grid from "@mui/material/Grid";
-import {useTheme} from "@mui/material";
+import React from 'react'
+// 引入编辑器组件
+import BraftEditor from 'braft-editor'
+// 引入编辑器样式
+import 'braft-editor/dist/index.css'
 
-function TabPanel(props) {
-    const {children, value, index, ...other} = props;
+export default class EditorDemo extends React.Component {
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{p: 3}}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+    state = {
+        // 创建一个空的editorState作为初始值
+        editorState: BraftEditor.createEditorState(null)
+    }
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
+    async componentDidMount () {
+        // 假设此处从服务端获取html格式的编辑器内容
+        const htmlContent = ""
+        // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
+        this.setState({
+            editorState: BraftEditor.createEditorState(htmlContent)
+        })
+    }
 
-function a11yProps(index) {
-    return {
-        id: `vertical-tab-${index}`,
-        'aria-controls': `vertical-tabpanel-${index}`,
-    };
-}
+    submitContent = async () => {
+        // 在编辑器获得焦点时按下ctrl+s会执行此方法
+        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
+        const htmlContent = this.state.editorState.toHTML()
+        // const result = await saveEditorContent(htmlContent)
+    }
 
-export default function VerticalTabs() {
-    const [value, setValue] = React.useState(0);
+    handleEditorChange = (editorState) => {
+        this.setState({ editorState})
+    }
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    render () {
 
-    let theme = useTheme();
+        const { editorState} = this.state
+        return (
+            <div className="my-component">
+                <BraftEditor
+                    value={editorState}
+                    onChange={this.handleEditorChange}
+                    onSave={this.submitContent}
+                />
+            </div>
+        )
 
-    return (
-        <Box
-            sx={{flexGrow: 1, bgcolor: 'background.paper', display: 'flex'}}
-        >
+    }
 
-        </Box>
-    );
 }

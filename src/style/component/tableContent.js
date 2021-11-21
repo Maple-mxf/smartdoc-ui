@@ -4,7 +4,7 @@ import TreeView from '@mui/lab/TreeView';
 import TreeItem, {treeItemClasses, useTreeItem} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import Typography from '@mui/material/Typography';
-import {styled, alpha} from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import {LeftTreeWidth} from "../../main/document/tree";
@@ -19,6 +19,7 @@ import {NavLink} from "react-router-dom";
 import Api from "@mui/icons-material/Api";
 import Description from "@mui/icons-material/Description";
 import HomeIcon from '@mui/icons-material/Home';
+import {useCallback} from "react";
 
 const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
         color: theme.palette.text.primary,
@@ -66,6 +67,7 @@ const options = [
     'Atria',
 ];
 
+// TODO  此组件的性能优化
 const CustomContent = React.forwardRef(
     function CustomContent(props, ref) {
 
@@ -90,13 +92,17 @@ const CustomContent = React.forwardRef(
             preventSelection,
         } = useTreeItem(nodeId);
 
-        const [displayMoreBtn, setDisplayMoreBtn] = React.useState(false)
+        const [displayMoreBtn, setDisplayMoreBtn] = React.useState(false);
+
+        const setDisplayMoreBtnHandler = useCallback((value) => {
+            setDisplayMoreBtn(value);
+        }, [displayMoreBtn]);
 
         // 当当前节点选中时，则显示more按钮，如果未选中，则不显示more按钮
         React.useEffect(() => {
-            setDisplayMoreBtn(selected);
+            setDisplayMoreBtnHandler(selected);
             return () => {
-                setDisplayMoreBtn(false);
+                setDisplayMoreBtnHandler(false);
             }
         }, [selected])
 
@@ -140,11 +146,11 @@ const CustomContent = React.forwardRef(
                  ref={ref}
 
                  onMouseEnter={() => {
-                     setDisplayMoreBtn(true)
+                     setDisplayMoreBtnHandler(true)
                  }}
 
                  onMouseLeave={() => {
-                     setDisplayMoreBtn(false)
+                     setDisplayMoreBtnHandler(false)
                  }}
             >
                 <div onClick={handleExpansionClick} className={classes.iconContainer}>
@@ -237,8 +243,21 @@ const CustomTreeItem = (props) => (
 );
 
 export default function NavigationTableContent(props) {
+
+    console.info("NavigationTableContent")
+
     const theme = useTheme();
     const {nodes, genLinkFunc, expanded, selected, setTargetSelectNode, setDefaultExpanded} = props;
+
+    // 缓存函数
+    const setTargetSelectNodeHandler = useCallback((nodeId) => {
+        setTargetSelectNode(nodeId)
+    }, [selected])
+
+    const setDefaultExpandedHandler = useCallback((nodeIds) => {
+        setDefaultExpanded(nodeIds)
+    }, [expanded])
+
     return (
         <TreeView
             aria-label="icon expansion"
@@ -251,11 +270,11 @@ export default function NavigationTableContent(props) {
             selected={selected}
 
             onNodeSelect={(event, value) => {
-                setTargetSelectNode(value)
+                setTargetSelectNodeHandler(value);
             }}
 
             onNodeToggle={(event, nodeIds) => {
-                setDefaultExpanded(nodeIds)
+                setDefaultExpandedHandler(nodeIds);
             }}
 
             sx={{

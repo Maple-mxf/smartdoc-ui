@@ -5,6 +5,9 @@ import {useTheme} from "@mui/material";
 import Box from "@mui/material/Box";
 import AceEditor from "react-ace";
 import Tooltip from "@mui/material/Tooltip";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/mode-json";
+
 
 const StyledSaveButton = styled(SaveIcon)(({theme}) => ({
     color: theme.palette.action,
@@ -29,6 +32,7 @@ export default function CodeEditorComponent(props) {
                     borderWidth: '0.5px',
                     borderColor: `${theme.palette.divider}`
                 }}
+                enableSnippets={true}
                 mode={language}
                 theme='github'
                 name='basic-code-editor'

@@ -4,6 +4,7 @@ export default function wrapperWithID(rows) {
 
     for (let i = 0; i < rows.length; i++) {
         rows[i]['id'] = uuid();
+        rows[i]['lasted'] = (i === (rows.length - 1));
     }
     return rows
 }

@@ -33,6 +33,8 @@ export default function DocumentNavigationComponent() {
     const classes = useStyles();
     const theme = useTheme()
 
+    console.log("rerender DocumentNavigationComponent")
+
     return (
         <Container maxWidth={null}>
             <div

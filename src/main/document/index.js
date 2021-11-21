@@ -39,7 +39,6 @@ export default function Index() {
                 <Grid item xs={12} sm={9}>
                     <ApiContentComponent/>
                 </Grid>
-
             </Grid>
         </BrowserRouter>
     )
