@@ -5,11 +5,10 @@ import {DynamicFormComponent} from "./DynamicFormComponent";
 import {
     changeMatrixVarLinesAction
 } from "../store/actionCreators";
-import Zoom from "@material-ui/core/Zoom";
-import Paper from "@material-ui/core/Paper";
+import Zoom from "@mui/material/Zoom";
+import Paper from "@mui/material/Paper";
 
 export const MatrixVarComponent = (props) => {
-    const {classes,} = props;
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
     const exploreOpenMatrixVarForm = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE].exploreOpenMatrixVarForm);
     const dispatch = useDispatch();
@@ -21,7 +20,6 @@ export const MatrixVarComponent = (props) => {
                     <Zoom in={exploreOpenMatrixVarForm}>
                         <Paper elevation={0} >
                             <DynamicFormComponent
-                                classes={classes}
                                 formLines={exploreDocData.matrixVarLines}
                                 keyPlaceholder="Matrix Var Key"
                                 setFormLines={(newLines)=>{

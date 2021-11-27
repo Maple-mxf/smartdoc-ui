@@ -1,13 +1,12 @@
-import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import React from "react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import {HighlightOff} from "@mui/icons-material";
 
 export const IncreaseFormLineComponent = (props) => {
     const {
-        classes,
         id,
         showDelBtn,
         clickValueTextFieldFunc,
@@ -60,7 +59,6 @@ export const IncreaseFormLineComponent = (props) => {
                            label="Value"
                            color="primary"
                            fullWidth
-                           className={classes.formDataTextField}
                            size='small'
                            value={value2}
                            placeholder="Value"
@@ -73,12 +71,11 @@ export const IncreaseFormLineComponent = (props) => {
                 {
                     showDelBtn ?
                         <IconButton aria-label="delete"
-                                    className={classes.margin}
                                     color='secondary'
                                     size='small'
                                     onClick={clickDelBtnFunc(id)}
                         >
-                            <HighlightOffIcon fontSize="medium"/>
+                            <HighlightOff fontSize="medium"/>
                         </IconButton>
                         : null
                 }

@@ -3,11 +3,10 @@ import {DOC_EXPLORE_REDUCER_NAMESPACE} from "../../../../util/constants";
 import React from "react";
 import {DynamicFormComponent} from "./DynamicFormComponent";
 import {changeRequestHeaderLinesAction} from "../store/actionCreators";
-import Zoom from "@material-ui/core/Zoom";
-import Paper from "@material-ui/core/Paper";
+import Zoom from "@mui/material/Zoom";
+import Paper from "@mui/material/Paper";
 
 export const RequestHeaderComponent = (props) => {
-    const {classes,} = props;
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
     const exploreOpenHeaderForm = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE].exploreOpenHeaderForm);
     const dispatch = useDispatch();
@@ -19,7 +18,6 @@ export const RequestHeaderComponent = (props) => {
                     <Zoom in={exploreOpenHeaderForm}>
                         <Paper elevation={0} >
                             <DynamicFormComponent
-                                classes={classes}
                                 formLines={exploreDocData.requestHeaderLines}
                                 keyPlaceholder="Header Key"
                                 autoCompleteOptions={top100Films}

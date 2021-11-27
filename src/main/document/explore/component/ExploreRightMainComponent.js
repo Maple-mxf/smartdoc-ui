@@ -5,17 +5,16 @@ import {RequestHeaderComponent} from "./RequestHeaderComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {DOC_EXPLORE_REDUCER_NAMESPACE} from "../../../../util/constants";
 import {changeUrlValueAction} from "../store/actionCreators";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
 import {URIVarComponent} from "./URIVarComponent";
 import {URLParamComponent} from "./URLParamComponent";
 import {MatrixVarComponent} from "./MatrixVarComponent";
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Icon from "@mui/material/Icon";
+import {Visibility} from "@mui/icons-material";
 
 export const ExploreRightMainComponent = (props) => {
-    const {classes} = props;
     const [codeType, setCodeType] = React.useState("json");
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
     const dispatch = useDispatch()
@@ -25,8 +24,8 @@ export const ExploreRightMainComponent = (props) => {
     }
 
     return (
-        <Paper elevation={4} style={{height: '85vh', width: '100%', overflow: 'auto'}} className={classes.paper}>
-            <form className={classes.root} noValidate autoComplete="off">
+        <Paper elevation={4} style={{height: '85vh', width: '100%', overflow: 'auto'}} >
+            <form  noValidate autoComplete="off">
                 <TextField id="standard-basic"
                            label="request URL"
                            autoFocus
@@ -38,27 +37,25 @@ export const ExploreRightMainComponent = (props) => {
                            margin="dense"
                            placeholder="Enter request URL here"
                 />
-                <RequestHeaderComponent classes={classes}/>
-                <URIVarComponent classes={classes} />
-                <MatrixVarComponent  classes={classes} />
-                <URLParamComponent classes={classes} />
+                <RequestHeaderComponent />
+                <URIVarComponent  />
+                <MatrixVarComponent  />
+                <URLParamComponent  />
                 <RequestBodyTypeSelectorComponent codeType={codeType} setCodeType={setCodeType}/>
-                <RequestBodyComponent classes={classes} codeType={codeType}/>
-                <ExploreContentControllerComponent classes={classes}/>
+                <RequestBodyComponent  codeType={codeType}/>
+                <ExploreContentControllerComponent />
             </form>
         </Paper>
     )
 }
 
 const ExploreContentControllerComponent = (props) => {
-    const {classes} = props;
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
     return (
         <div>
             <Button
                 variant="contained"
                 color="primary"
-                className={classes.button}
                 endIcon={<Icon>send</Icon>}
                 disabled={exploreDocData.url.length === 0}
             >
@@ -68,8 +65,7 @@ const ExploreContentControllerComponent = (props) => {
             <Button
                 variant="contained"
                 color="default"
-                className={classes.button}
-                endIcon={<VisibilityIcon/>}
+                endIcon={<Visibility/>}
                 disabled={exploreDocData.url.length === 0}
             >
                 Clear

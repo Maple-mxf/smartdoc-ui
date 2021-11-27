@@ -1,6 +1,6 @@
 import React from "react";
-import List from "@material-ui/core/List";
 import {IncreaseFormLineComponent} from "./IncreaseFormLineComponent";
+import List from "@mui/material/List";
 
 export const DynamicFormComponent = (props) => {
     const {classes, open, formLines,setFormLines,keyPlaceholder,autoCompleteOptions } = props;

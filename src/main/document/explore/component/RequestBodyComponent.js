@@ -7,7 +7,7 @@ import {changeFormLinesAction, changeXFormLinesAction} from "../store/actionCrea
 
 
 export const RequestBodyComponent = (props) => {
-    const {classes,codeType} = props;
+    const {codeType} = props;
     const bodyParamTypeTabs = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE].bodyParamTypeTabs);
     const dispatch = useDispatch();
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
@@ -18,13 +18,11 @@ export const RequestBodyComponent = (props) => {
                 bodyParamTypeTabs.map((item, index) => {
                     if (item.id === 1) {
                         return <RawComponent key={index}
-                                             classes={classes}
                                              open={item.active}
                                              codeType={codeType}/>
                     }
                     if (item.id === 2) {
                         return <DynamicFormComponent key={index}
-                                                     classes={classes}
                                                      open={item.active}
                                                      keyPlaceholder="Form key"
                                                      formLines={exploreDocData.formLines}
@@ -37,7 +35,6 @@ export const RequestBodyComponent = (props) => {
                     }
                     if (item.id === 3) {
                         return <DynamicFormComponent key={index}
-                                                     classes={classes}
                                                      open={item.active}
                                                      keyPlaceholder="Form key"
                                                      formLines={exploreDocData.xformLines}

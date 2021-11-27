@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {DOC_EXPLORE_REDUCER_NAMESPACE} from "../../../../util/constants";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Button from "@material-ui/core/Button";
 import React from "react";
-import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import {BootstrapInputComponent} from "./BootstrapInputComponent";
 import {changeParamTypeTagAction} from "../store/actionCreators";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import InputBase from "@mui/material/InputBase";
 
 
 export const RequestBodyTypeSelectorComponent = (props) => {
@@ -56,7 +56,7 @@ export const RequestBodyTypeSelectorComponent = (props) => {
                                 id="demo-customized-select-native"
                                 value={codeType}
                                 onChange={handleChange}
-                                input={<BootstrapInputComponent/>}
+                                input={<InputBase/>}
                             >
                                 <option value='json'>json</option>
                                 <option value='xml'>xml</option>

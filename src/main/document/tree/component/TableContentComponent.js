@@ -22,6 +22,7 @@ function getExpandNodeIds(nodes, selectedNodeId) {
 }
 
 export default function TableContentTreeViewComponent() {
+    console.log("rerender TableContentTreeViewComponent")
     const {nodes} = useSelector(state => state[NAV_TREE_REDUCER_NAMESPACE]);
 
     let selectedNodeId = "root";
@@ -33,6 +34,7 @@ export default function TableContentTreeViewComponent() {
     }
 
     let [defaultExpanded, setDefaultExpanded] = useState(['root']);
+
     const [targetSelectNode, setTargetSelectNode] = useState(selectedNodeId);
 
     // useCallback第二个参数设置的是依赖值
@@ -68,7 +70,6 @@ export default function TableContentTreeViewComponent() {
                                 setTargetSelectNode={setTargetSelectNode}
                                 setDefaultExpanded={setDefaultExpanded}
         />
-
     );
 }
 

@@ -33,6 +33,8 @@ export default function DocumentNavigationComponent() {
     const classes = useStyles();
     const theme = useTheme()
 
+    console.log("rerender DocumentNavigationComponent")
+
     return (
         <Container maxWidth={null}>
             <div
@@ -42,11 +44,9 @@ export default function DocumentNavigationComponent() {
                     marginLeft: "0px",
                     width: 350,
                     height: "86vh",
-                    borderRight:'solid',
-                    borderBottom:'solid',
-                    borderBottomWidth:'0.5px',
-                    borderRightWidth:'0.5px',
-                    borderBottomColor:theme.palette.grey.A100,
+                    border:'solid',
+                    borderWidth:'0.5px',
+                    borderColor:theme.palette.divider,
                 }}
             >
                 <Drawer

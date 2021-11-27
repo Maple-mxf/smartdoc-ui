@@ -1,18 +1,17 @@
 import {useDispatch, useSelector} from "react-redux";
 import {DOC_EXPLORE_REDUCER_NAMESPACE} from "../../../../util/constants";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import {
     changeOpenHeaderFormSwitch,
     changeOpenMatrixVarFormSwitch,
     changeOpenURIVarFormSwitch, changeOpenURLParamFormSwitch
 } from "../store/actionCreators";
 import React from "react";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 export const RightControllerButtonComponent = (props) => {
-    const {classes} = props;
+
     const exploreDocData = useSelector(state => state[DOC_EXPLORE_REDUCER_NAMESPACE]);
     let dispatch = useDispatch();
 
@@ -27,8 +26,7 @@ export const RightControllerButtonComponent = (props) => {
 
     return (
         <Paper elevation={5}
-               style={{height: '85vh', width: '100%',overflow: 'auto', textAlign: 'center'}}
-               className={classes.paper}>
+               style={{height: '85vh', width: '100%',overflow: 'auto', textAlign: 'center'}} >
 
             <ButtonGroup
                 orientation="vertical"

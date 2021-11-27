@@ -1,16 +1,13 @@
-import React, {useEffect} from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import deepPurple from "@material-ui/core/colors/deepPurple";
-import deepOrange from "@material-ui/core/colors/deepOrange";
+import React from "react";
 import {getProjectAction, getProjectList} from "./store/actionCreators";
 import {parseResponseMsg} from '../../util/http'
 import {ErrorVariant} from "../../common/tip";
 import {CreateProjectComponent} from "./component/CreateProjectComponent";
 import {ProjectToolBarComponent} from "./component/ProjectToolBarComponent";
 import {ProjectContentTableComponent} from "./component/ProjectContentTableComponent";
-import {useDispatch} from "react-redux";
-import {getSwitchLeftMenuAction} from "../../store/actionCreators";
-import {node} from "prop-types";
+import {makeStyles} from "@mui/material";
+import deepOrange from "@mui/material/colors/deepOrange";
+import deepPurple from "@mui/material/colors/deepPurple";
 
 
 const useStyles = makeStyles((theme) => ({

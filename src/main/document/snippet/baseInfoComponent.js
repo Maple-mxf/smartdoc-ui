@@ -1,21 +1,20 @@
 import React from 'react';
 import {Box} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {FakeSampleComponent} from "../component/FakeSampleComponent";
-import LeftTableTabComponent from "../component/LeftTableTabComponent";
+import RequestSnippetTabComponent from "../component/RequestSnippetTabComponent";
+import ResponseSnippetTabComponent from "../component/ResponseSnippetTabComponent";
+// import ResponseSnippetTabComponent from "../component/ResponseSnippetTabComponent";
 
 export default function BaseInfoComponent(props) {
     const {doc,} = props;
     return (
         <Box>
-            <Typography variant="h5" align='left' gutterBottom paragraph>
+            <Typography variant="h6" align='left' gutterBottom paragraph>
                 {doc.name}
             </Typography>
 
-            <FakeSampleComponent doc={doc}/>
-
-            <LeftTableTabComponent doc={doc}/>
-
+            <RequestSnippetTabComponent doc={doc}/>
+            <ResponseSnippetTabComponent doc={doc}/>
         </Box>
     )
 }
