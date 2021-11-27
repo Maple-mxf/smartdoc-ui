@@ -8,6 +8,9 @@ import HomeComponent from "./home";
 import {SnackbarProvider} from "notistack";
 import RichTextComponent from "./style/component/richText";
 import NavigationTableContent from "./style/component/tableContent";
+import TabsComponent from "./style/component/tabs";
+import BasicTable from "./style/component/table";
+import RoundInputBaseStyle from "./style/component/demo";
 
 const Root = () => {
     const store = configStore({
@@ -21,6 +24,9 @@ const Root = () => {
                         <Route path='/home' component={HomeComponent}/>
                         <Route path='/richText' component={RichTextComponent}/>
                         <Route path='/nav' component={NavigationTableContent}/>
+                        <Route path='/tabs' component={TabsComponent}/>
+                        <Route path='/table' component={BasicTable}/>
+                        <Route path='/demo' component={RoundInputBaseStyle}/>
                     </Switch>
                 </Router>
             </SnackbarProvider>

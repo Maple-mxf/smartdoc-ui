@@ -12,6 +12,7 @@ import AddCommentIcon from '@mui/icons-material/AddComment';
 import CopyAllIcon from '@mui/icons-material/CopyAll';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import TableViewIcon from '@mui/icons-material/TableView';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const StyledIconButton = styled(IconButton)(({theme}) => ({
     '&:hover': {
@@ -55,37 +56,42 @@ export default function ApiDocumentToobarListComponent(props) {
             <Box sx={{
                 color: theme.palette.primary.main,
             }}>tools</Box>
-            <Tooltip title="API explore" arrow placement="right">
+            <Tooltip title="API explore" arrow placement="bottom">
                 <StyledIconButton>
                     <ExploreIcon color='primary'/>
                 </StyledIconButton>
             </Tooltip>
-            <Tooltip title="document subject" arrow placement="right">
+            <Tooltip title="document subject" arrow placement="bottom">
                 <StyledIconButton>
                     <SubjectIcon color='primary'/>
                 </StyledIconButton>
             </Tooltip>
-            <Tooltip title="wiki text" arrow placement="right">
+            <Tooltip title="wiki text" arrow placement="bottom">
                 <StyledIconButton>
                     <AddCommentIcon color='primary'/>
                 </StyledIconButton>
             </Tooltip>
-            <Tooltip title="copy document link" arrow placement="right">
+            <Tooltip title="copy document link" arrow placement="bottom">
                 <StyledIconButton>
                     <InsertLinkIcon color='primary'/>
                 </StyledIconButton>
             </Tooltip>
-            <Tooltip title="copy document" arrow placement="right">
+            <Tooltip title="copy document" arrow placement="bottom">
                 <StyledIconButton>
                     <CopyAllIcon color='primary'/>
                 </StyledIconButton>
             </Tooltip>
-            <Tooltip title="copy document" arrow placement="right">
+            <Tooltip title="copy document" arrow placement="bottom">
                 <StyledIconButton>
                     <TableViewIcon color='primary'/>
                 </StyledIconButton>
             </Tooltip>
-            <Tooltip title="copy document" arrow placement="right">
+            <Tooltip title="copy document" arrow placement="bottom">
+                <StyledIconButton>
+                    <VisibilityIcon color='primary'/>
+                </StyledIconButton>
+            </Tooltip>
+            <Tooltip title="copy document" arrow placement="bottom">
                 <StyledIconButton>
                     <DeleteForeverIcon color='error'/>
                 </StyledIconButton>
